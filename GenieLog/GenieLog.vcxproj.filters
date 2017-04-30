@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Managers">
+      <UniqueIdentifier>{ff2b7c27-8146-4e0e-b55b-e8cd94d8c467}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SOZLayout">
+      <UniqueIdentifier>{af814d21-eeef-4c7b-9f65-6594d858d961}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tools">
+      <UniqueIdentifier>{0e8b32eb-372f-45c4-aab7-346636ba8ca5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ChoiceBoxs">
+      <UniqueIdentifier>{5635a8dc-b9e9-4492-9263-d0e4441321ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SOZTab">
+      <UniqueIdentifier>{55277061-8891-42df-a207-8b4d14137116}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameStates">
+      <UniqueIdentifier>{443b9a57-ed28-408e-8ce7-4746a939c9ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entity">
+      <UniqueIdentifier>{f1e754e2-9777-490b-b0c6-da53d4b247a0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SOZLayout\LayoutBase.cpp">
+      <Filter>SOZLayout</Filter>
+    </ClCompile>
+    <ClCompile Include="SOZLayout\LayoutButton.cpp">
+      <Filter>SOZLayout</Filter>
+    </ClCompile>
+    <ClCompile Include="SOZLayout\LayoutInput.cpp">
+      <Filter>SOZLayout</Filter>
+    </ClCompile>
+    <ClCompile Include="SOZLayout\LayoutLabel.cpp">
+      <Filter>SOZLayout</Filter>
+    </ClCompile>
+    <ClCompile Include="SOZLayout\Exception.cpp">
+      <Filter>SOZLayout</Filter>
+    </ClCompile>
+    <ClCompile Include="FontManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="GameBoard.cpp">
+      <Filter>Source Files\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="GameCreator.cpp">
+      <Filter>Source Files\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMenu.cpp">
+      <Filter>Source Files\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSettings.cpp">
+      <Filter>Source Files\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="PerlinNoise.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorChoiceBox.cpp">
+      <Filter>Source Files\ChoiceBoxs</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionButton.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Tools.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameBattle.cpp">
+      <Filter>Source Files\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Source Files\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>Source Files\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Competence.cpp">
+      <Filter>Source Files\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Objet.cpp">
+      <Filter>Source Files\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Combat.cpp">
+      <Filter>Source Files\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillsBoard.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="EditList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Game.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SOZLayout\LayoutBase.h">
+      <Filter>SOZLayout</Filter>
+    </ClInclude>
+    <ClInclude Include="SOZLayout\LayoutButton.h">
+      <Filter>SOZLayout</Filter>
+    </ClInclude>
+    <ClInclude Include="SOZLayout\LayoutInput.h">
+      <Filter>SOZLayout</Filter>
+    </ClInclude>
+    <ClInclude Include="SOZLayout\LayoutLabel.h">
+      <Filter>SOZLayout</Filter>
+    </ClInclude>
+    <ClInclude Include="SOZLayout\Colors.h">
+      <Filter>SOZLayout</Filter>
+    </ClInclude>
+    <ClInclude Include="SOZLayout\Component.h">
+      <Filter>SOZLayout</Filter>
+    </ClInclude>
+    <ClInclude Include="SOZLayout\Exception.h">
+      <Filter>SOZLayout</Filter>
+    </ClInclude>
+    <ClInclude Include="GameBoard.hpp">
+      <Filter>Source Files\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="GameCreator.hpp">
+      <Filter>Source Files\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMenu.hpp">
+      <Filter>Source Files\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSettings.hpp">
+      <Filter>Source Files\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState.hpp">
+      <Filter>Source Files\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="TileMap.hpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="PerlinNoise.hpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorChoiceBox.h">
+      <Filter>Source Files\ChoiceBoxs</Filter>
+    </ClInclude>
+    <ClInclude Include="FontManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionButton.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Tools.hpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="GameBattle.hpp">
+      <Filter>Source Files\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Source Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Source Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>Source Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Competence.h">
+      <Filter>Source Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Objet.h">
+      <Filter>Source Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Combat.h">
+      <Filter>Source Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillsBoard.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="EditList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
