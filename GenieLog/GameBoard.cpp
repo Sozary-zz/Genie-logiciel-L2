@@ -89,7 +89,7 @@ void GameBoard::update(const float delta_time)
 			m_map->tiles.fade(Color(fade, fade, fade));
 			fade =  (1 - (t_intro.getElapsedTime().asSeconds() / 1.3f))*255.f;
 		}
-		else if (t_intro.getElapsedTime().asSeconds() >= 2.6f)
+		else if (t_intro.getElapsedTime().asSeconds() >= 2.6f)// ntm
 		{
 			t_fight = false;
 			game->pushState((GameState*)new GameBattle(this->game,new Joueur("Rayquaza", 100, 0, 5, 1), new Monstre("Kyogre", 50, 0, 2, 0),&m_battle_issue));
