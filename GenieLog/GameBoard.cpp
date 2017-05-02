@@ -75,6 +75,8 @@ void GameBoard::draw(const float delta_time)
 
 void GameBoard::update(const float delta_time)
 {
+
+
 }
 
 void GameBoard::eventLoop()
