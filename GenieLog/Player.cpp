@@ -41,8 +41,7 @@ Joueur::Joueur(string pseudo, int pvmax, int mana, int armure, int force) : Enti
 	m_equipement = new Objet[nb_equipement_max];
 	RempirCompetence();
 }
-
-
+// iuehdiuehd //
 //Fonction TEST
 void Joueur::RempirCompetence()
 {
