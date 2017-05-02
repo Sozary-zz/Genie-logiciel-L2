@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ActionButton" Collapsed="true">
+    <Position X="14.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAEAAAABAAgBAAAKAAAAAAACAEAAAAABAAAAEAAQ=</HashCode>
+      <FileName>ActionButton.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Competence" Collapsed="true">
+    <Position X="16" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAFCEAIgAAAAAAAAABAAAAAABAAAAgQAIAAAAAAAAgA=</HashCode>
+      <FileName>Competence.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EditList" Collapsed="true">
+    <Position X="17.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAkAAAIAAAAAAAAIIAAAAAAEAAEAAAAAAAAQgAAAA=</HashCode>
+      <FileName>EditList.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EditorChoiceBox" Collapsed="true">
+    <Position X="7.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>EditorChoiceBox.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Entite" Collapsed="true">
+    <Position X="3.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>URAgAAAACAAABAAABAAAAAAQAAABAgAAAAAAAAQgAAM=</HashCode>
+      <FileName>Entity.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Exception" Collapsed="true">
+    <Position X="19.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>SOZLayout\Exception.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FontManager" Collapsed="true">
+    <Position X="14.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAAAAAAAAAAAABAAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>FontManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Game" Collapsed="true">
+    <Position X="16" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAQAAIEAAgiAAAAMAAAAAAAAAEA=</HashCode>
+      <FileName>Game.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameBattle" Collapsed="true">
+    <Position X="7.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAQSAEgEQASCAAAIUAAAExAAAAQBAAQAAABAUYAA=</HashCode>
+      <FileName>GameBattle.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameBoard" Collapsed="true">
+    <Position X="9.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgACAAEAIABQAAKBIAAAAIhAQAAAAAEQBAABQ0cIA=</HashCode>
+      <FileName>GameBoard.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameCreator" Collapsed="true">
+    <Position X="11.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAABAAICEAAAgAAAAACAAAAAABAUAAA=</HashCode>
+      <FileName>GameCreator.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameMenu" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAAAoAAAAAgAAAAAAAAAAAABAUAAA=</HashCode>
+      <FileName>GameMenu.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameSettings" Collapsed="true">
+    <Position X="5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAgAAAAAAAAAAAABAUAgA=</HashCode>
+      <FileName>GameSettings.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameState" Collapsed="true">
+    <Position X="7.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIACAQAQAIAAAAAgAAAAAAIAAAAAAAEAAA=</HashCode>
+      <FileName>GameState.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Joueur" Collapsed="true">
+    <Position X="2.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAIAAAAAAAACAAAAQAAAAFAAAAAAAAAMAAIIAAAAAA=</HashCode>
+      <FileName>Player.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LayoutBase" Collapsed="true">
+    <Position X="7.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAABAgAAAAAACAAACAAAAACAAACABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SOZLayout\LayoutBase.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LayoutButton" Collapsed="true">
+    <Position X="2.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAIAAEAwAkQAIAAAEAAASAQAAgAAAgAAAEgAA=</HashCode>
+      <FileName>SOZLayout\LayoutButton.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LayoutComponent" Collapsed="true">
+    <Position X="5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAgAAAAAAAQAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>SOZLayout\Component.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LayoutInput" Collapsed="true">
+    <Position X="5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAIAAAAgAkQCIACAKAAAQMQAIgAAAAAAIUAAA=</HashCode>
+      <FileName>SOZLayout\LayoutInput.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LayoutLabel" Collapsed="true">
+    <Position X="7.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAgAEAAIAAAAAAAQEAAAAAAAAgCgEAAA=</HashCode>
+      <FileName>SOZLayout\LayoutLabel.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Monstre" Collapsed="true">
+    <Position X="4.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAAAAAAAAAAEAAAAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Monster.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Objet" Collapsed="true">
+    <Position X="17.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAIAAACAAAAAAAAAAAEABAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Objet.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PerlinNoise" Collapsed="true">
+    <Position X="19.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAIAAAAAAAAAAAAgAASAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>PerlinNoise.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SkillsBoard" Collapsed="true">
+    <Position X="14.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>hAAAAAAAgAEAAIAAAAIAAAAAAAAAABBAAAAAIAaABAA=</HashCode>
+      <FileName>SkillsBoard.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TextureManager" Collapsed="true">
+    <Position X="16" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAAAAAAAAAAAABAAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>TextureManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TileMap" Collapsed="true">
+    <Position X="17.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAABIAAAAAAAIIAAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TileMap.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="Map" Collapsed="true">
+    <Position X="14.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAAAAAAAAAAAgAAAAAAACAAAAAAAAA=</HashCode>
+      <FileName>GameBoard.hpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Node" Collapsed="true">
+    <Position X="16" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameBoard.hpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Turn" Collapsed="true">
+    <Position X="17.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAACAAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameBattle.hpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="BUTTON_INDEX" Collapsed="true">
+    <Position X="14.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAAAQAgAAAAAAAAAAAAAQAAgAAA=</HashCode>
+      <FileName>GameMenu.hpp</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="INPUT_TYPE_RESTRICT" Collapsed="true">
+    <Position X="16" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAIAAAAAAQAAAAAAAAAAEAAA=</HashCode>
+      <FileName>SOZLayout\LayoutInput.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TILE_TYPE" Collapsed="true">
+    <Position X="17.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAIAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>GameBoard.hpp</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

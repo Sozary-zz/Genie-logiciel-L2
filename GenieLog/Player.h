@@ -2,7 +2,7 @@
 #include <SFML\Graphics.hpp>
 #include "Entity.h"
 
-class Joueur : public Entite, public sf::Drawable, public sf::Transformable {
+class Joueur : public Entite/*, public sf::Drawable, public sf::Transformable */{
 
 
 public:
