@@ -34,6 +34,9 @@
     <Filter Include="Source Files\Entity">
       <UniqueIdentifier>{f1e754e2-9777-490b-b0c6-da53d4b247a0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Animations">
+      <UniqueIdentifier>{cbbe27d2-3cfd-4f1d-a171-172fff5f66e2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -116,6 +119,12 @@
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
     <ClCompile Include="EditList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatedSprite.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -206,6 +215,12 @@
     </ClInclude>
     <ClInclude Include="EditList.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedSprite.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.hpp">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
