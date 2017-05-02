@@ -1,5 +1,6 @@
 #include "Entity.h"
 #pragma once
+#DEFINE DATASAVEPERS "./data/loading/Player.txt"
 #ifndef JOUEUR
 #define JOUEUR
 
