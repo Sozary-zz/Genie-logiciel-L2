@@ -3,7 +3,6 @@
 #ifndef COMPETENCE
 #define COMPETENCE
 
-#define DATASAVECOMP "./data/loading/Comp.txt"
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -32,6 +31,5 @@ public:
 	int getTempsIncantation();
 	int getCoutMana();
 };
-Competence * ChargerCompetence(int numero);
 
 #endif
