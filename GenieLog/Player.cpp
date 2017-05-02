@@ -10,7 +10,7 @@ m_animated(seconds(.2f),true,false), m_is_walking(false)
 	m_inventaire = new Objet[nb_objet_max];
 	m_equipement = new Objet[nb_equipement_max];
 
-	GameState::texture_manager->addElement("character_sprite", "data\\character.png");
+	GameState::texture_manager->addElement("character_sprite", "data\\character.png"); // pwet
 
 	m_walking_anim = new Animation[4]; // down/left/right/up
 
@@ -64,27 +64,32 @@ void Joueur::run() {
 
 void Joueur::up()
 {
+	m_current_anim = &m_walking_anim[3];
 }
 
 void Joueur::down()
 {
+	m_current_anim = &m_walking_anim[0];
 }
 
 void Joueur::left()
 {
+	m_current_anim = &m_walking_anim[1];
 }
 
 void Joueur::right()
 {
+	m_current_anim = &m_walking_anim[2];
 }
 
 bool Joueur::isWalking()
 {
-	return false;
+	return m_is_walking ;
 }
 
 void Joueur::stop_running()
 {
+	m_is_walking = false;
 }
 
 Joueur::Joueur(string pseudo, int pvmax, int mana, int armure, int force) : Entite(pseudo, pvmax, mana, armure, force), nb_objet_max(30), nb_equipement_max(6), nb_competence_max(5), m_pseudo(pseudo)
