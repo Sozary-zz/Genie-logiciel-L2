@@ -25,7 +25,7 @@ GameBoard::GameBoard(Game * game)
 	random_device rd;
 	mt19937 gen(rd());
 	uniform_int_distribution<>dis(0, 9999);
-	
+
 	int* level = new int[DEFAULT_HEIGHT*DEFAULT_WIDTH];
 
 	m_map->movements = new int[DEFAULT_HEIGHT*DEFAULT_WIDTH];
@@ -37,9 +37,9 @@ GameBoard::GameBoard(Game * game)
 			for (int y = 0; y < DEFAULT_HEIGHT; ++y) {
 				double n = 10 * pn.noise(x, y, 2.6);
 
-				if (n < 4 && dis(gen)<5000)
+				if (n < 4 && dis(gen) < 5000)
 					level[x + y*DEFAULT_HEIGHT] = (int)TILE_TYPE::BAD_GRASS;
-				else if (n < 4.5 )
+				else if (n < 4.5)
 					level[x + y*DEFAULT_HEIGHT] = (int)TILE_TYPE::FLOWER;
 				else if (n < 5.5)
 					level[x + y*DEFAULT_HEIGHT] = (int)TILE_TYPE::GRASS;
@@ -69,14 +69,14 @@ GameBoard::GameBoard(Game * game)
 void GameBoard::draw(const float delta_time)
 {
 	game->window.setView(m_view);
-	game->window.draw(m_map->tiles);	
-	game->window.draw(*m_player);
+	game->window.draw(m_map->tiles);
+	//game->window.draw(*m_player);
 }
 
 void GameBoard::update(const float delta_time)
 {
-
-
+	if (t_fight)
+		blink();
 }
 
 void GameBoard::eventLoop()
@@ -102,9 +102,7 @@ void GameBoard::eventLoop()
 			}
 			else	if (event.key.code == Keyboard::Escape) game->window.close();
 			else if (event.key.code == Keyboard::Left) {
-				if (!m_player->isWalking())
-					m_player->run();
-				m_player->left();
+
 			}
 			break;
 		}
@@ -224,53 +222,52 @@ int GameBoard::getV(const std::map<sf::Vector2i*, int>& m, sf::Vector2i* a) cons
 	return -1;
 }
 
-void GameBoard::blink()
+bool GameBoard::blink()
 {
+	if (!t_already_started) {
+		t_intro.restart(); m_base_battle_sound.setPlayingOffset(seconds(.2f));
+		m_base_battle_sound.play();
+		t_already_started = true;
 
-	if (t_fight) {
-		if (!t_already_started) {
-			t_intro.restart(); m_base_battle_sound.setPlayingOffset(seconds(.2f));
-			m_base_battle_sound.play();
-			t_already_started = true;
+		t_blink.restart();
+		blink_boom = false;
+		m_map->tiles.fade(Color(64, 64, 64));
+	}
+	if (t_intro.getElapsedTime().asSeconds() >= 1.2f && t_intro.getElapsedTime().asSeconds() < 2.6f) {
+
+		m_map->tiles.fade(Color(fade, fade, fade));
+		fade = (1 - (t_intro.getElapsedTime().asSeconds() / 1.3f))*255.f;
+	}
+	else if (t_intro.getElapsedTime().asSeconds() >= 2.6f)
+	{
+		t_fight = false;
+		game->pushState((GameState*)new GameBattle(this->game, m_player, new Monstre("Kyogre", 50, 0, 2, 0), &m_battle_issue));
+		m_map->tiles.fade(Color(255, 255, 255));
+		m_base_battle_sound.stop();
+		return true;
+	}
+	else {
+
+		if (t_blink.getElapsedTime().asSeconds() >= .1f)
+		{
+			if (!blink_boom)
+			{
+				m_map->tiles.fade(Color(255, 255, 255));
+				blink_boom = true;
+			}
+
+			else
+			{
+				blink_boom = false;
+				m_map->tiles.fade(Color(64, 64, 64));
+			}
 
 			t_blink.restart();
-			blink_boom = false;
-			m_map->tiles.fade(Color(64, 64, 64));
 		}
-		if (t_intro.getElapsedTime().asSeconds() >= 1.2f && t_intro.getElapsedTime().asSeconds() < 2.6f) {
 
-			m_map->tiles.fade(Color(fade, fade, fade));
-			fade = (1 - (t_intro.getElapsedTime().asSeconds() / 1.3f))*255.f;
-		}
-		else if (t_intro.getElapsedTime().asSeconds() >= 2.6f)
-		{
-			t_fight = false;
-			game->pushState((GameState*)new GameBattle(this->game, m_player, new Monstre("Kyogre", 50, 0, 2, 0), &m_battle_issue));
-			m_map->tiles.fade(Color(255, 255, 255));
-			m_base_battle_sound.stop();
-			return;
-		}
-		else {
-
-			if (t_blink.getElapsedTime().asSeconds() >= .1f)
-			{
-				if (!blink_boom)
-				{
-					m_map->tiles.fade(Color(255, 255, 255));
-					blink_boom = true;
-				}
-
-				else
-				{
-					blink_boom = false;
-					m_map->tiles.fade(Color(64, 64, 64));
-				}
-
-				t_blink.restart();
-			}
-		}
 
 	}
+	return false;
 }
 
 int GameBoard::manhattanDistance(const sf::Vector2i & a, const sf::Vector2i & b)

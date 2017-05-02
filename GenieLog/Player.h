@@ -1,10 +1,9 @@
 #pragma once
 #include <SFML\Graphics.hpp>
-#include "AnimatedSprite.hpp"
 #include "GameState.hpp"
 #include "Entity.h"
 
-class Joueur : public Entite, public sf::Drawable, public sf::Transformable {
+class Joueur : public Entite, public sf::Drawable/*, public sf::Transformable*/ {
 	
 public:
 
@@ -16,11 +15,7 @@ public:
 
 	std::vector<std::string> recupNomCompetences() const;
 
-	void up();
-	void down();
-	void left();
-	void right();
-	bool isWalking();
+	
 	void RempirCompetence();
 
 

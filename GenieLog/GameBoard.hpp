@@ -46,7 +46,7 @@ private:
 	bool exist(const std::map<sf::Vector2i*, int>& m, sf::Vector2i* a) const;
 
 	int getV(const std::map<sf::Vector2i*, int>& m, sf::Vector2i* a) const;
-	void blink();
+	bool blink();
 
 	static int manhattanDistance(const sf::Vector2i& a, const sf::Vector2i& b);
 private:
