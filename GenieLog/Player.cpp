@@ -65,21 +65,22 @@ void Joueur::run() {
 void Joueur::up()
 {
 	m_current_anim = &m_walking_anim[3];
+	move(0, -10);
 }
 
 void Joueur::down()
 {
-	m_current_anim = &m_walking_anim[0];
+	m_current_anim = &m_walking_anim[0];	move(0, 10);
 }
 
 void Joueur::left()
 {
-	m_current_anim = &m_walking_anim[1];
+	m_current_anim = &m_walking_anim[1];	move(-10,0);
 }
 
 void Joueur::right()
 {
-	m_current_anim = &m_walking_anim[2];
+	m_current_anim = &m_walking_anim[2];	move(10,0);
 }
 
 bool Joueur::isWalking()
@@ -111,4 +112,5 @@ void Joueur::RempirCompetence()
 
 void Joueur::draw(sf::RenderTarget & target, sf::RenderStates states) const
 {
+	target.draw(m_animated);
 }

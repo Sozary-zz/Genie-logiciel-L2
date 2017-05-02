@@ -11,7 +11,7 @@ GameBoard::GameBoard(Game * game)
 	m_base_battle_sound_buffer.loadFromFile("data\\songs\\009_Battle_Wild_Pok_mon_.ogg");
 	m_base_battle_sound.setBuffer(m_base_battle_sound_buffer);
 	m_base_battle_sound.setLoop(true);	m_base_battle_sound.setVolume(1);
-
+	m_player = new Joueur("Rayquaza", 100, 0, 5, 1);
 	this->game = game;
 	auto x = (Vector2f)this->game->window.getSize();
 
@@ -70,6 +70,7 @@ void GameBoard::draw(const float delta_time)
 {
 	game->window.setView(m_view);
 	game->window.draw(m_map->tiles);	
+	game->window.draw(*m_player);
 }
 
 void GameBoard::update(const float delta_time)
@@ -97,11 +98,12 @@ void GameBoard::eventLoop()
 				game->popState();
 				return;
 			}
-
-
-
-
 			else	if (event.key.code == Keyboard::Escape) game->window.close();
+			else if (event.key.code == Keyboard::Left) {
+				if (!m_player->isWalking())
+					m_player->run();
+				m_player->left();
+			}
 			break;
 		}
 		default: break;
@@ -241,7 +243,7 @@ void GameBoard::blink()
 		else if (t_intro.getElapsedTime().asSeconds() >= 2.6f)
 		{
 			t_fight = false;
-			game->pushState((GameState*)new GameBattle(this->game, new Joueur("Rayquaza", 100, 0, 5, 1), new Monstre("Kyogre", 50, 0, 2, 0), &m_battle_issue));
+			game->pushState((GameState*)new GameBattle(this->game, m_player, new Monstre("Kyogre", 50, 0, 2, 0), &m_battle_issue));
 			m_map->tiles.fade(Color(255, 255, 255));
 			m_base_battle_sound.stop();
 			return;

@@ -67,5 +67,7 @@ private:
 	bool blink_boom;
 	bool t_already_started;
 	int fade;
+
+	Joueur *m_player;
 };
 
