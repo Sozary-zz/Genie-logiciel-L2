@@ -42,6 +42,9 @@ Joueur::Joueur(string pseudo, int pvmax, int mana, int armure, int force) : Enti
 	RempirCompetence();
 }
 
+void test(){
+
+}
 
 //Fonction TEST
 void Joueur::RempirCompetence()
