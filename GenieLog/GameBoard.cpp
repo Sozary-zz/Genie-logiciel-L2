@@ -11,7 +11,7 @@ GameBoard::GameBoard(Game * game)
 	m_base_battle_sound_buffer.loadFromFile("data\\songs\\009_Battle_Wild_Pok_mon_.ogg");
 	m_base_battle_sound.setBuffer(m_base_battle_sound_buffer);
 	m_base_battle_sound.setLoop(true);	m_base_battle_sound.setVolume(1);
-
+	m_player = new Joueur("Rayquaza", 100, 0, 5, 1);
 	this->game = game;
 	auto x = (Vector2f)this->game->window.getSize();
 
@@ -70,54 +70,12 @@ void GameBoard::draw(const float delta_time)
 {
 	game->window.setView(m_view);
 	game->window.draw(m_map->tiles);	
+	game->window.draw(*m_player);
 }
 
 void GameBoard::update(const float delta_time)
 {
-	if (t_fight) {
-		if (!t_already_started) {
-			t_intro.restart(); m_base_battle_sound.setPlayingOffset(seconds(.2f));
-			m_base_battle_sound.play();
-			t_already_started = true;
 
-			t_blink.restart();
-			blink_boom = false;
-			m_map->tiles.fade(Color(64, 64, 64));
-		}
-		if (t_intro.getElapsedTime().asSeconds() >= 1.2f && t_intro.getElapsedTime().asSeconds() < 2.6f) {
-			
-			m_map->tiles.fade(Color(fade, fade, fade));
-			fade =  (1 - (t_intro.getElapsedTime().asSeconds() / 1.3f))*255.f;
-		}
-		else if (t_intro.getElapsedTime().asSeconds() >= 2.6f)
-		{
-			t_fight = false;
-			game->pushState((GameState*)new GameBattle(this->game,new Joueur("Rayquaza", 100, 0, 5, 1), new Monstre("Kyogre", 50, 0, 2, 0),&m_battle_issue));
-			m_map->tiles.fade(Color(255, 255, 255));
-			m_base_battle_sound.stop();
-			return;
-		}
-		else {
-
-			if (t_blink.getElapsedTime().asSeconds() >= .1f)
-			{
-				if (!blink_boom)
-				{
-					m_map->tiles.fade(Color(255, 255, 255));
-					blink_boom = true;
-				}
-
-				else
-				{
-					blink_boom = false;
-					m_map->tiles.fade(Color(64, 64, 64));
-				}
-
-				t_blink.restart();
-			}
-		}
-
-	}
 
 }
 
@@ -142,11 +100,12 @@ void GameBoard::eventLoop()
 				game->popState();
 				return;
 			}
-
-
-
-
 			else	if (event.key.code == Keyboard::Escape) game->window.close();
+			else if (event.key.code == Keyboard::Left) {
+				if (!m_player->isWalking())
+					m_player->run();
+				m_player->left();
+			}
 			break;
 		}
 		default: break;
@@ -263,6 +222,55 @@ int GameBoard::getV(const std::map<sf::Vector2i*, int>& m, sf::Vector2i* a) cons
 		if (*x.first == *a)
 			return x.second;
 	return -1;
+}
+
+void GameBoard::blink()
+{
+
+	if (t_fight) {
+		if (!t_already_started) {
+			t_intro.restart(); m_base_battle_sound.setPlayingOffset(seconds(.2f));
+			m_base_battle_sound.play();
+			t_already_started = true;
+
+			t_blink.restart();
+			blink_boom = false;
+			m_map->tiles.fade(Color(64, 64, 64));
+		}
+		if (t_intro.getElapsedTime().asSeconds() >= 1.2f && t_intro.getElapsedTime().asSeconds() < 2.6f) {
+
+			m_map->tiles.fade(Color(fade, fade, fade));
+			fade = (1 - (t_intro.getElapsedTime().asSeconds() / 1.3f))*255.f;
+		}
+		else if (t_intro.getElapsedTime().asSeconds() >= 2.6f)
+		{
+			t_fight = false;
+			game->pushState((GameState*)new GameBattle(this->game, m_player, new Monstre("Kyogre", 50, 0, 2, 0), &m_battle_issue));
+			m_map->tiles.fade(Color(255, 255, 255));
+			m_base_battle_sound.stop();
+			return;
+		}
+		else {
+
+			if (t_blink.getElapsedTime().asSeconds() >= .1f)
+			{
+				if (!blink_boom)
+				{
+					m_map->tiles.fade(Color(255, 255, 255));
+					blink_boom = true;
+				}
+
+				else
+				{
+					blink_boom = false;
+					m_map->tiles.fade(Color(64, 64, 64));
+				}
+
+				t_blink.restart();
+			}
+		}
+
+	}
 }
 
 int GameBoard::manhattanDistance(const sf::Vector2i & a, const sf::Vector2i & b)
