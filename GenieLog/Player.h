@@ -25,7 +25,7 @@ private:
 	Objet* m_equipement;
 	const int nb_objet_max;
 	const int nb_competence_max;
-	const int nb_equipement_max;//t
+	const int nb_equipement_max;
 };
 
 #endif
