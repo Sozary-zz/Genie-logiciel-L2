@@ -8,6 +8,7 @@
 #define DATASAVEPLAYER "./data/loading/Player.txt"
 
 Competence * ChargerCompetence(int numero);
+Joueur * ChargerJoueur(string psuedo,string nomclasse);
 
 
 #endif
