@@ -128,7 +128,7 @@ void GameBoard::eventLoop()
 						return;
 					}
 					else
-						;//song bonng, and change pos
+						;//song bonng, and change orientation
 				}
 				else if (event.key.code == Keyboard::Right) {
 					if (m_player->positionInGrid().x < DEFAULT_WIDTH - 1 && m_map->datas[m_player->positionInGrid().x + 1 + m_player->positionInGrid().y*DEFAULT_HEIGHT] != TILE_TYPE::BUSH
@@ -160,12 +160,16 @@ void GameBoard::eventLoop()
 				}
 				break;
 			}
-			default: break;
+
 			}
 		}
 	}
 	else
+	{
+		while(game->window.pollEvent(event));
 		m_player->continueAnim(frame_time);
+	}
+
 
 
 
