@@ -5,7 +5,7 @@ using namespace sf;
 using namespace std;
 
 Joueur::Joueur(string pseudo, int pvmax, int mana, int armure, int force) : Entite(pseudo, pvmax, mana, armure, force), nb_objet_max(30), nb_equipement_max(6), nb_competence_max(5), m_pseudo(pseudo)
-, m_walking_compt(0) {
+, m_walking_compt(0), m_orientation(DOWN){
 	m_inventaire = new Objet[nb_objet_max];
 	m_equipement = new Objet[nb_equipement_max];
 	RempirCompetence();
@@ -19,7 +19,9 @@ Joueur::Joueur(string pseudo, int pvmax, int mana, int armure, int force) : Enti
 	{ 8,10,9,11 };
 
 	m_sprite.setTexture(GameState::texture_manager->getElement("character_sprite"));
-	m_sprite.setTextureRect(IntRect(m_walking_compt, m_walking_positions[DOWN] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
+	m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
+
+
 }
 
 Joueur::Joueur() :nb_objet_max(30), nb_equipement_max(6), nb_competence_max(5),
@@ -65,10 +67,63 @@ void Joueur::RempirCompetence()
 	tableau_competence.push_back(new Competence("Mignon Sourire", 0, 0, 2, 0));
 }
 
-void Joueur::adjustPos(Vector2i position, Vector2f scale)
+void Joueur::adjustPos(Vector2i position, Vector2f scale, float speed)
 {
 	m_sprite.setPosition((Vector2f)position);
 	m_sprite.setScale(scale);
+	m_speed = speed;
+}
+
+void Joueur::left()
+{
+	if (m_orientation != LEFT)
+	{
+		m_walking_compt = 0;
+		m_orientation = LEFT;
+	}
+	else
+		m_walking_compt = (m_walking_compt + 1 >= 9) ? 0 : m_walking_compt + 1;
+	m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
+	m_sprite.move(-m_speed, 0);
+}
+
+void Joueur::up()
+{
+	if (m_orientation != UP)
+	{
+		m_walking_compt = 0;
+		m_orientation = UP;
+	}
+	else
+		m_walking_compt = (m_walking_compt + 1 >= 9) ? 0 : m_walking_compt + 1;
+	m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
+	m_sprite.move(0, -m_speed);
+}
+
+void Joueur::down()
+{
+	if (m_orientation != DOWN)
+	{
+		m_walking_compt = 0;
+		m_orientation = DOWN;
+	}
+	else
+		m_walking_compt = (m_walking_compt + 1 >= 9) ? 0 : m_walking_compt + 1;
+	m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
+	m_sprite.move(0, m_speed);
+}
+
+void Joueur::right()
+{
+	if (m_orientation != RIGHT)
+	{
+		m_walking_compt = 0;
+		m_orientation = RIGHT;
+	}
+	else
+		m_walking_compt = (m_walking_compt + 1 >= 9) ? 0 : m_walking_compt + 1;
+	m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
+	m_sprite.move(m_speed, 0);
 }
 
 void Joueur::draw(sf::RenderTarget & target, sf::RenderStates states) const

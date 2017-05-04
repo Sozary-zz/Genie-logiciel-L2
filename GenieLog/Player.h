@@ -21,8 +21,12 @@ public:
 
 
 	void RempirCompetence();
-	void adjustPos(sf::Vector2i position, sf::Vector2f scale);
+	void adjustPos(sf::Vector2i position, sf::Vector2f scale, float speed);
 
+	void left();
+	void up();
+	void down();
+	void right();
 
 private:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
@@ -39,5 +43,9 @@ private:
 	sf::Sprite m_sprite;
 	int *m_walking_positions;
 	int m_walking_compt;
+
+	float m_speed;
+
+	DIRECTION m_orientation;
 
 };
