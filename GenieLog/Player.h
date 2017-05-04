@@ -38,7 +38,10 @@ public:
 
 	bool isRunning();
 
-	void init();
+	void _left_();
+	void _up_();
+	void _down_();
+	void _right_();
 
 private:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;

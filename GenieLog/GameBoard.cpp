@@ -10,8 +10,14 @@ GameBoard::GameBoard(Game * game)
 {
 	m_base_battle_sound_buffer.loadFromFile("data\\songs\\009_Battle_Wild_Pok_mon_.ogg");
 	m_base_battle_sound.setBuffer(m_base_battle_sound_buffer);
+
+	m_collision.sample_buffer.loadFromFile("data\\songs\\sounds_effect\\emerald_0003_collision.wav");
+	m_collision.sample.setBuffer(m_collision.sample_buffer);
+	m_collision.running = false;
+
+	m_main_song.sample_buffer
 	m_base_battle_sound.setLoop(true);	m_base_battle_sound.setVolume(1);
-	m_player = new Joueur("Rayquaza","Player", 100, 0, 5, 1);
+	m_player = new Joueur("Rayquaza", "Player", 100, 0, 5, 1);
 	this->game = game;
 	auto x = (Vector2f)this->game->window.getSize();
 
@@ -39,9 +45,9 @@ GameBoard::GameBoard(Game * game)
 			for (int y = 0; y < DEFAULT_HEIGHT; ++y) {
 				double n = 10 * pn.noise(x, y, 2.6);
 
-				if (n < 4 && dis(gen) < 5000)
+			/*	if (n < 4 && dis(gen) < 5000)
 					level[x + y*DEFAULT_HEIGHT] = (int)TILE_TYPE::BAD_GRASS;
-				else if (n < 4.5)
+				else */if (n < 4.5)
 					level[x + y*DEFAULT_HEIGHT] = (int)TILE_TYPE::FLOWER;
 				else if (n < 5.5)
 				{
@@ -87,7 +93,7 @@ void GameBoard::draw(const float delta_time)
 
 void GameBoard::update(const float delta_time)
 {
-
+	m_collision.update();
 
 	/*	if (t_fight)
 			blink();*/
@@ -120,15 +126,22 @@ void GameBoard::eventLoop()
 				}
 				else	if (event.key.code == Keyboard::Escape)
 					game->window.close();
-				else if (event.key.code == Keyboard::Left && m_map->datas[m_player->positionInGrid().x - 1 + m_player->positionInGrid().y*DEFAULT_HEIGHT] != TILE_TYPE::BUSH
-					&&  m_map->datas[m_player->positionInGrid().x - 1 + m_player->positionInGrid().y*DEFAULT_HEIGHT] != TILE_TYPE::BAD_GRASS) {
-					if (m_player->positionInGrid().x > 0)
+				else if (event.key.code == Keyboard::Left ) {
+					if (m_map->datas[m_player->positionInGrid().x - 1 + m_player->positionInGrid().y*DEFAULT_HEIGHT] != TILE_TYPE::BUSH
+						&&  m_map->datas[m_player->positionInGrid().x - 1 + m_player->positionInGrid().y*DEFAULT_HEIGHT] != TILE_TYPE::BAD_GRASS && m_player->positionInGrid().x > 0)
 					{
 						m_player->left();
 						return;
 					}
 					else
-						;//song bonng, and change orientation
+					{
+						m_player->_left_();
+						if (!m_collision.running)
+							m_collision.run();
+
+
+					}
+					;//song bonng, and change orientation
 				}
 				else if (event.key.code == Keyboard::Right) {
 					if (m_player->positionInGrid().x < DEFAULT_WIDTH - 1 && m_map->datas[m_player->positionInGrid().x + 1 + m_player->positionInGrid().y*DEFAULT_HEIGHT] != TILE_TYPE::BUSH
@@ -137,24 +150,47 @@ void GameBoard::eventLoop()
 						m_player->right();
 						return;
 					}
+					else
+					{
+						m_player->_right_();
+						if (!m_collision.running)
+							m_collision.run();
+						
+
+					}
 
 				}
-				else if (event.key.code == Keyboard::Up && m_map->datas[m_player->positionInGrid().x + (m_player->positionInGrid().y - 1)*DEFAULT_HEIGHT] != TILE_TYPE::BUSH
-					&&  m_map->datas[m_player->positionInGrid().x + (m_player->positionInGrid().y - 1)*DEFAULT_HEIGHT] != TILE_TYPE::BAD_GRASS) {
-					if (m_player->positionInGrid().y > 0)
+				else if (event.key.code == Keyboard::Up ) {
+					if (m_map->datas[m_player->positionInGrid().x + (m_player->positionInGrid().y - 1)*DEFAULT_HEIGHT] != TILE_TYPE::BUSH
+						&&  m_map->datas[m_player->positionInGrid().x + (m_player->positionInGrid().y - 1)*DEFAULT_HEIGHT] != TILE_TYPE::BAD_GRASS && m_player->positionInGrid().y > 0)
 					{
 						m_player->up();
 						return;
 					}
+					else
+					{
+						m_player->_up_();
+						if (!m_collision.running)
+							m_collision.run();
+
+					}
 
 				}
-				else if (event.key.code == Keyboard::Down && m_map->datas[m_player->positionInGrid().x + (m_player->positionInGrid().y + 1)*DEFAULT_HEIGHT] != TILE_TYPE::BUSH
-					&&  m_map->datas[m_player->positionInGrid().x + (m_player->positionInGrid().y + 1)*DEFAULT_HEIGHT] != TILE_TYPE::BAD_GRASS) {
-					if (m_player->positionInGrid().y < DEFAULT_HEIGHT - 1)
+				else if (event.key.code == Keyboard::Down ) {
+					if (m_player->positionInGrid().y < DEFAULT_HEIGHT - 1 && m_map->datas[m_player->positionInGrid().x + (m_player->positionInGrid().y + 1)*DEFAULT_HEIGHT] != TILE_TYPE::BUSH
+						&&  m_map->datas[m_player->positionInGrid().x + (m_player->positionInGrid().y + 1)*DEFAULT_HEIGHT] != TILE_TYPE::BAD_GRASS)
 					{
 						m_player->down();
 
 						return;
+					}
+					else
+					{
+						m_player->_down_();
+						if (!m_collision.running)
+							m_collision.run();
+
+		
 					}
 
 				}
@@ -166,7 +202,7 @@ void GameBoard::eventLoop()
 	}
 	else
 	{
-		while(game->window.pollEvent(event));
+		while (game->window.pollEvent(event));
 		m_player->continueAnim(frame_time);
 	}
 

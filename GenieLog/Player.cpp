@@ -91,7 +91,6 @@ void Joueur::adjustPos(Vector2i grid,Vector2i position, Vector2f scale, Vector2f
 
 void Joueur::left()
 {
-	cout << "gauche" << endl;
 	m_position_in_the_grid.x--;
 	m_orientation = LEFT;
 	m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
@@ -103,7 +102,6 @@ void Joueur::left()
 
 void Joueur::up()
 {
-	cout << "haut" << endl;
 
 	m_position_in_the_grid.y--;
 	m_orientation = UP;
@@ -116,7 +114,6 @@ void Joueur::up()
 
 void Joueur::down()
 {
-	cout << "bas" << endl;
 
 	m_position_in_the_grid.y++;
 	m_orientation = DOWN;
@@ -129,7 +126,6 @@ void Joueur::down()
 
 void Joueur::right()
 {
-	cout << "droite" << endl;
 
 	m_position_in_the_grid.x++;
 	m_orientation = RIGHT;
@@ -188,12 +184,39 @@ bool Joueur::isRunning()
 	return m_anim_running;
 }
 
-void Joueur::init()
+void Joueur::_left_()
 {
 	m_walking_compt = 0;
+	m_orientation = LEFT;
 	m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
 
 }
+
+void Joueur::_up_()
+{
+	m_walking_compt = 0;
+	m_orientation = UP;
+	m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
+
+}
+
+void Joueur::_down_()
+{
+	m_walking_compt = 0;
+	m_orientation = DOWN;
+	m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
+
+}
+
+void Joueur::_right_()
+{
+	m_walking_compt = 0;
+	m_orientation = RIGHT;
+	m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
+
+}
+
+
 
 void Joueur::draw(sf::RenderTarget & target, sf::RenderStates states) const
 {
