@@ -5,7 +5,7 @@ using namespace sf;
 using namespace std;
 
 Joueur::Joueur(string pseudo, int pvmax, int mana, int armure, int force) : Entite(pseudo, pvmax, mana, armure, force), nb_objet_max(30), nb_equipement_max(6), nb_competence_max(5), m_pseudo(pseudo)
-, m_walking_compt(0), m_orientation(DOWN),m_animated_sprite(seconds(.2f),true,false), m_anim_running(false), m_running_cmpt(0){
+, m_walking_compt(0), m_orientation(DOWN),m_animated_sprite(seconds(.9f),true,false), m_anim_running(false), m_running_cmpt(0){
 	m_inventaire = new Objet[nb_objet_max];
 	m_equipement = new Objet[nb_equipement_max];
 	RempirCompetence();
@@ -99,7 +99,7 @@ void Joueur::left()
 	m_orientation = LEFT;
 
 	m_current_anim = &m_animations[m_orientation];
-	m_animated_sprite.play(*m_current_anim);
+
 	m_anim_running = true;
 	m_running_cmpt = 0;
 }
@@ -109,7 +109,7 @@ void Joueur::up()
 	m_orientation = UP;
 
 	m_current_anim = &m_animations[m_orientation];
-	m_animated_sprite.play(*m_current_anim);
+
 	m_anim_running = true;
 	m_running_cmpt = 0;
 
@@ -120,7 +120,7 @@ void Joueur::down()
 	m_orientation = DOWN;
 
 	m_current_anim = &m_animations[m_orientation];
-	m_animated_sprite.play(*m_current_anim);
+
 	m_anim_running = true;
 	m_running_cmpt = 0;
 
@@ -130,7 +130,6 @@ void Joueur::right()
 {
 	m_orientation = RIGHT;
 	m_current_anim = &m_animations[m_orientation];
-	m_animated_sprite.play(*m_current_anim);
 	m_anim_running = true;
 	m_running_cmpt = 0;
 
@@ -155,11 +154,11 @@ void Joueur::continueAnim(Time frame)
 	}
 	
 
-	m_animated_sprite.update(frame);
+
 
 	if (m_running_cmpt >= 9)
 	{
-		m_animated_sprite.stop();
+		
 		m_anim_running = false;
 		m_running_cmpt = 0;
 		return;
