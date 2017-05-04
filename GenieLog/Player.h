@@ -16,7 +16,7 @@ class Joueur : public Entite, public sf::Drawable {
 public:
 
 	Joueur();
-	Joueur(std::string pseudo, int pvmax, int mana, int armure, int force);
+	Joueur(std::string pseudo,std::string classe, int pvmax, int mana, int armure, int force);
 
 	~Joueur();
 	Competence * choisir_competence(int i_comp);
