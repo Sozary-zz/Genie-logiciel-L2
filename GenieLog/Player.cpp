@@ -78,6 +78,8 @@ void Joueur::left()
 	m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
 	m_anim_running = true;
 	m_walking_compt = 0;
+	m_next_anim.restart();
+
 }
 
 void Joueur::up()
@@ -86,6 +88,7 @@ void Joueur::up()
 	m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
 	m_anim_running = true;
 	m_walking_compt = 0;
+	m_next_anim.restart();
 
 }
 
@@ -95,6 +98,7 @@ void Joueur::down()
 	m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
 	m_anim_running = true;
 	m_walking_compt = 0;
+	m_next_anim.restart();
 
 }
 
@@ -104,42 +108,47 @@ void Joueur::right()
 	m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
 	m_anim_running = true;
 	m_walking_compt = 0;
+	m_next_anim.restart();
 
 }
 
 void Joueur::continueAnim(Time frame)
 {
-	Vector2f res;
-	switch (m_orientation)
-	{
-	case UP:
-		res = { 0,-m_speed / 9.f };
-		break;
-	case DOWN:
-		res = { 0,m_speed / 9.f };
-		break;
-	case LEFT:
-		res = { -m_speed / 9.f,0 };
-		break;
-	case RIGHT:
-		res = { m_speed / 9.f ,0 };
-		break;
-	}
+	if (m_next_anim.getElapsedTime().asSeconds() >= TIME_ACTION / 9.f) {
+		Vector2f res;
+		switch (m_orientation)
+		{
+		case UP:
+			res = { 0,-m_speed / 9.f };
+			break;
+		case DOWN:
+			res = { 0,m_speed / 9.f };
+			break;
+		case LEFT:
+			res = { -m_speed / 9.f,0 };
+			break;
+		case RIGHT:
+			res = { m_speed / 9.f ,0 };
+			break;
+		}
 
-	m_sprite.move(res);
-	m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
-
-
-	if (m_walking_compt >= 9)
-	{
-
-		m_anim_running = false;
-		m_walking_compt = 0;
+		m_sprite.move(res);
 		m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
-		return;
-	}
 
-	m_walking_compt++;
+
+		if (m_walking_compt >= 9)
+		{
+
+			m_anim_running = false;
+			m_walking_compt = 0;
+			m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
+			return;
+		}
+
+		m_walking_compt++;
+		m_next_anim.restart();
+	}
+	
 }
 
 bool Joueur::isRunning()

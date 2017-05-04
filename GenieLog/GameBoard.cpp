@@ -135,8 +135,10 @@ void GameBoard::eventLoop()
 			}
 		}
 	}
-	else
-		m_player->continueAnim(frame_time);
+	else	
+			m_player->continueAnim(frame_time);
+		
+			
 	
 	
 

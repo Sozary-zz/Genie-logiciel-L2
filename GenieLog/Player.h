@@ -5,6 +5,7 @@
 #include "AnimatedSprite.hpp"
 #include "Entity.h"
 #define TILE_SIZE 64.f
+#define TIME_ACTION .5f
 
 enum DIRECTION {
 	UP, DOWN, LEFT, RIGHT
@@ -57,5 +58,6 @@ private:
 	DIRECTION m_orientation;
 
 	bool m_anim_running;
+	sf::Clock m_next_anim;
 
 };
