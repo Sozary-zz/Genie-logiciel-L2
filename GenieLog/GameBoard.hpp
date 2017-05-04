@@ -16,6 +16,7 @@ struct Sample {
 	void load(std::string path) {
 		sample_buffer.loadFromFile(path);
 		sample.setBuffer(sample_buffer);
+
 	}
 	void run() {
 		running = true;
