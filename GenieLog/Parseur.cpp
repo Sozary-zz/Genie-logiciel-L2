@@ -132,8 +132,8 @@ Joueur * ChargerJoueur(string psuedo,string nomclasse){
 				fichier.close();
 
 				if(classe != "" && hp != "" && mana != "" && force != "" && comp1 != "" && comp2 != "" && comp3 != "" && comp4 != ""){
-					return new Personnage(pseudo,classe,stoi(hp),stoi(mana),stoi(armure),stoi(force),stoi(comp1),stoi(comp2),stoi(comp3),stoi(comp4))
-				}
+					return new Personnage(pseudo,classe,stoi(hp),stoi(mana),stoi(armure),stoi(force),stoi(comp1),stoi(comp2),stoi(comp3),stoi(comp4));
+				}	
 				else{
 					cout << "La ligne du fichier de chargemnet concernant le Personnage de la classe " << nomclasse << " est incomplet !" << endl;
 					cout << "Impossible de charger le Personnage" << endl;
@@ -142,7 +142,7 @@ Joueur * ChargerJoueur(string psuedo,string nomclasse){
 			}
 		}
 		fichier.close();
-		cout << "Le Personnage de la classe " << nomclasse << " n'est pas renseignée dans le fichier " << DATASAVEPLAYER << endl;
+		cout << "Le Personnage de la classe " << nomclasse << " n'est pas renseignée dans le fichier " << DATASAVEPLAYER << endl
 		return NULL;
 	}
 	else{
