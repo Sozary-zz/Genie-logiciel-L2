@@ -69,5 +69,6 @@ private:
 	int fade;
 
 	Joueur *m_player;
+
 };
 

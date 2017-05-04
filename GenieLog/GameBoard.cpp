@@ -72,7 +72,7 @@ GameBoard::GameBoard(Game * game)
 
 	m_player->adjustPos(Vector2i{ 100 + available_pos.x*(int)(m_map->tiles.getScale().x * 16) ,75 + available_pos.y*(int)(m_map->tiles.getScale().y * 16) },
 		Vector2f{ (m_map->tiles.getScale().x * 16) / TILE_SIZE  ,(m_map->tiles.getScale().y * 16) / TILE_SIZE },
-		(m_map->tiles.getScale().x * 16)/5.f);
+		(m_map->tiles.getScale().x * 16)/20.f);
 
 
 }
@@ -86,6 +86,8 @@ void GameBoard::draw(const float delta_time)
 
 void GameBoard::update(const float delta_time)
 {
+
+	
 	/*	if (t_fight)
 			blink();*/
 }
@@ -93,7 +95,6 @@ void GameBoard::update(const float delta_time)
 void GameBoard::eventLoop()
 {
 	Event event;
-	bool key_pressed = false;
 
 	while (game->window.pollEvent(event))
 	{
@@ -107,7 +108,7 @@ void GameBoard::eventLoop()
 
 		case Event::KeyPressed:
 		{
-			key_pressed = true;
+		
 			if (event.key.code == Keyboard::A)
 			{
 				game->popState();

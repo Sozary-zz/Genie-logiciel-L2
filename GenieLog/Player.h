@@ -28,6 +28,8 @@ public:
 	void down();
 	void right();
 
+	void init();
+
 private:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 

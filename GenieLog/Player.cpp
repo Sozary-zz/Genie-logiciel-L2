@@ -126,6 +126,13 @@ void Joueur::right()
 	m_sprite.move(m_speed, 0);
 }
 
+void Joueur::init()
+{
+	m_walking_compt = 0;
+	m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
+
+}
+
 void Joueur::draw(sf::RenderTarget & target, sf::RenderStates states) const
 {
 	target.draw(m_sprite);
