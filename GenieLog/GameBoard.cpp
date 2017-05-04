@@ -70,8 +70,8 @@ GameBoard::GameBoard(Game * game)
 	t_fight = true;
 	t_already_started = false;
 
-	m_player->adjustPos(Vector2i{ 100 + available_pos.x*(int)(m_map->tiles.getScale().x * 16) + (int)(TILE_SIZE / 4.f),75 + available_pos.y*(int)(m_map->tiles.getScale().y * 16) },
-		Vector2f{(m_map->tiles.getScale().x * 16)/TILE_SIZE  ,(m_map->tiles.getScale().y * 16)/TILE_SIZE  });
+	m_player->adjustPos(Vector2i{ 100 + available_pos.x*(int)(m_map->tiles.getScale().x * 16) ,75 + available_pos.y*(int)(m_map->tiles.getScale().y * 16) },
+		Vector2f{ (m_map->tiles.getScale().x * 16) / TILE_SIZE  ,(m_map->tiles.getScale().y * 16) / TILE_SIZE });
 
 
 }
