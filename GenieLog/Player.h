@@ -2,9 +2,13 @@
 #include <SFML\Graphics.hpp>
 #include "GameState.hpp"
 #include "Entity.h"
+#define TILE_SIZE 64.f
 
+enum DIRECTION {
+	UP, DOWN, LEFT, RIGHT
+};
 class Joueur : public Entite, public sf::Drawable {
-	
+
 public:
 
 	Joueur();
@@ -15,7 +19,7 @@ public:
 
 	std::vector<std::string> recupNomCompetences() const;
 
-	
+
 	void RempirCompetence();
 
 
@@ -28,9 +32,11 @@ private:
 	Objet* m_equipement;
 	const int nb_objet_max;
 	const int nb_competence_max;
-	const int nb_equipement_max;	
+	const int nb_equipement_max;
 
 	// SFML PART
 	sf::Sprite m_sprite;
+	int *m_walking_positions;
+	int m_walking_compt;
 
 };

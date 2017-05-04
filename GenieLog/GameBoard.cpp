@@ -70,7 +70,7 @@ void GameBoard::draw(const float delta_time)
 {
 	game->window.setView(m_view);
 	game->window.draw(m_map->tiles);
-	//game->window.draw(*m_player);
+	game->window.draw(*m_player);
 }
 
 void GameBoard::update(const float delta_time)
