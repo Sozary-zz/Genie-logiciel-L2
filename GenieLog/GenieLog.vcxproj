@@ -71,8 +71,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ActionButton.cpp" />
-    <ClCompile Include="AnimatedSprite.cpp" />
-    <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Combat.cpp" />
     <ClCompile Include="Competence.cpp" />
     <ClCompile Include="EditList.cpp" />
@@ -101,8 +99,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ActionButton.h" />
-    <ClInclude Include="AnimatedSprite.hpp" />
-    <ClInclude Include="Animation.hpp" />
     <ClInclude Include="Combat.h" />
     <ClInclude Include="Competence.h" />
     <ClInclude Include="EditList.h" />

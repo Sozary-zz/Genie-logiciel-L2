@@ -75,8 +75,8 @@ void GameBoard::draw(const float delta_time)
 
 void GameBoard::update(const float delta_time)
 {
-	if (t_fight)
-		blink();
+/*	if (t_fight)
+		blink();*/
 }
 
 void GameBoard::eventLoop()

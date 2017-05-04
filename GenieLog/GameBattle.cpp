@@ -201,6 +201,7 @@ bool GameBattle::endBattle()
 	if (changed)
 	{
 		game->popState();
+		m_base_battle_sound.stop();
 		return false;
 	}
 
