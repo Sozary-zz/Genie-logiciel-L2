@@ -1,0 +1,25 @@
+/* n° Objet / Place dansl'equipement ( 0:Tete 1:Corps 2:Main droite 3:Main gauche 4:Jambe 5:Pieds 6:Consommable ) / Nom de L'objet / PV Ajout / Mana Ajout / Armure Ajout / Force Ajout / Monstre sur lesquels ont peut les dropper */
+
+1/2/Epée en bois/0/0/0/10/0
+2/3/Bouclier en bois/5/0/5/0/0
+3/0/Coiffe de l'apprenti/0/5/0/0/0
+4/1/Armure en peau/5/0/5/0/0
+5/4/Jambières de cuir/5/0/5/0/0
+6/5/Sandales/0/0/5/0/0
+7/6/Potion de Soin/25/0/0/0/1
+8/6/Potion de Mana/25/0/0/0/1
+9/0/Casque de Chevalier/10/0/10/0/
+10/1/Armure du Chevalier/15/5/15/5/1
+11/2/Excalibur/0/15/0/30/2
+12/3/A.E.G.I.S/15/15/0/15/2
+13/4/Cuissière du Chevalier/15/0/15/0/1
+14/5/Bottes du Chevalier/15/0/15/15/1
+15/0/Couronne Magique/15/15/0/0/1
+16/1/Armure Druidique/10/25/20/0/2
+17/2/Baton du Mage/0/30/0/5/2
+18/3/Bouclier en Acier/15/0/20/5/1
+19/4/Jambière lourde/10/0/30/0/1
+20/6/Grande potion de vie/50/0/0/0/2
+21/6/Grande potion de mana/50/0/0/0/2
+22/6/Petite potion de Soin/15/0/0/0/0
+23/6/Petite potion de Mana/15/0/0/0/0
