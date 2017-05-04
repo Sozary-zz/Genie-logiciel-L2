@@ -8,6 +8,7 @@
 #define DATASAVEPLAYER "data\\loading\\Player.txt"
 
 Competence * ChargerCompetence(int numero);
+Joueur * ChargerJoueur(std::string psuedo, std::string nomclasse);
 
 
 #endif
