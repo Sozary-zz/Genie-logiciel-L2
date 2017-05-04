@@ -93,9 +93,10 @@ void Joueur::stop_running()
 	m_is_walking = false;
 }
 
-Joueur::Joueur(string pseudo, int pvmax, int mana, int armure, int force,int comp1,int comp2,int comp3,int comp4) : Entite(pseudo, pvmax, mana, armure, force), nb_objet_max(30), nb_equipement_max(6), nb_competence_max(5), m_pseudo(pseudo)
+Joueur::Joueur(string pseudo,string classe, int pvmax, int mana, int armure, int force,int comp1,int comp2,int comp3,int comp4) : Entite(classe, pvmax, mana, armure, force), nb_objet_max(30), nb_equipement_max(6), nb_competence_max(5), m_pseudo(pseudo)
 {
 	// constructeur changé avec plusieurs int pour les numero de compétences
+	m_pseudo = pseudo;
 	m_inventaire = new Objet[nb_objet_max];
 	m_equipement = new Objet[nb_equipement_max];
 	//j'ai chargé ici les compétences avec le parseur

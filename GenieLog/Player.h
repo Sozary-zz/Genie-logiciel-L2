@@ -19,7 +19,7 @@ class Joueur : public Entite, public sf::Drawable, public sf::Transformable {
 public:
 
 	Joueur();
-	Joueur(std::string pseudo, int pvmax, int mana, int armure, int force,int comp1,int comp2,int comp3,int comp4);
+	Joueur(std::string classe,std::string pseudo, int pvmax, int mana, int armure, int force,int comp1,int comp2,int comp3,int comp4);
 
 	~Joueur();
 	Competence * choisir_competence(int i_comp);
