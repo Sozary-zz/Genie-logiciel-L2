@@ -93,22 +93,20 @@ void Joueur::stop_running()
 	m_is_walking = false;
 }
 
-Joueur::Joueur(string pseudo, int pvmax, int mana, int armure, int force) : Entite(pseudo, pvmax, mana, armure, force), nb_objet_max(30), nb_equipement_max(6), nb_competence_max(5), m_pseudo(pseudo)
+Joueur::Joueur(string pseudo, int pvmax, int mana, int armure, int force,int comp1,int comp2,int comp3,int comp4) : Entite(pseudo, pvmax, mana, armure, force), nb_objet_max(30), nb_equipement_max(6), nb_competence_max(5), m_pseudo(pseudo)
 {
+	// constructeur changé avec plusieurs int pour les numero de compétences
 	m_inventaire = new Objet[nb_objet_max];
 	m_equipement = new Objet[nb_equipement_max];
-	RempirCompetence();
+	//j'ai chargé ici les compétences avec le parseur
+	tableau_competence.push_back(ChargerCompetence(comp1));
+	tableau_competence.push_back(ChargerCompetence(comp2));
+	tableau_competence.push_back(ChargerCompetence(comp3));
+	tableau_competence.push_back(ChargerCompetence(comp4));
+	
 }
 
 
-//Fonction TEST
-void Joueur::RempirCompetence()
-{
-	tableau_competence.push_back(new Competence("griffe", 10, 1, 5, 0));
-	tableau_competence.push_back(new Competence("Morsure", 25, 2, 10, 1));
-	tableau_competence.push_back(new Competence("Pet", 1, 0, 25, 0));
-	tableau_competence.push_back(new Competence("Mignon Sourire", 0, 0, 2, 0));
-}
 
 void Joueur::draw(sf::RenderTarget & target, sf::RenderStates states) const
 {
