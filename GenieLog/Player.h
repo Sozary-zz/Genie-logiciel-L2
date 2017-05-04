@@ -56,11 +56,6 @@ private:
 
 	DIRECTION m_orientation;
 
-	std::vector<Animation> m_animations;
-	Animation* m_current_anim;
-	AnimatedSprite m_animated_sprite;
-
 	bool m_anim_running;
-	int m_running_cmpt;
 
 };
