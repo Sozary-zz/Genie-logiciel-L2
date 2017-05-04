@@ -4,8 +4,9 @@
 #include "GameState.hpp"
 #include "AnimatedSprite.hpp"
 #include "Entity.h"
+
 #define TILE_SIZE 64.f
-#define TIME_ACTION .5f
+#define TIME_ACTION .2f
 
 enum DIRECTION {
 	UP, DOWN, LEFT, RIGHT
