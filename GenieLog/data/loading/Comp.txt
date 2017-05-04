@@ -1,0 +1,21 @@
+/* n° Competence / Nom / Degats / Ratio / Temps d'incant / Cout mana */
+
+1/Attaque/20/5/20/0
+2/Poing du dragon/35/15/30/20
+3/Stalactite/30/5/25/15
+4/Boule de feu/50/5/40/25
+5/Courroux royal/35/15/30/15
+6/Lance sacrée/30/20/20/20
+7/Le bras armé du seigneur/40/20/45/30
+8/Rage defferlante/20/20/20/20
+9/Berzerk/15/40/30/5
+10/Charge/20/10/15/0
+11/Fleche enchanté/40/5/30/20
+12/Tir precis/70/5/45/0
+13/Tir rapide/10/5/10/0
+14/Jet de lance/20/25/30/0
+15/Morsure/30/10/15/0
+16/Rage interieur/20/20/20/20
+17/Colere Tribal/15/30/40/0
+18/Laceration/35/5/30/0
+19/Croc/20/25/25/0
