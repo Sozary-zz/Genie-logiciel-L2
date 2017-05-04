@@ -5,7 +5,7 @@ using namespace sf;
 using namespace std;
 
 Joueur::Joueur(string pseudo, int pvmax, int mana, int armure, int force) : Entite(pseudo, pvmax, mana, armure, force), nb_objet_max(30), nb_equipement_max(6), nb_competence_max(5), m_pseudo(pseudo)
-, m_walking_compt(0), m_orientation(DOWN), m_anim_running(false){
+, m_walking_compt(0), m_orientation(DOWN), m_anim_running(false) {
 	m_inventaire = new Objet[nb_objet_max];
 	m_equipement = new Objet[nb_equipement_max];
 	RempirCompetence();
@@ -109,29 +109,30 @@ void Joueur::right()
 
 void Joueur::continueAnim(Time frame)
 {
+	Vector2f res;
 	switch (m_orientation)
 	{
 	case UP:
-		m_sprite.move(0,-m_speed / 9.f);
+		res = { 0,-m_speed / 9.f };
 		break;
 	case DOWN:
-		m_sprite.move(0,m_speed / 9.f);
+		res = { 0,m_speed / 9.f };
 		break;
 	case LEFT:
-		m_sprite.move(-m_speed / 9.f, 0);
+		res = { -m_speed / 9.f,0 };
 		break;
 	case RIGHT:
-		m_sprite.move(m_speed / 9.f, 0);
+		res = { m_speed / 9.f ,0 };
 		break;
 	}
+
+	m_sprite.move(res);
 	m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
-
-
 
 
 	if (m_walking_compt >= 9)
 	{
-		
+
 		m_anim_running = false;
 		m_walking_compt = 0;
 		m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
