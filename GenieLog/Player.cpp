@@ -65,11 +65,11 @@ void Joueur::RempirCompetence()
 	tableau_competence.push_back(new Competence("Mignon Sourire", 0, 0, 2, 0));
 }
 
-void Joueur::adjustPos(Vector2i position, Vector2f scale, float speed)
+void Joueur::adjustPos(Vector2i position, Vector2f scale, Vector2f speed)
 {
 	m_sprite.setPosition((Vector2f)position);
 	m_sprite.setScale(scale);
-	m_speed = speed;
+	m_speed = speed / 9.f;
 }
 
 void Joueur::left()
@@ -119,22 +119,21 @@ void Joueur::continueAnim(Time frame)
 		switch (m_orientation)
 		{
 		case UP:
-			res = { 0,-m_speed / 9.f };
+			res = { 0,-m_speed.y };
 			break;
 		case DOWN:
-			res = { 0,m_speed / 9.f };
+			res = { 0,m_speed.y };
 			break;
 		case LEFT:
-			res = { -m_speed / 9.f,0 };
+			res = { -m_speed.x ,0 };
 			break;
 		case RIGHT:
-			res = { m_speed / 9.f ,0 };
+			res = { m_speed.x ,0 };
 			break;
 		}
 
 		m_sprite.move(res);
 		m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
-
 
 		if (m_walking_compt >= 9)
 		{
@@ -148,7 +147,7 @@ void Joueur::continueAnim(Time frame)
 		m_walking_compt++;
 		m_next_anim.restart();
 	}
-	
+
 }
 
 bool Joueur::isRunning()

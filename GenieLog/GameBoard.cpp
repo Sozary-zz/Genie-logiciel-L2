@@ -72,7 +72,8 @@ GameBoard::GameBoard(Game * game)
 
 	m_player->adjustPos(Vector2i{ 100 + available_pos.x*(int)(m_map->tiles.getScale().x * 16) ,75 + available_pos.y*(int)(m_map->tiles.getScale().y * 16) },
 		Vector2f{ (m_map->tiles.getScale().x * 16) / TILE_SIZE  ,(m_map->tiles.getScale().y * 16) / TILE_SIZE },
-		(m_map->tiles.getScale().x * 16));
+		Vector2f{ m_map->tiles.getScale().x * 16, m_map->tiles.getScale().y * 16
+	});
 	m_movement_clock.restart();
 
 }
@@ -87,7 +88,7 @@ void GameBoard::draw(const float delta_time)
 void GameBoard::update(const float delta_time)
 {
 
-	
+
 	/*	if (t_fight)
 			blink();*/
 }
@@ -135,12 +136,12 @@ void GameBoard::eventLoop()
 			}
 		}
 	}
-	else	
-			m_player->continueAnim(frame_time);
-		
-			
-	
-	
+	else
+		m_player->continueAnim(frame_time);
+
+
+
+
 
 }
 

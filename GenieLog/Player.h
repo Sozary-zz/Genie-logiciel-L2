@@ -24,7 +24,7 @@ public:
 
 
 	void RempirCompetence();
-	void adjustPos(sf::Vector2i position, sf::Vector2f scale, float speed);
+	void adjustPos(sf::Vector2i position, sf::Vector2f scale, sf::Vector2f speed);
 
 	void left();
 	void up();
@@ -53,7 +53,7 @@ private:
 	int *m_walking_positions;
 	int m_walking_compt;
 
-	float m_speed;
+	sf::Vector2f m_speed;
 
 	DIRECTION m_orientation;
 
