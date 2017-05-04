@@ -18,7 +18,6 @@ Competence::Competence(string nom,int damages,int ratio,int tempsincantation,int
 
 Competence::~Competence(){
 
-
 }
 
 string Competence::getNom(){
@@ -39,4 +38,5 @@ int Competence::getTempsIncantation(){
 
 int Competence::getCoutMana(){
 	return m_coutmana;
-}	
+}
+
