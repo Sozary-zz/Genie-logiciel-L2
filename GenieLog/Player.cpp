@@ -134,6 +134,7 @@ void Joueur::continueAnim(Time frame)
 		
 		m_anim_running = false;
 		m_walking_compt = 0;
+		m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
 		return;
 	}
 
