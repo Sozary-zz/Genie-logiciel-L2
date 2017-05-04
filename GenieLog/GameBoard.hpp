@@ -69,6 +69,7 @@ private:
 	int fade;
 
 	Joueur *m_player;
+	sf::Clock m_movement_clock;
 
 };
 

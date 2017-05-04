@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML\Graphics.hpp>
+#include <vector>
 #include "GameState.hpp"
+#include "AnimatedSprite.hpp"
 #include "Entity.h"
 #define TILE_SIZE 64.f
 
@@ -23,10 +25,10 @@ public:
 	void RempirCompetence();
 	void adjustPos(sf::Vector2i position, sf::Vector2f scale, float speed);
 
-	void left();
-	void up();
-	void down();
-	void right();
+	void left(sf::Time frame);
+	void up(sf::Time frame);
+	void down(sf::Time frame);
+	void right(sf::Time frame);
 
 	void init();
 
@@ -49,5 +51,9 @@ private:
 	float m_speed;
 
 	DIRECTION m_orientation;
+
+	std::vector<Animation> m_animations;
+	Animation* m_current_anim;
+	AnimatedSprite m_animated_sprite;
 
 };

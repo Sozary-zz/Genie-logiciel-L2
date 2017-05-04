@@ -5,7 +5,7 @@ using namespace sf;
 using namespace std;
 
 Joueur::Joueur(string pseudo, int pvmax, int mana, int armure, int force) : Entite(pseudo, pvmax, mana, armure, force), nb_objet_max(30), nb_equipement_max(6), nb_competence_max(5), m_pseudo(pseudo)
-, m_walking_compt(0), m_orientation(DOWN){
+, m_walking_compt(0), m_orientation(DOWN),m_animated_sprite(seconds(.2f),true,false) {
 	m_inventaire = new Objet[nb_objet_max];
 	m_equipement = new Objet[nb_equipement_max];
 	RempirCompetence();
@@ -18,8 +18,28 @@ Joueur::Joueur(string pseudo, int pvmax, int mana, int armure, int force) : Enti
 	m_walking_positions = new int[4]
 	{ 8,10,9,11 };
 
-	m_sprite.setTexture(GameState::texture_manager->getElement("character_sprite"));
-	m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
+
+	//m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
+
+	Animation walking_down, walking_up, walking_right, walking_left;
+	walking_down.setSpriteSheet(GameState::texture_manager->getElement("character_sprite"));
+	walking_right.setSpriteSheet(GameState::texture_manager->getElement("character_sprite"));
+	walking_up.setSpriteSheet(GameState::texture_manager->getElement("character_sprite"));
+	walking_left.setSpriteSheet(GameState::texture_manager->getElement("character_sprite"));
+
+	for (int i = 0; i < 9; ++i)
+	{
+		walking_down.addFrame(IntRect(i * 64, m_walking_positions[DOWN] * 64, 64, 64));
+		walking_right.addFrame(IntRect(i * 64, m_walking_positions[RIGHT] * 64, 64, 64));
+		walking_up.addFrame(IntRect(i * 64, m_walking_positions[UP] * 64, 64, 64));
+		walking_left.addFrame(IntRect(i * 64, m_walking_positions[LEFT] * 64, 64, 64));
+	}
+	m_animations.push_back(walking_up);
+	m_animations.push_back(walking_down);
+	m_animations.push_back(walking_left);
+	m_animations.push_back(walking_right);
+
+	m_current_anim = &m_animations[m_orientation];
 
 
 }
@@ -27,7 +47,7 @@ Joueur::Joueur(string pseudo, int pvmax, int mana, int armure, int force) : Enti
 Joueur::Joueur() :nb_objet_max(30), nb_equipement_max(6), nb_competence_max(5),
 m_walking_compt(0)
 {
-	
+
 }
 
 Joueur::~Joueur()
@@ -69,61 +89,48 @@ void Joueur::RempirCompetence()
 
 void Joueur::adjustPos(Vector2i position, Vector2f scale, float speed)
 {
-	m_sprite.setPosition((Vector2f)position);
-	m_sprite.setScale(scale);
+	m_animated_sprite.setPosition((Vector2f)position);
+	m_animated_sprite.setScale(scale);
 	m_speed = speed;
 }
 
-void Joueur::left()
+void Joueur::left(Time frame)
 {
-	if (m_orientation != LEFT)
-	{
-		m_walking_compt = 0;
-		m_orientation = LEFT;
-	}
-	else
-		m_walking_compt = (m_walking_compt + 1 >= 9) ? 0 : m_walking_compt + 1;
-	m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
+	m_animated_sprite.play(*m_current_anim);
+
+	m_current_anim = &m_animations[LEFT];
 	m_sprite.move(-m_speed, 0);
+	m_animated_sprite.stop();
+	m_animated_sprite.update(frame);
 }
 
-void Joueur::up()
+void Joueur::up(Time frame)
 {
-	if (m_orientation != UP)
-	{
-		m_walking_compt = 0;
-		m_orientation = UP;
-	}
-	else
-		m_walking_compt = (m_walking_compt + 1 >= 9) ? 0 : m_walking_compt + 1;
-	m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
+	m_animated_sprite.play(*m_current_anim);
+
+	m_current_anim = &m_animations[UP];
 	m_sprite.move(0, -m_speed);
+	m_animated_sprite.stop();
+	m_animated_sprite.update(frame);
 }
 
-void Joueur::down()
+void Joueur::down(Time frame)
 {
-	if (m_orientation != DOWN)
-	{
-		m_walking_compt = 0;
-		m_orientation = DOWN;
-	}
-	else
-		m_walking_compt = (m_walking_compt + 1 >= 9) ? 0 : m_walking_compt + 1;
-	m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
+	m_animated_sprite.play(*m_current_anim);
+
+	m_current_anim = &m_animations[DOWN];
 	m_sprite.move(0, m_speed);
+	m_animated_sprite.stop();
+	m_animated_sprite.update(frame);
 }
 
-void Joueur::right()
+void Joueur::right(Time frame)
 {
-	if (m_orientation != RIGHT)
-	{
-		m_walking_compt = 0;
-		m_orientation = RIGHT;
-	}
-	else
-		m_walking_compt = (m_walking_compt + 1 >= 9) ? 0 : m_walking_compt + 1;
-	m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
+	m_current_anim = &m_animations[RIGHT];
+	m_sprite.move(0, m_speed); 
 	m_sprite.move(m_speed, 0);
+	m_animated_sprite.stop();
+	m_animated_sprite.update(frame);
 }
 
 void Joueur::init()
@@ -135,5 +142,5 @@ void Joueur::init()
 
 void Joueur::draw(sf::RenderTarget & target, sf::RenderStates states) const
 {
-	target.draw(m_sprite);
+	target.draw(m_animated_sprite);
 }
