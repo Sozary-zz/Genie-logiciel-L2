@@ -85,6 +85,7 @@
     <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameMenu.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Objet.cpp" />
     <ClCompile Include="Parseur.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -117,6 +118,7 @@
     <ClInclude Include="Game.hpp" />
     <ClInclude Include="GameMenu.hpp" />
     <ClInclude Include="GameState.hpp" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="Objet.h" />
     <ClInclude Include="Parseur.hpp" />
     <ClInclude Include="Player.h" />

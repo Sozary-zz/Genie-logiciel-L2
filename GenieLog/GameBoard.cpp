@@ -26,8 +26,6 @@ GameBoard::GameBoard(Game * game)
 	m_view.setSize(x);
 	m_view.setCenter(x*.5f);
 
-	//	m_background.setScale(x.x / m_background.getTexture()->getSize().x, x.y / m_background.getTexture()->getSize().y);
-
 	m_map = new Map;
 
 	random_device rd;
@@ -47,9 +45,10 @@ GameBoard::GameBoard(Game * game)
 			for (int y = 0; y < DEFAULT_HEIGHT; ++y) {
 				double n = 10 * pn.noise(x, y, 2.6);
 
-			/*	if (n < 4 && dis(gen) < 5000)
-					level[x + y*DEFAULT_HEIGHT] = (int)TILE_TYPE::BAD_GRASS;
-				else */if (n < 4.5)
+				/*	if (n < 4 && dis(gen) < 5000)
+						level[x + y*DEFAULT_HEIGHT] = (int)TILE_TYPE::BAD_GRASS;
+					else */
+				if (n < 4.5)
 					level[x + y*DEFAULT_HEIGHT] = (int)TILE_TYPE::FLOWER;
 				else if (n < 5.5)
 				{
@@ -128,7 +127,7 @@ void GameBoard::eventLoop()
 				}
 				else	if (event.key.code == Keyboard::Escape)
 					game->window.close();
-				else if (event.key.code == Keyboard::Left ) {
+				else if (event.key.code == Keyboard::Left) {
 					if (m_map->datas[m_player->positionInGrid().x - 1 + m_player->positionInGrid().y*DEFAULT_HEIGHT] != TILE_TYPE::BUSH
 						&&  m_map->datas[m_player->positionInGrid().x - 1 + m_player->positionInGrid().y*DEFAULT_HEIGHT] != TILE_TYPE::BAD_GRASS && m_player->positionInGrid().x > 0)
 					{
@@ -157,12 +156,12 @@ void GameBoard::eventLoop()
 						m_player->_right_();
 						if (!m_collision.running)
 							m_collision.run();
-						
+
 
 					}
 
 				}
-				else if (event.key.code == Keyboard::Up ) {
+				else if (event.key.code == Keyboard::Up) {
 					if (m_map->datas[m_player->positionInGrid().x + (m_player->positionInGrid().y - 1)*DEFAULT_HEIGHT] != TILE_TYPE::BUSH
 						&&  m_map->datas[m_player->positionInGrid().x + (m_player->positionInGrid().y - 1)*DEFAULT_HEIGHT] != TILE_TYPE::BAD_GRASS && m_player->positionInGrid().y > 0)
 					{
@@ -178,7 +177,7 @@ void GameBoard::eventLoop()
 					}
 
 				}
-				else if (event.key.code == Keyboard::Down ) {
+				else if (event.key.code == Keyboard::Down) {
 					if (m_player->positionInGrid().y < DEFAULT_HEIGHT - 1 && m_map->datas[m_player->positionInGrid().x + (m_player->positionInGrid().y + 1)*DEFAULT_HEIGHT] != TILE_TYPE::BUSH
 						&&  m_map->datas[m_player->positionInGrid().x + (m_player->positionInGrid().y + 1)*DEFAULT_HEIGHT] != TILE_TYPE::BAD_GRASS)
 					{
@@ -192,7 +191,7 @@ void GameBoard::eventLoop()
 						if (!m_collision.running)
 							m_collision.run();
 
-		
+
 					}
 
 				}
