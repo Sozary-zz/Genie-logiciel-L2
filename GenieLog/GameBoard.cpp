@@ -70,7 +70,7 @@ GameBoard::GameBoard(Game * game)
 	t_fight = true;
 	t_already_started = false;
 
-	m_player->adjustPos(Vector2i{ 100 + available_pos.x*(int)(m_map->tiles.getScale().x * 16) ,75 + available_pos.y*(int)(m_map->tiles.getScale().y * 16) },
+	m_player->adjustPos(available_pos, Vector2i{ 100 + available_pos.x*(int)(m_map->tiles.getScale().x * 16) ,75 + available_pos.y*(int)(m_map->tiles.getScale().y * 16) },
 		Vector2f{ (m_map->tiles.getScale().x * 16) / TILE_SIZE  ,(m_map->tiles.getScale().y * 16) / TILE_SIZE },
 		Vector2f{ m_map->tiles.getScale().x * 16, m_map->tiles.getScale().y * 16
 	});
@@ -95,6 +95,7 @@ void GameBoard::update(const float delta_time)
 
 void GameBoard::eventLoop()
 {
+
 	Event event;
 	Time frame_time = m_movement_clock.restart();
 	if (!m_player->isRunning())
@@ -117,18 +118,45 @@ void GameBoard::eventLoop()
 					game->popState();
 					return;
 				}
-				else	if (event.key.code == Keyboard::Escape) game->window.close();
-				else if (event.key.code == Keyboard::Left) {
-					m_player->left();
+				else	if (event.key.code == Keyboard::Escape)
+					game->window.close();
+				else if (event.key.code == Keyboard::Left && m_map->datas[m_player->positionInGrid().x - 1 + m_player->positionInGrid().y*DEFAULT_HEIGHT] != TILE_TYPE::BUSH
+					&&  m_map->datas[m_player->positionInGrid().x - 1 + m_player->positionInGrid().y*DEFAULT_HEIGHT] != TILE_TYPE::BAD_GRASS) {
+					if (m_player->positionInGrid().x > 0)
+					{
+						m_player->left();
+						return;
+					}
+					else
+						;//song bonng, and change pos
 				}
 				else if (event.key.code == Keyboard::Right) {
-					m_player->right();
+					if (m_player->positionInGrid().x < DEFAULT_WIDTH - 1 && m_map->datas[m_player->positionInGrid().x + 1 + m_player->positionInGrid().y*DEFAULT_HEIGHT] != TILE_TYPE::BUSH
+						&&  m_map->datas[m_player->positionInGrid().x + 1 + m_player->positionInGrid().y*DEFAULT_HEIGHT] != TILE_TYPE::BAD_GRASS)
+					{
+						m_player->right();
+						return;
+					}
+
 				}
-				else if (event.key.code == Keyboard::Up) {
-					m_player->up();
+				else if (event.key.code == Keyboard::Up && m_map->datas[m_player->positionInGrid().x + (m_player->positionInGrid().y - 1)*DEFAULT_HEIGHT] != TILE_TYPE::BUSH
+					&&  m_map->datas[m_player->positionInGrid().x + (m_player->positionInGrid().y - 1)*DEFAULT_HEIGHT] != TILE_TYPE::BAD_GRASS) {
+					if (m_player->positionInGrid().y > 0)
+					{
+						m_player->up();
+						return;
+					}
+
 				}
-				else if (event.key.code == Keyboard::Down) {
-					m_player->down();
+				else if (event.key.code == Keyboard::Down && m_map->datas[m_player->positionInGrid().x + (m_player->positionInGrid().y + 1)*DEFAULT_HEIGHT] != TILE_TYPE::BUSH
+					&&  m_map->datas[m_player->positionInGrid().x + (m_player->positionInGrid().y + 1)*DEFAULT_HEIGHT] != TILE_TYPE::BAD_GRASS) {
+					if (m_player->positionInGrid().y < DEFAULT_HEIGHT - 1)
+					{
+						m_player->down();
+
+						return;
+					}
+
 				}
 				break;
 			}

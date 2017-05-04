@@ -5,7 +5,7 @@ using namespace sf;
 using namespace std;
 
 Joueur::Joueur(string pseudo, int pvmax, int mana, int armure, int force) : Entite(pseudo, pvmax, mana, armure, force), nb_objet_max(30), nb_equipement_max(6), nb_competence_max(5), m_pseudo(pseudo)
-, m_walking_compt(0), m_orientation(DOWN), m_anim_running(false) {
+, m_walking_compt(0), m_orientation(DOWN), m_anim_running(false), m_position_in_the_grid(0,0){
 	m_inventaire = new Objet[nb_objet_max];
 	m_equipement = new Objet[nb_equipement_max];
 	RempirCompetence();
@@ -32,6 +32,7 @@ Joueur::~Joueur()
 {
 	delete[] m_inventaire;
 	delete[] m_equipement;
+	delete[] m_walking_positions;
 }
 
 Competence * Joueur::choisir_competence(int i_comp)
@@ -65,8 +66,9 @@ void Joueur::RempirCompetence()
 	tableau_competence.push_back(new Competence("Mignon Sourire", 0, 0, 2, 0));
 }
 
-void Joueur::adjustPos(Vector2i position, Vector2f scale, Vector2f speed)
+void Joueur::adjustPos(Vector2i grid,Vector2i position, Vector2f scale, Vector2f speed)
 {
+	m_position_in_the_grid = grid;
 	m_sprite.setPosition((Vector2f)position);
 	m_sprite.setScale(scale);
 	m_speed = speed / 9.f;
@@ -74,6 +76,8 @@ void Joueur::adjustPos(Vector2i position, Vector2f scale, Vector2f speed)
 
 void Joueur::left()
 {
+	cout << "gauche" << endl;
+	m_position_in_the_grid.x--;
 	m_orientation = LEFT;
 	m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
 	m_anim_running = true;
@@ -84,6 +88,9 @@ void Joueur::left()
 
 void Joueur::up()
 {
+	cout << "haut" << endl;
+
+	m_position_in_the_grid.y--;
 	m_orientation = UP;
 	m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
 	m_anim_running = true;
@@ -94,6 +101,9 @@ void Joueur::up()
 
 void Joueur::down()
 {
+	cout << "bas" << endl;
+
+	m_position_in_the_grid.y++;
 	m_orientation = DOWN;
 	m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
 	m_anim_running = true;
@@ -104,6 +114,9 @@ void Joueur::down()
 
 void Joueur::right()
 {
+	cout << "droite" << endl;
+
+	m_position_in_the_grid.x++;
 	m_orientation = RIGHT;
 	m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
 	m_anim_running = true;
@@ -135,7 +148,7 @@ void Joueur::continueAnim(Time frame)
 		m_sprite.move(res);
 		m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
 
-		if (m_walking_compt >= 9)
+		if (m_walking_compt >= 8)
 		{
 
 			m_anim_running = false;
@@ -148,6 +161,11 @@ void Joueur::continueAnim(Time frame)
 		m_next_anim.restart();
 	}
 
+}
+
+sf::Vector2i Joueur::positionInGrid()
+{
+	return m_position_in_the_grid;
 }
 
 bool Joueur::isRunning()

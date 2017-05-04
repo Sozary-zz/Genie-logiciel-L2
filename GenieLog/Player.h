@@ -24,7 +24,7 @@ public:
 
 
 	void RempirCompetence();
-	void adjustPos(sf::Vector2i position, sf::Vector2f scale, sf::Vector2f speed);
+	void adjustPos(sf::Vector2i grid, sf::Vector2i position, sf::Vector2f scale, sf::Vector2f speed);
 
 	void left();
 	void up();
@@ -32,6 +32,8 @@ public:
 	void right();
 
 	void continueAnim(sf::Time frame);
+
+	sf::Vector2i positionInGrid();
 
 	bool isRunning();
 
@@ -59,5 +61,6 @@ private:
 
 	bool m_anim_running;
 	sf::Clock m_next_anim;
+	sf::Vector2i m_position_in_the_grid;
 
 };
