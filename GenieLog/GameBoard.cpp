@@ -11,7 +11,7 @@ GameBoard::GameBoard(Game * game)
 	m_base_battle_sound_buffer.loadFromFile("data\\songs\\009_Battle_Wild_Pok_mon_.ogg");
 	m_base_battle_sound.setBuffer(m_base_battle_sound_buffer);
 	m_base_battle_sound.setLoop(true);	m_base_battle_sound.setVolume(1);
-	m_player = new Joueur("Rayquaza", 100, 0, 5, 1);
+	m_player = new Joueur("Rayquaza","Player", 100, 0, 5, 1);
 	this->game = game;
 	auto x = (Vector2f)this->game->window.getSize();
 

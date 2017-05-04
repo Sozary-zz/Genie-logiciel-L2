@@ -66,7 +66,7 @@ Competence * ChargerCompetence(int numero) {
 	}
 }
 
-Joueur * ChargerJoueur(string psuedo, string nomclasse) {
+Joueur * ChargerJoueur(string pseudo, string nomclasse) {
 
 	ifstream fichier(DATASAVEPLAYER, ios::in);
 	string contenu;
@@ -148,6 +148,7 @@ Joueur * ChargerJoueur(string psuedo, string nomclasse) {
 	else {
 		cout << "Le fichier " << DATASAVEPLAYER << " est introuvable " << endl;
 		return NULL;
+
 	}
 }
 

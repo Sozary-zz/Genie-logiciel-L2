@@ -17,7 +17,7 @@ public:
 
 	Joueur();
 	Joueur(std::string pseudo, std::string classe, int pvmax, int mana, int armure, int force, int comp1, int comp2, int comp3, int comp4);
-
+	Joueur(std::string pseudo, std::string classe, int pvmax, int mana, int armure, int force);
 	~Joueur();
 	Competence * choisir_competence(int i_comp);
 

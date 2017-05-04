@@ -9,10 +9,10 @@ Joueur::Joueur(string pseudo,string classe, int pvmax, int mana, int armure, int
 	m_inventaire = new Objet[nb_objet_max];
 	m_equipement = new Objet[nb_equipement_max];
 	
-	tableau_competence.push_back(ChargerCompetence(comp1));
+	/*tableau_competence.push_back(ChargerCompetence(comp1));
 	tableau_competence.push_back(ChargerCompetence(comp2));
 	tableau_competence.push_back(ChargerCompetence(comp3));
-	tableau_competence.push_back(ChargerCompetence(comp4));
+	tableau_competence.push_back(ChargerCompetence(comp4));*/
 
 	GameState::texture_manager->addElement("character_sprite", "data\\character.png"); // pwet
 
@@ -23,6 +23,20 @@ Joueur::Joueur(string pseudo,string classe, int pvmax, int mana, int armure, int
 	m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
 }
 
+Joueur::Joueur(string pseudo, string classe, int pvmax, int mana, int armure, int force): Entite(classe, pvmax, mana, armure, force), nb_objet_max(30), nb_equipement_max(6), nb_competence_max(5), m_pseudo(pseudo)
+, m_walking_compt(0), m_orientation(DOWN), m_anim_running(false), m_position_in_the_grid(0, 0) {
+	m_inventaire = new Objet[nb_objet_max];
+	m_equipement = new Objet[nb_equipement_max];
+
+
+	GameState::texture_manager->addElement("character_sprite", "data\\character.png"); // pwet
+
+	m_walking_positions = new int[4]
+	{ 8,10,9,11 };
+
+	m_sprite.setTexture(GameState::texture_manager->getElement("character_sprite"));
+	m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
+}
 Joueur::Joueur() :nb_objet_max(30), nb_equipement_max(6), nb_competence_max(5),
 m_walking_compt(0)
 {
