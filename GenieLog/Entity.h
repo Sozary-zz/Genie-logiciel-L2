@@ -2,6 +2,7 @@
 #include <vector>
 #include "Competence.h"
 #include "objet.h"
+#include "Parseur.hpp"
 
 #ifndef ENTITE
 #define ENTITE
