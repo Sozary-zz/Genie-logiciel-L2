@@ -28,28 +28,41 @@ Competence * ChargerCompetence(int numero){
 				
 				contenu = contenu.substr(contenu.find("/") + 1,contenu.length());
 				toto = contenu.substr(0,contenu.find("/"));
-				damages = stoi(toto);
+				damages = toto;
 				// damages chargés
 
 				contenu = contenu.substr(contenu.find("/") + 1,contenu.length());
 				toto = contenu.substr(0,contenu.find("/"));
-				ratio = stoi(toto);
+				ratio = toto;
 				// ratio chargé
 				
 				contenu = contenu.substr(contenu.find("/") + 1,contenu.length());
 				toto = contenu.substr(0,contenu.find("/"));
-				tempsincantation = stoi(toto);
+				tempsincantation = toto;
 				//temps incantation chargé
 				
 				contenu = contenu.substr(contenu.find("/") + 1,contenu.length());
 				toto = contenu.substr(0,contenu.find("/"));
-				coutmana = stoi(toto);
+				coutmana = toto;
 				//cout mana chargé				
 				
 				fichier.close();
-				return new Competence(nom,damages,ratio,tempsincantation,coutmana);
+				if(nom != "" && damages != "" && ratio != "" && tempsincantation != "" && coutmana != ""){
+					return new Competence(nom,damages,ratio,tempsincantation,coutmana);
+				}
+				else{
+					cout << "La ligne du fichier de chargemnet concernant la compétence " << numero << "est incomplet !" << endl;
+					cout << "Impossible de charger la compétence" << endl;
+					return NULL;
+				}
 			}
 		}
+		fichier.close();
+		cout << "La competence numero " << numero << "n'est pas renseignée dans le fichier " << DATASAVECOMP << endl;
+	}
+	else{
+		cout << "Le fichier " << DATASAVECOMP << "est introuvable " << endl;
+		return NULL;
 	}
 }
 
