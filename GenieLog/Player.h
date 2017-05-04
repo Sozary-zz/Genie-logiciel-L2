@@ -21,6 +21,7 @@ public:
 
 
 	void RempirCompetence();
+	void adjustPos(sf::Vector2i position, sf::Vector2f scale);
 
 
 private:

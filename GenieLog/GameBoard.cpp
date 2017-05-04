@@ -31,6 +31,8 @@ GameBoard::GameBoard(Game * game)
 	m_map->movements = new int[DEFAULT_HEIGHT*DEFAULT_WIDTH];
 	m_map->datas = new TILE_TYPE[DEFAULT_HEIGHT*DEFAULT_WIDTH];
 
+	Vector2i available_pos = { -1,-1 };
+
 	do {
 		auto pn = PerlinNoise(dis(gen));
 		for (int x = 0; x < DEFAULT_WIDTH; ++x)
@@ -42,7 +44,13 @@ GameBoard::GameBoard(Game * game)
 				else if (n < 4.5)
 					level[x + y*DEFAULT_HEIGHT] = (int)TILE_TYPE::FLOWER;
 				else if (n < 5.5)
+				{
 					level[x + y*DEFAULT_HEIGHT] = (int)TILE_TYPE::GRASS;
+					if (available_pos.x == -1 && available_pos.y == -1)
+						available_pos = { x,y };
+
+				}
+
 				else if (n < 6.5)
 					level[x + y*DEFAULT_HEIGHT] = (int)TILE_TYPE::BUSH;
 				else
@@ -62,6 +70,8 @@ GameBoard::GameBoard(Game * game)
 	t_fight = true;
 	t_already_started = false;
 
+	m_player->adjustPos(Vector2i{ 100 + available_pos.x*(int)(m_map->tiles.getScale().x * 16) + (int)(TILE_SIZE / 4.f),75 + available_pos.y*(int)(m_map->tiles.getScale().y * 16) },
+		Vector2f{(m_map->tiles.getScale().x * 16)/TILE_SIZE  ,(m_map->tiles.getScale().y * 16)/TILE_SIZE  });
 
 
 }
@@ -75,8 +85,8 @@ void GameBoard::draw(const float delta_time)
 
 void GameBoard::update(const float delta_time)
 {
-/*	if (t_fight)
-		blink();*/
+	/*	if (t_fight)
+			blink();*/
 }
 
 void GameBoard::eventLoop()

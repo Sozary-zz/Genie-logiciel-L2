@@ -4,9 +4,12 @@
 using namespace sf;
 using namespace std;
 
-Joueur::Joueur() :nb_objet_max(30), nb_equipement_max(6), nb_competence_max(5),
-m_walking_compt(0)
-{
+Joueur::Joueur(string pseudo, int pvmax, int mana, int armure, int force) : Entite(pseudo, pvmax, mana, armure, force), nb_objet_max(30), nb_equipement_max(6), nb_competence_max(5), m_pseudo(pseudo)
+, m_walking_compt(0) {
+	m_inventaire = new Objet[nb_objet_max];
+	m_equipement = new Objet[nb_equipement_max];
+	RempirCompetence();
+
 	m_inventaire = new Objet[nb_objet_max];
 	m_equipement = new Objet[nb_equipement_max];
 
@@ -17,7 +20,12 @@ m_walking_compt(0)
 
 	m_sprite.setTexture(GameState::texture_manager->getElement("character_sprite"));
 	m_sprite.setTextureRect(IntRect(m_walking_compt, m_walking_positions[DOWN] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
+}
 
+Joueur::Joueur() :nb_objet_max(30), nb_equipement_max(6), nb_competence_max(5),
+m_walking_compt(0)
+{
+	
 }
 
 Joueur::~Joueur()
@@ -45,12 +53,7 @@ std::vector<std::string> Joueur::recupNomCompetences() const
 	return res;
 }
 
-Joueur::Joueur(string pseudo, int pvmax, int mana, int armure, int force) : Entite(pseudo, pvmax, mana, armure, force), nb_objet_max(30), nb_equipement_max(6), nb_competence_max(5), m_pseudo(pseudo)
-{
-	m_inventaire = new Objet[nb_objet_max];
-	m_equipement = new Objet[nb_equipement_max];
-	RempirCompetence();
-}
+
 
 
 //Fonction TEST
@@ -60,6 +63,12 @@ void Joueur::RempirCompetence()
 	tableau_competence.push_back(new Competence("Morsure", 25, 2, 10, 1));
 	tableau_competence.push_back(new Competence("Pet", 1, 0, 25, 0));
 	tableau_competence.push_back(new Competence("Mignon Sourire", 0, 0, 2, 0));
+}
+
+void Joueur::adjustPos(Vector2i position, Vector2f scale)
+{
+	m_sprite.setPosition((Vector2f)position);
+	m_sprite.setScale(scale);
 }
 
 void Joueur::draw(sf::RenderTarget & target, sf::RenderStates states) const

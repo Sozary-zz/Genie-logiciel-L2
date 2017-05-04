@@ -6,8 +6,8 @@
 #include "TextureManager.h"
 #include "FontManager.h"
 
-#define DEFAULT_HEIGHT 5  //20 max!
-#define DEFAULT_WIDTH  5
+#define DEFAULT_HEIGHT 15  //20 max!
+#define DEFAULT_WIDTH  15
 
 
 class GameState
