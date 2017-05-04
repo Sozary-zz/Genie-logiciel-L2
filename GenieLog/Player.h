@@ -25,10 +25,14 @@ public:
 	void RempirCompetence();
 	void adjustPos(sf::Vector2i position, sf::Vector2f scale, float speed);
 
-	void left(sf::Time frame);
-	void up(sf::Time frame);
-	void down(sf::Time frame);
-	void right(sf::Time frame);
+	void left();
+	void up();
+	void down();
+	void right();
+
+	void continueAnim(sf::Time frame);
+
+	bool isRunning();
 
 	void init();
 
@@ -55,5 +59,8 @@ private:
 	std::vector<Animation> m_animations;
 	Animation* m_current_anim;
 	AnimatedSprite m_animated_sprite;
+
+	bool m_anim_running;
+	int m_running_cmpt;
 
 };

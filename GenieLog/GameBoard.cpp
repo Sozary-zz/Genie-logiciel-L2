@@ -72,7 +72,7 @@ GameBoard::GameBoard(Game * game)
 
 	m_player->adjustPos(Vector2i{ 100 + available_pos.x*(int)(m_map->tiles.getScale().x * 16) ,75 + available_pos.y*(int)(m_map->tiles.getScale().y * 16) },
 		Vector2f{ (m_map->tiles.getScale().x * 16) / TILE_SIZE  ,(m_map->tiles.getScale().y * 16) / TILE_SIZE },
-		(m_map->tiles.getScale().x * 16)/20.f);
+		(m_map->tiles.getScale().x * 16));
 	m_movement_clock.restart();
 
 }
@@ -96,42 +96,49 @@ void GameBoard::eventLoop()
 {
 	Event event;
 	Time frame_time = m_movement_clock.restart();
-	while (game->window.pollEvent(event))
+	if (!m_player->isRunning())
 	{
-		switch (event.type)
+		while (game->window.pollEvent(event))
 		{
-		case Event::Closed:
-		{
-			game->window.close();
-			break;
-		}
-
-		case Event::KeyPressed:
-		{
-		
-			if (event.key.code == Keyboard::A)
+			switch (event.type)
 			{
-				game->popState();
-				return;
+			case Event::Closed:
+			{
+				game->window.close();
+				break;
 			}
-			else	if (event.key.code == Keyboard::Escape) game->window.close();
-			else if (event.key.code == Keyboard::Left) {
-				m_player->left(frame_time);
+
+			case Event::KeyPressed:
+			{
+
+				if (event.key.code == Keyboard::A)
+				{
+					game->popState();
+					return;
+				}
+				else	if (event.key.code == Keyboard::Escape) game->window.close();
+				else if (event.key.code == Keyboard::Left) {
+					m_player->left();
+				}
+				else if (event.key.code == Keyboard::Right) {
+					m_player->right();
+				}
+				else if (event.key.code == Keyboard::Up) {
+					m_player->up();
+				}
+				else if (event.key.code == Keyboard::Down) {
+					m_player->down();
+				}
+				break;
 			}
-			else if (event.key.code == Keyboard::Right) {
-				m_player->right(frame_time);
+			default: break;
 			}
-			else if (event.key.code == Keyboard::Up) {
-				m_player->up(frame_time);
-			}
-			else if (event.key.code == Keyboard::Down) {
-				m_player->down(frame_time);
-			}
-			break;
-		}
-		default: break;
 		}
 	}
+	else
+		m_player->continueAnim(frame_time);
+	
+	
 
 }
 

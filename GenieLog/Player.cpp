@@ -5,7 +5,7 @@ using namespace sf;
 using namespace std;
 
 Joueur::Joueur(string pseudo, int pvmax, int mana, int armure, int force) : Entite(pseudo, pvmax, mana, armure, force), nb_objet_max(30), nb_equipement_max(6), nb_competence_max(5), m_pseudo(pseudo)
-, m_walking_compt(0), m_orientation(DOWN),m_animated_sprite(seconds(.2f),true,false) {
+, m_walking_compt(0), m_orientation(DOWN),m_animated_sprite(seconds(.2f),true,false), m_anim_running(false), m_running_cmpt(0){
 	m_inventaire = new Objet[nb_objet_max];
 	m_equipement = new Objet[nb_equipement_max];
 	RempirCompetence();
@@ -94,43 +94,83 @@ void Joueur::adjustPos(Vector2i position, Vector2f scale, float speed)
 	m_speed = speed;
 }
 
-void Joueur::left(Time frame)
+void Joueur::left()
 {
-	m_animated_sprite.play(*m_current_anim);
+	m_orientation = LEFT;
 
-	m_current_anim = &m_animations[LEFT];
-	m_sprite.move(-m_speed, 0);
-	m_animated_sprite.stop();
-	m_animated_sprite.update(frame);
+	m_current_anim = &m_animations[m_orientation];
+	m_animated_sprite.play(*m_current_anim);
+	m_anim_running = true;
+	m_running_cmpt = 0;
 }
 
-void Joueur::up(Time frame)
+void Joueur::up()
 {
-	m_animated_sprite.play(*m_current_anim);
+	m_orientation = UP;
 
-	m_current_anim = &m_animations[UP];
-	m_sprite.move(0, -m_speed);
-	m_animated_sprite.stop();
-	m_animated_sprite.update(frame);
+	m_current_anim = &m_animations[m_orientation];
+	m_animated_sprite.play(*m_current_anim);
+	m_anim_running = true;
+	m_running_cmpt = 0;
+
 }
 
-void Joueur::down(Time frame)
+void Joueur::down()
 {
-	m_animated_sprite.play(*m_current_anim);
+	m_orientation = DOWN;
 
-	m_current_anim = &m_animations[DOWN];
-	m_sprite.move(0, m_speed);
-	m_animated_sprite.stop();
-	m_animated_sprite.update(frame);
+	m_current_anim = &m_animations[m_orientation];
+	m_animated_sprite.play(*m_current_anim);
+	m_anim_running = true;
+	m_running_cmpt = 0;
+
 }
 
-void Joueur::right(Time frame)
+void Joueur::right()
 {
-	m_current_anim = &m_animations[RIGHT];
-	m_sprite.move(0, m_speed); 
-	m_sprite.move(m_speed, 0);
-	m_animated_sprite.stop();
+	m_orientation = RIGHT;
+	m_current_anim = &m_animations[m_orientation];
+	m_animated_sprite.play(*m_current_anim);
+	m_anim_running = true;
+	m_running_cmpt = 0;
+
+}
+
+void Joueur::continueAnim(Time frame)
+{
+	switch (m_orientation)
+	{
+	case UP:
+		m_animated_sprite.move(0,-m_speed / 9.f);
+		break;
+	case DOWN:
+		m_animated_sprite.move(0,m_speed / 9.f);
+		break;
+	case LEFT:
+		m_animated_sprite.move(-m_speed / 9.f, 0);
+		break;
+	case RIGHT:
+		m_animated_sprite.move(m_speed / 9.f, 0);
+		break;
+	}
+	
+
 	m_animated_sprite.update(frame);
+
+	if (m_running_cmpt >= 9)
+	{
+		m_animated_sprite.stop();
+		m_anim_running = false;
+		m_running_cmpt = 0;
+		return;
+	}
+
+	m_running_cmpt++;
+}
+
+bool Joueur::isRunning()
+{
+	return m_anim_running;
 }
 
 void Joueur::init()
