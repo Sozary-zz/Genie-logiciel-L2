@@ -6,17 +6,22 @@ using namespace sf;
 
 
 // https://downloads.khinsider.com/game-soundtracks/album/pokemon-ruby-sapphire-music-super-complete
-GameBoard::GameBoard(Game * game)
+GameBoard::GameBoard(Game * game) :
+	m_map_reloaded(false)
 {
 	m_base_battle_sound_buffer.loadFromFile("data\\songs\\009_Battle_Wild_Pok_mon_.ogg");
 	m_base_battle_sound.setBuffer(m_base_battle_sound_buffer);
 
 	m_collision.load("data\\songs\\sounds_effect\\emerald_0003_collision.wav");
+	m_collision.sample.setVolume(5);
 	m_collision.running = false;
 
-	m_main_song.load("data\\songs\\048_Route_111.ogg");
-	m_main_song.run();
-	m_main_song.sample.setLoop(true);
+	m_main_song.openFromFile("data\\songs\\048_Route_111.ogg");
+	m_main_song.setLoop(true);
+	m_main_song.play();
+
+	m_menu.load("data\\songs\\sounds_effect\\emerald_00F8_menu.wav");
+	m_menu.running = false;
 
 	m_base_battle_sound.setLoop(true);	m_base_battle_sound.setVolume(1);
 	m_player = new Joueur("Rayquaza", "Player", 100, 0, 5, 1);
@@ -53,7 +58,8 @@ GameBoard::GameBoard(Game * game)
 				else if (n < 5.5)
 				{
 					level[x + y*DEFAULT_HEIGHT] = (int)TILE_TYPE::GRASS;
-					if (available_pos.x == -1 && available_pos.y == -1)
+
+					if (m_map_reloaded || (available_pos.x == -1 && available_pos.y == -1))
 						available_pos = { x,y };
 
 				}
@@ -95,6 +101,7 @@ void GameBoard::draw(const float delta_time)
 void GameBoard::update(const float delta_time)
 {
 	m_collision.update();
+	m_menu.update();
 
 	/*	if (t_fight)
 			blink();*/
@@ -127,6 +134,12 @@ void GameBoard::eventLoop()
 				}
 				else	if (event.key.code == Keyboard::Escape)
 					game->window.close();
+				else if (event.key.code == Keyboard::Return)
+				{
+					if (!m_menu.running)
+						m_menu.run();
+				}
+
 				else if (event.key.code == Keyboard::Left) {
 					if (m_map->datas[m_player->positionInGrid().x - 1 + m_player->positionInGrid().y*DEFAULT_HEIGHT] != TILE_TYPE::BUSH
 						&&  m_map->datas[m_player->positionInGrid().x - 1 + m_player->positionInGrid().y*DEFAULT_HEIGHT] != TILE_TYPE::BAD_GRASS && m_player->positionInGrid().x > 0)
@@ -142,7 +155,7 @@ void GameBoard::eventLoop()
 
 
 					}
-					
+
 				}
 				else if (event.key.code == Keyboard::Right) {
 					if (m_player->positionInGrid().x < DEFAULT_WIDTH - 1 && m_map->datas[m_player->positionInGrid().x + 1 + m_player->positionInGrid().y*DEFAULT_HEIGHT] != TILE_TYPE::BUSH
@@ -216,6 +229,9 @@ void GameBoard::eventLoop()
 
 GameBoard::~GameBoard()
 {
+	m_main_song.stop();
+	m_collision.sample.stop();
+	m_menu.sample.stop();
 	delete m_map;
 
 	for (auto&x : m_entities)
@@ -256,8 +272,10 @@ bool GameBoard::validMap(int * map, int _x, int _y)
 		}
 
 	}
-
-	return getDistanceMap(map, _x, _y, start);
+	auto res = getDistanceMap(map, _x, _y, start);;
+	if (!res)
+		m_map_reloaded = true;
+	return res;
 }
 
 bool GameBoard::getDistanceMap(int* _map, int _x, int _y, Vector2i start) const

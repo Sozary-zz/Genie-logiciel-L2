@@ -81,7 +81,8 @@ private:
 	sf::Sound m_base_battle_sound;
 
 	Sample m_collision;
-	Sample m_main_song;
+	sf::Music m_main_song;
+	Sample m_menu;
 
 	int m_battle_issue;
 
@@ -95,6 +96,8 @@ private:
 
 	Joueur *m_player;
 	sf::Clock m_movement_clock;
+
+	bool m_map_reloaded;
 
 };
 
