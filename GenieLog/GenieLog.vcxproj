@@ -81,6 +81,7 @@
     <ClCompile Include="GameBattle.cpp" />
     <ClCompile Include="GameBoard.cpp" />
     <ClCompile Include="GameCreator.cpp" />
+    <ClCompile Include="GameInventory.cpp" />
     <ClCompile Include="GameSettings.cpp" />
     <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -113,6 +114,7 @@
     <ClInclude Include="GameBattle.hpp" />
     <ClInclude Include="GameBoard.hpp" />
     <ClInclude Include="GameCreator.hpp" />
+    <ClInclude Include="GameInventory.hpp" />
     <ClInclude Include="GameSettings.hpp" />
     <ClInclude Include="FontManager.h" />
     <ClInclude Include="Game.hpp" />
