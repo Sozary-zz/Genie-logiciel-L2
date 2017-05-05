@@ -155,7 +155,9 @@ void GameBoard::eventLoop()
 							m_menu->setVisible(false);
 							break;
 						case CHOICE::INVENTORY:
-							cout << "inventaire" << endl;
+						//	cout << "inventaire" << endl;
+							game->pushState((GameState*)new GameInventory(this->game));
+							return;
 							break;
 
 						case CHOICE::SAVE:

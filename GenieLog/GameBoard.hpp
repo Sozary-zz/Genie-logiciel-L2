@@ -8,6 +8,7 @@
 #include "PerlinNoise.hpp"
 #include "GameBattle.hpp"
 #include "Menu.h"
+#include "GameInventory.hpp"
 
 struct Sample {
 	sf::SoundBuffer sample_buffer;

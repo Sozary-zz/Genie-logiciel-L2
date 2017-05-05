@@ -1,10 +1,10 @@
-#include "GameSettings.hpp"
+#include "GameInventory.hpp"
 #include <iostream>
 
 using namespace std;
 using namespace sf;
 
-GameSettings::GameSettings(Game * game)
+GameInventory::GameInventory(Game * game)
 {
 	this->game = game;
 	auto x = (Vector2f)this->game->window.getSize();
@@ -12,26 +12,34 @@ GameSettings::GameSettings(Game * game)
 	m_view.setSize(x);
 	m_view.setCenter(x*.5f);
 
-	GameState::texture_manager->addElement("settings_background", "data\\back_2.png");
+	GameState::texture_manager->addElement("inventory_background", "data\\inventory.png");
 
-	m_background.setTexture(GameState::texture_manager->getElement("settings_background"));
+	m_background.setTexture(GameState::texture_manager->getElement("inventory_background"));
 
 	m_background.setScale(x.x / m_background.getTexture()->getSize().x, x.y / m_background.getTexture()->getSize().y);
 
-}
 
-void GameSettings::draw(const float delta_time)
-{
-	game->window.setView(m_view);
-	game->window.draw(m_background);
-}
+	for (int j = 0; j < 10; ++j)
+		for (int i = 0; i < 4; ++i)
+			m_items_pos.push_back(IntRect(538 + 57 * i, 95 + 41.5 * j, 52, 39));
+			
 
-void GameSettings::update(const float delta_time)
-{
 	
 }
 
-void GameSettings::eventLoop()
+void GameInventory::draw(const float delta_time)
+{
+	game->window.setView(m_view);
+	game->window.draw(m_background);
+
+}
+
+void GameInventory::update(const float delta_time)
+{
+
+}
+
+void GameInventory::eventLoop()
 {
 	Event event;
 
@@ -52,7 +60,7 @@ void GameSettings::eventLoop()
 				game->popState();
 				return;
 			}
-				
+
 
 			else	if (event.key.code == Keyboard::Escape) game->window.close();
 			break;
