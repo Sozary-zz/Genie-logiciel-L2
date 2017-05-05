@@ -142,7 +142,7 @@ void GameBoard::eventLoop()
 
 
 					}
-					;//song bonng, and change orientation
+					
 				}
 				else if (event.key.code == Keyboard::Right) {
 					if (m_player->positionInGrid().x < DEFAULT_WIDTH - 1 && m_map->datas[m_player->positionInGrid().x + 1 + m_player->positionInGrid().y*DEFAULT_HEIGHT] != TILE_TYPE::BUSH
