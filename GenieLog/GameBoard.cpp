@@ -13,15 +13,17 @@ GameBoard::GameBoard(Game * game) :
 	m_base_battle_sound.setBuffer(m_base_battle_sound_buffer);
 
 	m_collision.load("data\\songs\\sounds_effect\\emerald_0003_collision.wav");
-	m_collision.sample.setVolume(5);
+	m_collision.sample.setVolume(1);
 	m_collision.running = false;
 
 	m_main_song.openFromFile("data\\songs\\048_Route_111.ogg");
 	m_main_song.setLoop(true);
+	m_main_song.setVolume(1);
 	m_main_song.play();
 
-	m_menu.load("data\\songs\\sounds_effect\\emerald_00F8_menu.wav");
-	m_menu.running = false;
+	m_menu_song.load("data\\songs\\sounds_effect\\emerald_00F8_menu.wav");
+	m_menu_song.running = false;
+	m_menu_song.sample.setVolume(1);
 
 	m_base_battle_sound.setLoop(true);	m_base_battle_sound.setVolume(1);
 	m_player = new Joueur("Rayquaza", "Player", 100, 0, 5, 1);
@@ -87,7 +89,12 @@ GameBoard::GameBoard(Game * game) :
 		Vector2f{ (m_map->tiles.getScale().x * 16) / TILE_SIZE  ,(m_map->tiles.getScale().y * 16) / TILE_SIZE },
 		Vector2f{ m_map->tiles.getScale().x * 16, m_map->tiles.getScale().y * 16
 	});
+
+	m_menu = new Menu;
+	m_menu->adjustPos({ 175,200 }, { 520,79 });
+	m_menu->setVisible(false);
 	m_movement_clock.restart();
+
 
 }
 
@@ -96,12 +103,17 @@ void GameBoard::draw(const float delta_time)
 	game->window.setView(m_view);
 	game->window.draw(m_map->tiles);
 	game->window.draw(*m_player);
+
+	if (m_menu->isVisible())
+		game->window.draw(*m_menu);
 }
 
 void GameBoard::update(const float delta_time)
 {
 	m_collision.update();
-	m_menu.update();
+	m_menu_song.update();
+
+
 
 	/*	if (t_fight)
 			blink();*/
@@ -136,11 +148,37 @@ void GameBoard::eventLoop()
 					game->window.close();
 				else if (event.key.code == Keyboard::Return)
 				{
-					if (!m_menu.running)
-						m_menu.run();
+					if (m_menu->isVisible()) {
+						switch (m_menu->getChoice())
+						{
+						case CHOICE::QUIT:
+							m_menu->setVisible(false);
+							break;
+						case CHOICE::INVENTORY:
+							cout << "inventaire" << endl;
+							break;
+
+						case CHOICE::SAVE:
+							cout << "sauvegarde" << endl;
+
+							break;
+
+						case CHOICE::PROFIL:
+							cout << "profil" << endl;
+							break;
+						}
+					
+					}
+					else {
+						m_menu->setVisible(true);
+						if (!m_menu_song.running)
+							m_menu_song.run();
+					}
 				}
 
 				else if (event.key.code == Keyboard::Left) {
+					if (m_menu->isVisible())
+						break;
 					if (m_map->datas[m_player->positionInGrid().x - 1 + m_player->positionInGrid().y*DEFAULT_HEIGHT] != TILE_TYPE::BUSH
 						&&  m_map->datas[m_player->positionInGrid().x - 1 + m_player->positionInGrid().y*DEFAULT_HEIGHT] != TILE_TYPE::BAD_GRASS && m_player->positionInGrid().x > 0)
 					{
@@ -158,6 +196,8 @@ void GameBoard::eventLoop()
 
 				}
 				else if (event.key.code == Keyboard::Right) {
+					if (m_menu->isVisible())
+						break;
 					if (m_player->positionInGrid().x < DEFAULT_WIDTH - 1 && m_map->datas[m_player->positionInGrid().x + 1 + m_player->positionInGrid().y*DEFAULT_HEIGHT] != TILE_TYPE::BUSH
 						&&  m_map->datas[m_player->positionInGrid().x + 1 + m_player->positionInGrid().y*DEFAULT_HEIGHT] != TILE_TYPE::BAD_GRASS)
 					{
@@ -175,37 +215,46 @@ void GameBoard::eventLoop()
 
 				}
 				else if (event.key.code == Keyboard::Up) {
-					if (m_map->datas[m_player->positionInGrid().x + (m_player->positionInGrid().y - 1)*DEFAULT_HEIGHT] != TILE_TYPE::BUSH
-						&&  m_map->datas[m_player->positionInGrid().x + (m_player->positionInGrid().y - 1)*DEFAULT_HEIGHT] != TILE_TYPE::BAD_GRASS && m_player->positionInGrid().y > 0)
-					{
-						m_player->up();
-						return;
-					}
-					else
-					{
-						m_player->_up_();
-						if (!m_collision.running)
-							m_collision.run();
+					if (m_menu->isVisible())
+						m_menu->up();
 
+					else {
+						if (m_map->datas[m_player->positionInGrid().x + (m_player->positionInGrid().y - 1)*DEFAULT_HEIGHT] != TILE_TYPE::BUSH
+							&&  m_map->datas[m_player->positionInGrid().x + (m_player->positionInGrid().y - 1)*DEFAULT_HEIGHT] != TILE_TYPE::BAD_GRASS && m_player->positionInGrid().y > 0)
+						{
+							m_player->up();
+							return;
+						}
+						else
+						{
+							m_player->_up_();
+							if (!m_collision.running)
+								m_collision.run();
+
+						}
 					}
+
 
 				}
 				else if (event.key.code == Keyboard::Down) {
-					if (m_player->positionInGrid().y < DEFAULT_HEIGHT - 1 && m_map->datas[m_player->positionInGrid().x + (m_player->positionInGrid().y + 1)*DEFAULT_HEIGHT] != TILE_TYPE::BUSH
-						&&  m_map->datas[m_player->positionInGrid().x + (m_player->positionInGrid().y + 1)*DEFAULT_HEIGHT] != TILE_TYPE::BAD_GRASS)
-					{
-						m_player->down();
+					if (m_menu->isVisible())
+						m_menu->down();
+					else {
+						if (m_player->positionInGrid().y < DEFAULT_HEIGHT - 1 && m_map->datas[m_player->positionInGrid().x + (m_player->positionInGrid().y + 1)*DEFAULT_HEIGHT] != TILE_TYPE::BUSH
+							&&  m_map->datas[m_player->positionInGrid().x + (m_player->positionInGrid().y + 1)*DEFAULT_HEIGHT] != TILE_TYPE::BAD_GRASS)
+						{
+							m_player->down();
 
-						return;
+							return;
+						}
+						else
+						{
+							m_player->_down_();
+							if (!m_collision.running)
+								m_collision.run();
+						}
 					}
-					else
-					{
-						m_player->_down_();
-						if (!m_collision.running)
-							m_collision.run();
 
-
-					}
 
 				}
 				break;
@@ -231,7 +280,7 @@ GameBoard::~GameBoard()
 {
 	m_main_song.stop();
 	m_collision.sample.stop();
-	m_menu.sample.stop();
+	m_menu_song.sample.stop();
 	delete m_map;
 
 	for (auto&x : m_entities)

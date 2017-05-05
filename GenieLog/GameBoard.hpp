@@ -7,6 +7,7 @@
 #include "TileMap.hpp"
 #include "PerlinNoise.hpp"
 #include "GameBattle.hpp"
+#include "Menu.h"
 
 struct Sample {
 	sf::SoundBuffer sample_buffer;
@@ -30,6 +31,7 @@ struct Sample {
 			running = false;
 		}
 	}
+
 };
 enum class TILE_TYPE {
 	BUSH,
@@ -82,7 +84,7 @@ private:
 
 	Sample m_collision;
 	sf::Music m_main_song;
-	Sample m_menu;
+	Sample m_menu_song;
 
 	int m_battle_issue;
 
@@ -98,6 +100,8 @@ private:
 	sf::Clock m_movement_clock;
 
 	bool m_map_reloaded;
+
+	Menu* m_menu;
 
 };
 
