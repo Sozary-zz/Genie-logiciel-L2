@@ -114,7 +114,6 @@ void GameBoard::update(const float delta_time)
 	m_menu_song.update();
 
 
-
 	/*	if (t_fight)
 			blink();*/
 }

@@ -18,5 +18,6 @@ private:
 	sf::View m_view;
 	sf::Sprite m_background;
 	std::vector<sf::IntRect> m_items_pos;
+	sf::Sprite m_selector;
 };
 
