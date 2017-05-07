@@ -46,6 +46,11 @@ void EditList::addData(const string & text)
 	m_data.push_back(tmp);
 }
 
+void EditList::init()
+{
+	m_data.clear();
+}
+
 
 
 void EditList::draw(sf::RenderTarget & target, sf::RenderStates states) const

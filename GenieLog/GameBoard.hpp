@@ -10,30 +10,7 @@
 #include "Menu.h"
 #include "GameInventory.hpp"
 
-struct Sample {
-	sf::SoundBuffer sample_buffer;
-	sf::Sound sample;
-	bool running;
-	sf::Clock sample_clock;
-	void load(std::string path) {
-		sample_buffer.loadFromFile(path);
-		sample.setBuffer(sample_buffer);
 
-	}
-	void run() {
-		running = true;
-		sample.play();
-		sample_clock.restart();
-	}
-	void update() {
-		if (sample_clock.getElapsedTime().asSeconds() >= sample_buffer.getDuration().asSeconds())
-		{
-			sample.stop();
-			running = false;
-		}
-	}
-
-};
 enum class TILE_TYPE {
 	BUSH,
 	GRASS,
@@ -103,6 +80,8 @@ private:
 	bool m_map_reloaded;
 
 	Menu* m_menu;
+
+	std::vector<Monstre> m_monsters;
 
 };
 

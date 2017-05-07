@@ -8,6 +8,16 @@ using namespace sf;
 GameBattle::GameBattle(Game * game, Joueur* player, Monstre* monster, int* battle_issue) :
 	m_tick(0), m_player(player), m_monster(monster), m_enemy_bar(156, 0), m_player_bar(156, 0), m_battle_issue(battle_issue)
 {
+
+
+	m_attack.load("data\\songs\\sounds_effect\\emerald_000D_hit.wav");
+	m_attack.sample.setVolume(10);
+	m_attack.running = false;
+
+	m_final_attack.load("data\\songs\\sounds_effect\\emerald_000E_end.wav");
+	m_final_attack.sample.setVolume(10);
+	m_final_attack.running = false;
+
 	m_dis = uniform_int_distribution<>(1, 100);
 	random_device rd;
 	m_gen = mt19937(rd());
@@ -110,6 +120,11 @@ GameBattle::GameBattle(Game * game, Joueur* player, Monstre* monster, int* battl
 	*m_battle_issue = 0;
 }
 
+GameBattle::~GameBattle()
+{
+	m_base_battle_sound.stop();
+}
+
 void GameBattle::draw(const float delta_time)
 {
 	game->window.setView(m_view);
@@ -134,12 +149,19 @@ void GameBattle::draw(const float delta_time)
 
 }
 void GameBattle::player_attack() {
+	if (m_monster->recupVie() - m_turns.front().skill->getDamages() <= 0) {
+		if (!m_final_attack.running)
+			m_final_attack.run();
+	}
+	else {
+		if (!m_attack.running)
+			m_attack.run();
+	}
 	m_monster->prendreDegats(m_turns.front().skill->getDamages());
 	m_enemy_bar.x -= float(m_turns.front().skill->getDamages()*BAR_SIZE) / (float)m_monster->recupMaxVie();
 	m_enemy_bar.y += float(m_turns.front().skill->getDamages()*BAR_SIZE) / (float)m_monster->recupMaxVie();
 
-	m_actions->addData(m_turns.front().entity->recupNom() + " utilise " + m_turns.front().skill->getNom() + "!");
-	m_actions->addData(m_monster->recupNom() + " perd " + to_string(m_turns.front().skill->getDamages()) + " hp.");
+	m_actions->addData(m_monster->recupNom() + ": -" + to_string(m_turns.front().skill->getDamages()) + " hp.");
 	m_actions->addData("");
 
 	if (m_enemy_bar.x < 0)
@@ -156,12 +178,21 @@ void GameBattle::player_attack() {
 }
 
 void GameBattle::monster_attack() {
+	if (m_player->recupVie() - m_turns.front().skill->getDamages() <= 0) {
+		if (!m_final_attack.running)
+			m_final_attack.run();
+	}
+	else {
+		if (!m_attack.running)
+			m_attack.run();
+	}
+	
+
 	m_player->prendreDegats(m_turns.front().skill->getDamages());
 	m_player_bar.x -= float(m_turns.front().skill->getDamages()*BAR_SIZE) / (float)m_player->recupMaxVie();
 	m_player_bar.y += float(m_turns.front().skill->getDamages()*BAR_SIZE) / (float)m_player->recupMaxVie();
 
-	m_actions->addData(m_turns.front().entity->recupNom() + " utilise " + m_turns.front().skill->getNom() + "!");
-	m_actions->addData(m_player->recupNom() + " perd " + to_string(m_turns.front().skill->getDamages()) + " hp.");
+	m_actions->addData(m_player->recupNom() + ": -" + to_string(m_turns.front().skill->getDamages()) + " hp.");
 	m_actions->addData("");
 
 	if (m_player_bar.x < 0)
@@ -200,8 +231,8 @@ bool GameBattle::endBattle()
 
 	if (changed)
 	{
-		game->popState();
 		m_base_battle_sound.stop();
+		game->popState();
 		return false;
 	}
 
@@ -209,7 +240,10 @@ bool GameBattle::endBattle()
 }
 void GameBattle::update(const float delta_time)
 {
-	if(!endBattle())
+	m_final_attack.update();
+	m_attack.update();
+
+	if (!endBattle())
 		return;
 
 	sort(m_turns.begin(), m_turns.end(), [](const Turn &a, const Turn &b) {return a.tick_rest < b.tick_rest; });
@@ -218,11 +252,16 @@ void GameBattle::update(const float delta_time)
 		if (m_turns.front().type == 0)
 			monster_attack();
 		else
+		{
+			m_actions->init();
 			player_attack();
+		}
+
 	}
 
 	if (!endBattle())
 		return;
+
 	if (m_turns.front().tick_rest == 0) {
 		if (m_turns.front().type == 0)
 			monster_attack();

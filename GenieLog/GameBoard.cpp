@@ -114,8 +114,8 @@ void GameBoard::update(const float delta_time)
 	m_menu_song.update();
 
 
-	/*	if (t_fight)
-			blink();*/
+		if (t_fight)
+			blink();
 }
 
 void GameBoard::eventLoop()
@@ -395,6 +395,7 @@ int GameBoard::getV(const std::map<sf::Vector2i*, int>& m, sf::Vector2i* a) cons
 bool GameBoard::blink()
 {
 	if (!t_already_started) {
+		m_main_song.stop();
 		t_intro.restart(); m_base_battle_sound.setPlayingOffset(seconds(.2f));
 		m_base_battle_sound.play();
 		t_already_started = true;

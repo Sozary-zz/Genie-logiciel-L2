@@ -12,6 +12,7 @@ public:
 	~EditList();
 
 	void addData(const std::string& text);
+	void init();
 
 
 private:

@@ -24,11 +24,12 @@ Joueur::Joueur(string pseudo,string classe, int pvmax, int mana, int armure, int
 }
 
 Joueur::Joueur(string pseudo, string classe, int pvmax, int mana, int armure, int force): Entite(classe, pvmax, mana, armure, force), nb_objet_max(30), nb_equipement_max(6), nb_competence_max(5), m_pseudo(pseudo)
-, m_walking_compt(0), m_orientation(DOWN), m_anim_running(false), m_position_in_the_grid(0, 0) {
+, m_walking_compt(0), m_orientation(DOWN), m_anim_running(false), m_position_in_the_grid(0, 0)  {
 	m_inventaire = new Objet[nb_objet_max];
 	m_equipement = new Objet[nb_equipement_max];
+	RempirCompetence();
 
-
+	m_nom = pseudo;
 	GameState::texture_manager->addElement("character_sprite", "data\\character.png"); // pwet
 
 	m_walking_positions = new int[4]

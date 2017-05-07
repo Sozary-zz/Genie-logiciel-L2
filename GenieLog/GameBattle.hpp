@@ -7,6 +7,30 @@
 #include "Combat.h"
 #include "SkillsBoard.h"
 #include "EditList.h"
+struct Sample {
+	sf::SoundBuffer sample_buffer;
+	sf::Sound sample;
+	bool running;
+	sf::Clock sample_clock;
+	void load(std::string path) {
+		sample_buffer.loadFromFile(path);
+		sample.setBuffer(sample_buffer);
+
+	}
+	void run() {
+		running = true;
+		sample.play();
+		sample_clock.restart();
+	}
+	void update() {
+		if (sample_clock.getElapsedTime().asSeconds() >= sample_buffer.getDuration().asSeconds())
+		{
+			sample.stop();
+			running = false;
+		}
+	}
+
+};
 
 struct Turn {
 	int tick_rest; // ticks restant to do the turn
@@ -18,6 +42,7 @@ class GameBattle: public GameState
 {
 public:
 	GameBattle(Game* game,Joueur* player, Monstre* monster, int* battle_issue);
+	~GameBattle();
 	virtual void draw(const float delta_time) ;
 	virtual void update(const float delta_time);
 	virtual void eventLoop();
@@ -60,6 +85,9 @@ private:
 	EditList* m_actions;
 
 	int* m_battle_issue;
+
+	Sample m_attack;
+	Sample m_final_attack;
 
 };
 
