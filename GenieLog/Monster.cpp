@@ -13,5 +13,9 @@ Monstre::~Monstre()
 
 Competence * Monstre::choisir_competence()
 {
-	return new Competence("CACA", 10, 1, 5, 0);
+	return new Competence("Griffure", 15, 1, 5, 0);
+}
+
+void Monstre::draw(sf::RenderTarget & target, sf::RenderStates states) const
+{
 }

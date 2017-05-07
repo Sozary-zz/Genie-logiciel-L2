@@ -1,10 +1,10 @@
 #include "Entity.h"
-
+#include <SFML\Graphics.hpp>
 
 #ifndef MONSTRE
 #define MONSTRE
 
-class Monstre : public Entite {
+class Monstre : public Entite , public sf::Drawable {
 
 
 public:
@@ -13,6 +13,8 @@ public:
 	~Monstre();
 
 	Competence * choisir_competence();
+private:
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 };
 
