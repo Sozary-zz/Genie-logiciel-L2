@@ -9,7 +9,7 @@
 #include "GameBattle.hpp"
 #include "Menu.h"
 #include "GameInventory.hpp"
-
+#define NB_OF_MONSTERS 5
 
 enum class TILE_TYPE {
 	BUSH,
@@ -81,7 +81,8 @@ private:
 
 	Menu* m_menu;
 
-	std::vector<Monstre> m_monsters;
+	std::vector<Monstre*> m_monsters;
+	sf::Vector2i  * m_monster_pos;
 
 };
 

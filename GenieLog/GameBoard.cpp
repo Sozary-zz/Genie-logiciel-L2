@@ -27,6 +27,11 @@ GameBoard::GameBoard(Game * game) :
 
 	m_base_battle_sound.setLoop(true);	m_base_battle_sound.setVolume(1);
 	m_player = new Joueur("Rayquaza", "Player", 100, 0, 5, 1);
+
+	m_monster_pos = new Vector2i[NB_OF_MONSTERS];
+
+	int monster_compt;
+
 	this->game = game;
 	auto x = (Vector2f)this->game->window.getSize();
 
@@ -47,6 +52,7 @@ GameBoard::GameBoard(Game * game) :
 	Vector2i available_pos = { -1,-1 };
 
 	do {
+		monster_compt = 0;
 		auto pn = PerlinNoise(dis(gen));
 		for (int x = 0; x < DEFAULT_WIDTH; ++x)
 			for (int y = 0; y < DEFAULT_HEIGHT; ++y) {
@@ -63,6 +69,10 @@ GameBoard::GameBoard(Game * game) :
 
 					if (m_map_reloaded || (available_pos.x == -1 && available_pos.y == -1))
 						available_pos = { x,y };
+
+					if (m_map_reloaded || monster_compt < NB_OF_MONSTERS)
+						if (available_pos.x != x && available_pos.y != y)
+							m_monster_pos[monster_compt++] = { x,y };
 
 				}
 
@@ -84,6 +94,25 @@ GameBoard::GameBoard(Game * game) :
 
 	t_fight = true;
 	t_already_started = false;
+	for (int i = 0; i < NB_OF_MONSTERS; ++i)
+	{
+		auto rand = dis(gen);
+		DIRECTION or ;
+		if (rand <= 2500)
+			or = UP;
+		else if (rand > 2500 && rand <= 5000)
+			or = DOWN;
+		else if (rand > 2500 && rand <= 5000)
+			or = LEFT;
+		else
+			or = RIGHT;
+
+		m_monsters.push_back(new Monstre("Gardevoir", 100, 0, 0, 0,
+			Vector2i{ 100 + m_monster_pos[i].x*(int)(m_map->tiles.getScale().x * 16) ,75 + m_monster_pos[i].y*(int)(m_map->tiles.getScale().y * 16) },
+			Vector2f{ (m_map->tiles.getScale().x * 16) / 32.f  ,(m_map->tiles.getScale().y * 16) / 32.f }, or ));
+	}
+
+
 
 	m_player->adjustPos(available_pos, Vector2i{ 100 + available_pos.x*(int)(m_map->tiles.getScale().x * 16) ,75 + available_pos.y*(int)(m_map->tiles.getScale().y * 16) },
 		Vector2f{ (m_map->tiles.getScale().x * 16) / TILE_SIZE  ,(m_map->tiles.getScale().y * 16) / TILE_SIZE },
@@ -104,8 +133,13 @@ void GameBoard::draw(const float delta_time)
 	game->window.draw(m_map->tiles);
 	game->window.draw(*m_player);
 
+	for (auto&x : m_monsters)
+		game->window.draw(*x);
+
 	if (m_menu->isVisible())
 		game->window.draw(*m_menu);
+
+
 }
 
 void GameBoard::update(const float delta_time)
@@ -114,8 +148,8 @@ void GameBoard::update(const float delta_time)
 	m_menu_song.update();
 
 
-		if (t_fight)
-			blink();
+	/*if (t_fight)
+		blink();*/
 }
 
 void GameBoard::eventLoop()
@@ -154,7 +188,7 @@ void GameBoard::eventLoop()
 							m_menu->setVisible(false);
 							break;
 						case CHOICE::INVENTORY:
-						//	cout << "inventaire" << endl;
+							//	cout << "inventaire" << endl;
 							game->pushState((GameState*)new GameInventory(this->game));
 							return;
 							break;
@@ -168,7 +202,7 @@ void GameBoard::eventLoop()
 							cout << "profil" << endl;
 							break;
 						}
-					
+
 					}
 					else {
 						m_menu->setVisible(true);
@@ -412,7 +446,7 @@ bool GameBoard::blink()
 	else if (t_intro.getElapsedTime().asSeconds() >= 2.6f)
 	{
 		t_fight = false;
-		game->pushState((GameState*)new GameBattle(this->game, m_player, new Monstre("Kyogre", 50, 0, 2, 0), &m_battle_issue));
+		game->pushState((GameState*)new GameBattle(this->game, m_player, new Monstre(), &m_battle_issue));
 		m_map->tiles.fade(Color(255, 255, 255));
 		m_base_battle_sound.stop();
 		return true;

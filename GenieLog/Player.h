@@ -8,9 +8,7 @@
 #define TILE_SIZE 64.f
 #define TIME_ACTION .2f
 
-enum DIRECTION {
-	UP, DOWN, LEFT, RIGHT
-};
+
 class Joueur : public Entite, public sf::Drawable {
 
 public:

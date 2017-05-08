@@ -6,7 +6,9 @@
 
 #ifndef ENTITE
 #define ENTITE
-
+enum DIRECTION {
+	UP, DOWN, LEFT, RIGHT
+};
 class Entite {
 
 
