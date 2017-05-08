@@ -9,6 +9,8 @@
 #include "GameBattle.hpp"
 #include "Menu.h"
 #include "GameInventory.hpp"
+#include "Parseur.hpp"
+
 #define NB_OF_MONSTERS 5
 
 enum class TILE_TYPE {

@@ -23,6 +23,7 @@ public:
 	 static FontManager* font_manager;
 
 
+
 	int width;
 	int height;
 };
