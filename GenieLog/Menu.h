@@ -1,6 +1,14 @@
+/**
+*\file Menu.h
+*\brief Ce fichier gère le Menu pour voir son inventaire , quitter le jeu etc..
+*\author 
+*\date 06 Mai 2017
+**/
+
 #pragma once
 #include <SFML\Graphics.hpp>
 #include "GameState.hpp"
+
 
 enum class CHOICE {PROFIL,INVENTORY,SAVE,QUIT};
 class Menu: public sf::Drawable
