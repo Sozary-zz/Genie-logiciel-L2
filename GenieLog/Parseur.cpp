@@ -234,7 +234,7 @@ Monstre * ChargerMonstre(string pseudo) {
 				fichier.close();
 
 				if (Pseudovalide == 'o' && pseudo != "") {
-					return new Monstre(pseudo, stoi(hp), stoi(mana), stoi(armure), stoi(force), stoi(comp1), stoi(comp2), stoi(comp3), stoi(comp4));
+					return NULL;// new Monstre(pseudo, stoi(hp), stoi(mana), stoi(armure), stoi(force), stoi(comp1), stoi(comp2), stoi(comp3), stoi(comp4));
 				}
 				else {
 					cout << "La ligne du fichier de chargemnet concernant le Monstre du nom " << pseudo << " est incomplet !" << endl;
