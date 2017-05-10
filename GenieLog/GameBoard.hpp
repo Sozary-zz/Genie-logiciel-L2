@@ -84,8 +84,6 @@ private:
 	Joueur *m_player;
 	sf::Clock m_movement_clock;
 
-	bool m_map_reloaded;
-
 	Menu* m_menu;
 
 	std::vector<Monstre*> m_monsters;

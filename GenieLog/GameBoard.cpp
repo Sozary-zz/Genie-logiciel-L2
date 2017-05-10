@@ -7,7 +7,7 @@ using namespace sf;
 
 // https://downloads.khinsider.com/game-soundtracks/album/pokemon-ruby-sapphire-music-super-complete
 GameBoard::GameBoard(Game * game) :
-	m_map_reloaded(false), m_monster_buffer(nullptr), t_fight(false)
+ m_monster_buffer(nullptr), t_fight(false)
 {
 	m_base_battle_sound_buffer.loadFromFile("data\\songs\\009_Battle_Wild_Pok_mon_.ogg");
 	m_base_battle_sound.setBuffer(m_base_battle_sound_buffer);
@@ -57,10 +57,7 @@ GameBoard::GameBoard(Game * game) :
 	do {
 		monster_compt = 0;
 		auto pn = PerlinNoise(dis(gen));
-		if (m_map_reloaded)
-			available_pos = { -1,-1 };
-
-			
+					
 		for (int x = 0; x < DEFAULT_WIDTH; ++x)
 			for (int y = 0; y < DEFAULT_HEIGHT; ++y) {
 				double n = 10 * pn.noise(x, y, 2.6);
@@ -71,31 +68,11 @@ GameBoard::GameBoard(Game * game) :
 				if (n < 4.5)
 					level[x + y*DEFAULT_HEIGHT] = (int)TILE_TYPE::FLOWER;
 				else if (n < 5.5)
-				{
 					level[x + y*DEFAULT_HEIGHT] = (int)TILE_TYPE::GRASS;
-
-					if (available_pos.x == -1 && available_pos.y == -1)
-						available_pos = { x,y };
-
-					if (monster_compt < NB_OF_MONSTERS)
-						if (available_pos.x != x && available_pos.y != y && noMonsterHere({ x,y }))
-							m_monster_pos[monster_compt++] = { x,y };
-
-				}
-
 				else if (n < 6.5)
 					level[x + y*DEFAULT_HEIGHT] = (int)TILE_TYPE::BUSH;
-				else
-				{
-					level[x + y*DEFAULT_HEIGHT] = (int)TILE_TYPE::GRASS;
-
-					if (m_map_reloaded || (available_pos.x == -1 && available_pos.y == -1))
-						available_pos = { x,y };
-
-					if (m_map_reloaded || monster_compt < NB_OF_MONSTERS)
-						if (available_pos.x != x && available_pos.y != y && noMonsterHere({ x,y }))
-							m_monster_pos[monster_compt++] = { x,y };
-				}
+				else			
+					level[x + y*DEFAULT_HEIGHT] = (int)TILE_TYPE::GRASS;					
 
 				m_map->datas[x + y*DEFAULT_HEIGHT] = (TILE_TYPE)level[x + y*DEFAULT_HEIGHT];
 
@@ -377,10 +354,8 @@ bool GameBoard::validMap(int * map, int _x, int _y)
 		}
 
 	}
-	auto res = getDistanceMap(map, _x, _y, start);;
-	if (!res)
-		m_map_reloaded = true;
-	return res;
+
+	return getDistanceMap(map, _x, _y, start);
 }
 
 bool GameBoard::getDistanceMap(int* _map, int _x, int _y, Vector2i start) const
