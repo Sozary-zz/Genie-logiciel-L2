@@ -4,7 +4,7 @@
 
 #define DATASAVECOMP "data\\loading\\Comp.txt"
 #define DATASAVEPLAYER "data\\loading\\Character.txt"
-#define DATASAVEMONSTEr "data\\loading\\Monster.txt"
+#define DATASAVEMONSTER "data\\loading\\Monster.txt"
 
 class Joueur;
 class Monstre;

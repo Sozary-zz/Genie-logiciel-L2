@@ -9,6 +9,7 @@ using namespace sf;
 GameBoard::GameBoard(Game * game) :
 	m_monster_buffer(nullptr), t_fight(false)
 {
+	
 	m_base_battle_sound_buffer.loadFromFile("data\\songs\\009_Battle_Wild_Pok_mon_.ogg");
 	m_base_battle_sound.setBuffer(m_base_battle_sound_buffer);
 
@@ -53,7 +54,6 @@ GameBoard::GameBoard(Game * game) :
 	m_map->datas = new TILE_TYPE[DEFAULT_HEIGHT*DEFAULT_WIDTH];
 
 	Vector2i available_pos = { -1,-1 };
-
 	do {
 		monster_compt = 0;
 		auto pn = PerlinNoise(dis(gen));
@@ -78,6 +78,7 @@ GameBoard::GameBoard(Game * game) :
 
 			}
 	} while (!validMap((int*)m_map->datas, DEFAULT_WIDTH, DEFAULT_HEIGHT));
+
 
 
 	for (int x = 0; x < DEFAULT_WIDTH; ++x) {

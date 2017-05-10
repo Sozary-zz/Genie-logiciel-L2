@@ -28,25 +28,25 @@ Competence * ChargerCompetence(int numero) {
 
 				contenu = contenu.substr(contenu.find("/") + 1, contenu.length());
 				lignefichier = contenu.substr(0, contenu.find("/"));
-				nombrePossible(lignefichier,compvalide,'c');
+				nombrePossible(lignefichier, compvalide, 'c');
 				damages = lignefichier;
 				// damages chargés
 
 				contenu = contenu.substr(contenu.find("/") + 1, contenu.length());
 				lignefichier = contenu.substr(0, contenu.find("/"));
-				nombrePossible(lignefichier,compvalide,'c');
+				nombrePossible(lignefichier, compvalide, 'c');
 				ratio = lignefichier;
 				// ratio chargé
 
 				contenu = contenu.substr(contenu.find("/") + 1, contenu.length());
 				lignefichier = contenu.substr(0, contenu.find("/"));
-				nombrePossible(lignefichier,compvalide,'c');
+				nombrePossible(lignefichier, compvalide, 'c');
 				tempsincantation = lignefichier;
 				//temps incantation chargé
 
 				contenu = contenu.substr(contenu.find("/") + 1, contenu.length());
 				lignefichier = contenu.substr(0, contenu.find("/"));
-				nombrePossible(lignefichier,compvalide,'c');
+				nombrePossible(lignefichier, compvalide, 'c');
 				coutmana = lignefichier;
 				//cout mana chargé				
 
@@ -83,61 +83,65 @@ Joueur * ChargerJoueur(string pseudo, string nomclasse) {
 		getline(fichier, contenu);
 		contenu = " ";
 		while (contenu != "") {
+
 			getline(fichier, contenu);
+			lignefichier = contenu.substr(0, contenu.find("/"));
+
 			if (nomclasse == lignefichier) { // on a trouve le Personnage qu'on cherchait
+
 				char classevalide = 'o';
 				string classe, hp, mana, armure, force, comp1, comp2, comp3, comp4;
 				// recupere la ligne sans le numero de la competence
 
-				lignefichier = contenu.substr(0, contenu.find("/"));
+
 				classe = lignefichier;
 				//classe chargée
 
 				contenu = contenu.substr(contenu.find("/") + 1, contenu.length());
 				lignefichier = contenu.substr(0, contenu.find("/"));
-				nombrePossible(lignefichier,classevalide,'j');
+				nombrePossible(lignefichier, classevalide, 'j');
 				hp = lignefichier;
 				//hp chargées
 
 				contenu = contenu.substr(contenu.find("/") + 1, contenu.length());
 				lignefichier = contenu.substr(0, contenu.find("/"));
-				nombrePossible(lignefichier,classevalide,'j');
+				nombrePossible(lignefichier, classevalide, 'j');
 				mana = lignefichier;
 				// mana chargé
 
 				contenu = contenu.substr(contenu.find("/") + 1, contenu.length());
 				lignefichier = contenu.substr(0, contenu.find("/"));
-				nombrePossible(lignefichier,classevalide,'j');
+				nombrePossible(lignefichier, classevalide, 'j');
 				armure = lignefichier;
 				//armure chargé			
 
 				contenu = contenu.substr(contenu.find("/") + 1, contenu.length());
 				lignefichier = contenu.substr(0, contenu.find("/"));
-				nombrePossible(lignefichier,classevalide,'j');
+				nombrePossible(lignefichier, classevalide, 'j');
 				force = lignefichier;
 				//force chargée
 
 				contenu = contenu.substr(contenu.find("/") + 1, contenu.length());
 				lignefichier = contenu.substr(0, contenu.find("/"));
-				nombrePossible(lignefichier,classevalide,'j');
+				nombrePossible(lignefichier, classevalide, 'j');
 				comp1 = lignefichier;
 				//competence 1 chargée				
 
 				contenu = contenu.substr(contenu.find("/") + 1, contenu.length());
 				lignefichier = contenu.substr(0, contenu.find("/"));
-				nombrePossible(lignefichier,classevalide,'j');
+				nombrePossible(lignefichier, classevalide, 'j');
 				comp2 = lignefichier;
 				// competence 2 chargée
 
 				contenu = contenu.substr(contenu.find("/") + 1, contenu.length());
 				lignefichier = contenu.substr(0, contenu.find("/"));
-				nombrePossible(lignefichier,classevalide,'j');
+				nombrePossible(lignefichier, classevalide, 'j');
 				comp3 = lignefichier;
 				//competence 3 chargée
 
 				contenu = contenu.substr(contenu.find("/") + 1, contenu.length());
 				lignefichier = contenu.substr(0, contenu.find("/"));
-				nombrePossible(lignefichier,classevalide,'j');
+				nombrePossible(lignefichier, classevalide, 'j');
 				comp4 = lignefichier;
 				//competence 4 chargée
 
@@ -165,7 +169,7 @@ Joueur * ChargerJoueur(string pseudo, string nomclasse) {
 }
 
 Monstre * ChargerMonstre(string pseudo) {
-	ifstream fichier(DATASAVEPLAYER, ios::in);
+	ifstream fichier(DATASAVEMONSTER, ios::in);
 	string contenu;
 	string lignefichier;
 	if (fichier) {
@@ -174,12 +178,13 @@ Monstre * ChargerMonstre(string pseudo) {
 		contenu = " ";
 		while (contenu != "") {
 			getline(fichier, contenu);
+			lignefichier = contenu.substr(0, contenu.find("/"));
 			if (pseudo == lignefichier) { // on a trouve le Personnage qu'on cherchait
 				char Pseudovalide = 'o';
 				string hp, mana, armure, force, comp1, comp2, comp3, comp4;
 				// recupere la ligne sans le numero de la competence
 
-				lignefichier = contenu.substr(0, contenu.find("/"));
+			
 				pseudo = lignefichier;
 				//pseudo chargée
 
@@ -244,55 +249,55 @@ Monstre * ChargerMonstre(string pseudo) {
 			}
 		}
 		fichier.close();
-		cout << "Le Monstre du nom de " << pseudo << " n'est pas renseignée dans le fichier " << DATASAVEMONSTEr << endl;
+		cout << "Le Monstre du nom de " << pseudo << " n'est pas renseignée dans le fichier " << DATASAVEMONSTER << endl;
 		return NULL;
 	}
 	else {
-		cout << "Le fichier " << DATASAVEMONSTEr << " est introuvable " << endl;
+		cout << "Le fichier " << DATASAVEMONSTER << " est introuvable " << endl;
 		return NULL;
 
 	}
 }
-void nombrePossible(string contenu, char& classecomplete,char type){
-	if(classecomplete != 'n'){
+void nombrePossible(string contenu, char& classecomplete, char type) {
+	if (classecomplete != 'n') {
 		char complet = 'o';
-		if(contenu == ""){
+		if (contenu == "") {
 			complet = 'n';
-			if(type == 'm'){
+			if (type == 'm') {
 				cout << "Erreur le fichier de chargement du Monstre est mal construit ou incomplet" << endl;
 			}
-			if(type == 'c'){
+			if (type == 'c') {
 				cout << "Erreur le fichier de chargement des Compétence est mal construit ou incomplet" << endl;
 			}
-			if(type == 'j'){
+			if (type == 'j') {
 				cout << "Erreur le fichier de chargement du Joueur est mal construit ou incomplet" << endl;
 			}
 		}
-		else{
+		else {
 			int contenuint = stoi(contenu);
-			if(contenuint < 0){
+			if (contenuint < 0) {
 				complet = 'n';
-				if(type == 'j'){
+				if (type == 'j') {
 					cout << "Erreur le fichier de chargement du Joueur contient une valeur négative" << endl;
 				}
-				if(type == 'm'){
+				if (type == 'm') {
 					cout << "Erreur le fichier de chargement du Monstre contient une valeur négative" << endl;
 				}
-				if(type == 'c'){
+				if (type == 'c') {
 					cout << "Erreur le fichier de chargement de Competence contient une valeur négative" << endl;
 				}
 			}
-			else if(contenuint > 1000){
+			else if (contenuint > 1000) {
 				complet = 'n';
-				if(type == 'j'){
-				cout << "Erreur le fichier de chargement du Joueur contient une valeur négative" << endl;
+				if (type == 'j') {
+					cout << "Erreur le fichier de chargement du Joueur contient une valeur négative" << endl;
 				}
-				if(type == 'm'){
+				if (type == 'm') {
 					cout << "Erreur le fichier de chargement du Monstre contient une valeur négative" << endl;
 				}
-				if(type == 'c'){
+				if (type == 'c') {
 					cout << "Erreur le fichier de chargement de Competence contient une valeur négative" << endl;
-				}		
+				}
 			}
 		}
 		complet = classecomplete;
