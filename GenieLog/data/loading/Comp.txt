@@ -1,4 +1,4 @@
-/* n° Competence / Nom / Degats / Ratio / Temps d'incant / Cout mana */
+﻿/* n° Competence / Nom / Degats / Ratio / Temps d'incant / Cout mana */
 
 1/Attaque/20/5/20/0
 2/Poing du dragon/35/15/30/20
