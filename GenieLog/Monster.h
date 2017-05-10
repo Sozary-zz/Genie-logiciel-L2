@@ -13,7 +13,7 @@ class Monstre : public Entite , public sf::Drawable {
 
 public:
 	Monstre() {}
-	Monstre(std::string classe, int pvMax, int mana, int armure, int force);
+	Monstre(std::string classe, int pvMax, int mana, int armure, int force,  int comp1, int comp2, int comp3, int comp4);
 	~Monstre();
 
 	void adjustPos(sf::Vector2i position, sf::Vector2f scale, DIRECTION orientation);

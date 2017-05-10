@@ -110,7 +110,7 @@ GameBoard::GameBoard(Game * game) :
 		else
 			or = RIGHT;
 
-		m_monsters.push_back(new Monstre("Gardevoir", 100, 0, 0, 0));
+		m_monsters.push_back(ChargerMonstre("Gobelins"));
 		m_monsters.back()->adjustPos(
 			Vector2i{ 100 + m_monster_pos[i].x*(int)(m_map->tiles.getScale().x * 16) ,75 + m_monster_pos[i].y*(int)(m_map->tiles.getScale().y * 16) },
 			Vector2f{ (m_map->tiles.getScale().x * 16) / 32.f  ,(m_map->tiles.getScale().y * 16) / 32.f }, or );

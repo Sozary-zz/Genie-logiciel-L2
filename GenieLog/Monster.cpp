@@ -4,9 +4,11 @@
 using namespace sf;
 using namespace std;
 
-Monstre::Monstre(string classe, int pvMax, int mana, int armure, int force) : Entite(classe, pvMax, mana, armure, force) {
-	
-
+Monstre::Monstre(string classe, int pvMax, int mana, int armure, int force, int comp1, int comp2, int comp3, int comp4) : Entite(classe, pvMax, mana, armure, force) {
+	tableau_competence.push_back(ChargerCompetence(comp1));
+	tableau_competence.push_back(ChargerCompetence(comp2));
+	tableau_competence.push_back(ChargerCompetence(comp3));
+	tableau_competence.push_back(ChargerCompetence(comp4));
 }
 
 Monstre::~Monstre()
