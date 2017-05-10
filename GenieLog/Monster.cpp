@@ -30,7 +30,8 @@ void Monstre::adjustPos(sf::Vector2i position, sf::Vector2f scale, DIRECTION ori
 
 Competence * Monstre::choisir_competence()
 {
-	return new Competence("Griffure", 15, 1, 5, 0);
+	srand(time(NULL));
+	return tableau_competence[rand() % 4];	
 }
 
 sf::Vector2i Monstre::recupPos() const
