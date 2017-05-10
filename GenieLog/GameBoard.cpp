@@ -7,7 +7,7 @@ using namespace sf;
 
 // https://downloads.khinsider.com/game-soundtracks/album/pokemon-ruby-sapphire-music-super-complete
 GameBoard::GameBoard(Game * game) :
- m_monster_buffer(nullptr), t_fight(false)
+	m_monster_buffer(nullptr), t_fight(false)
 {
 	m_base_battle_sound_buffer.loadFromFile("data\\songs\\009_Battle_Wild_Pok_mon_.ogg");
 	m_base_battle_sound.setBuffer(m_base_battle_sound_buffer);
@@ -57,7 +57,7 @@ GameBoard::GameBoard(Game * game) :
 	do {
 		monster_compt = 0;
 		auto pn = PerlinNoise(dis(gen));
-					
+
 		for (int x = 0; x < DEFAULT_WIDTH; ++x)
 			for (int y = 0; y < DEFAULT_HEIGHT; ++y) {
 				double n = 10 * pn.noise(x, y, 2.6);
@@ -71,8 +71,8 @@ GameBoard::GameBoard(Game * game) :
 					level[x + y*DEFAULT_HEIGHT] = (int)TILE_TYPE::GRASS;
 				else if (n < 6.5)
 					level[x + y*DEFAULT_HEIGHT] = (int)TILE_TYPE::BUSH;
-				else			
-					level[x + y*DEFAULT_HEIGHT] = (int)TILE_TYPE::GRASS;					
+				else
+					level[x + y*DEFAULT_HEIGHT] = (int)TILE_TYPE::GRASS;
 
 				m_map->datas[x + y*DEFAULT_HEIGHT] = (TILE_TYPE)level[x + y*DEFAULT_HEIGHT];
 
@@ -83,11 +83,11 @@ GameBoard::GameBoard(Game * game) :
 	for (int x = 0; x < DEFAULT_WIDTH; ++x) {
 		for (int y = 0; y < DEFAULT_HEIGHT; ++y)
 		{
-			cout <<(int) m_map->datas[x + y*DEFAULT_HEIGHT] << ",";
+			cout << (int)m_map->datas[x + y*DEFAULT_HEIGHT] << ",";
 		}
 		cout << endl;
 	}
-		
+
 
 	m_map->tiles.load("data\\tileset.png", Vector2u(16, 16), level, DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	m_map->tiles.setScale((x.x - 200) / (16 * DEFAULT_WIDTH), (x.y - 150) / (16 * DEFAULT_HEIGHT));
@@ -110,9 +110,10 @@ GameBoard::GameBoard(Game * game) :
 		else
 			or = RIGHT;
 
-		m_monsters.push_back(new Monstre("Gardevoir", 100, 0, 0, 0,
+		m_monsters.push_back(new Monstre("Gardevoir", 100, 0, 0, 0));
+		m_monsters.back()->adjustPos(
 			Vector2i{ 100 + m_monster_pos[i].x*(int)(m_map->tiles.getScale().x * 16) ,75 + m_monster_pos[i].y*(int)(m_map->tiles.getScale().y * 16) },
-			Vector2f{ (m_map->tiles.getScale().x * 16) / 32.f  ,(m_map->tiles.getScale().y * 16) / 32.f }, or ));
+			Vector2f{ (m_map->tiles.getScale().x * 16) / 32.f  ,(m_map->tiles.getScale().y * 16) / 32.f }, or );
 	}
 
 
@@ -152,7 +153,7 @@ void GameBoard::update(const float delta_time)
 	m_collision.update();
 	m_menu_song.update();
 
-//	if (!t_fight)		tryToLaunchABattle(m_player->positionInGrid());
+	//	if (!t_fight)		tryToLaunchABattle(m_player->positionInGrid());
 
 	if (t_fight)
 		blink();
