@@ -84,6 +84,7 @@ GameBoard::GameBoard(Game * game) :
 	m_map->tiles.move(100, 75);
 
 	auto where_can_I_pose = availablePositions(m_map->datas);
+
 	auto rand_player_pos = dis(gen);
 	Vector2i player_pos = where_can_I_pose[rand_player_pos%where_can_I_pose.size()];
 	where_can_I_pose.erase(where_can_I_pose.begin() + rand_player_pos%where_can_I_pose.size());
@@ -93,9 +94,6 @@ GameBoard::GameBoard(Game * game) :
 		auto rand_monster_pos = dis(gen);
 		Vector2i monster_pos = where_can_I_pose[rand_monster_pos%where_can_I_pose.size()];
 		where_can_I_pose.erase(where_can_I_pose.begin() + rand_monster_pos%where_can_I_pose.size());
-
-		cout << monster_pos.x << "," << monster_pos.y << " ";
-		cout << level[m_monster_pos[i].x + m_monster_pos[i].y*DEFAULT_HEIGHT] << endl;
 
 		auto rand = dis(gen);
 		DIRECTION or ;
@@ -110,13 +108,13 @@ GameBoard::GameBoard(Game * game) :
 
 		m_monsters.push_back(ChargerMonstre("Gobelins"));
 		m_monsters.back()->adjustPos(
-			Vector2i{ 100 + monster_pos.x*(int)(m_map->tiles.getScale().x * 16) ,75 + monster_pos.y*(int)(m_map->tiles.getScale().y * 16) },
+			Vector2i{ 100 + monster_pos.y*(int)(m_map->tiles.getScale().x * 16) ,75 + monster_pos.x*(int)(m_map->tiles.getScale().y * 16) },
 			Vector2f{ (m_map->tiles.getScale().x * 16) / 32.f  ,(m_map->tiles.getScale().y * 16) / 32.f }, or );
 	}
 
 
 
-	m_player->adjustPos(player_pos, Vector2i{ 100 + player_pos.x*(int)(m_map->tiles.getScale().x * 16) ,75 + player_pos.y*(int)(m_map->tiles.getScale().y * 16) },
+	m_player->adjustPos({ player_pos.y,player_pos.x }, Vector2i{ 100 + player_pos.y*(int)(m_map->tiles.getScale().x * 16) ,75 + player_pos.x*(int)(m_map->tiles.getScale().y * 16) },
 		Vector2f{ (m_map->tiles.getScale().x * 16) / TILE_SIZE  ,(m_map->tiles.getScale().y * 16) / TILE_SIZE },
 		Vector2f{ m_map->tiles.getScale().x * 16, m_map->tiles.getScale().y * 16
 	});
