@@ -6,7 +6,7 @@ using namespace std;/// INFOS DE CE Q U IL SE PASSE
 using namespace sf;
 
 GameBattle::GameBattle(Game * game, Joueur* player, Monstre* monster, int* battle_issue, vector<Monstre*>* monsters) :
-	m_tick(0), m_player(player), m_monster(monster), m_enemy_bar(156, 0), m_player_bar(156, 0), m_battle_issue(battle_issue),m_monsters(monsters)
+	m_tick(0), m_player(player), m_monster(monster), m_enemy_bar(156, 0), m_player_bar(156, 0), m_battle_issue(battle_issue), m_monsters(monsters)
 {
 
 
@@ -118,6 +118,10 @@ GameBattle::GameBattle(Game * game, Joueur* player, Monstre* monster, int* battl
 	m_skills_board->setActive(true);
 
 	*m_battle_issue = 0;
+
+	m_player_bar.x -= 100 * float(m_player->recupMaxVie() - m_player->recupVie()) / (float)m_player->recupMaxVie();
+	m_player_bar.y += 100 * float(m_player->recupMaxVie() - m_player->recupVie()) / (float)m_player->recupMaxVie();
+	updateBars(1);
 }
 
 GameBattle::~GameBattle()

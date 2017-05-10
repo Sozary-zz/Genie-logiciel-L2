@@ -7,7 +7,7 @@ using namespace sf;
 
 // https://downloads.khinsider.com/game-soundtracks/album/pokemon-ruby-sapphire-music-super-complete
 GameBoard::GameBoard(Game * game) :
-	m_monster_buffer(nullptr), t_fight(false), t_already_started(false)
+	m_monster_buffer(nullptr), t_fight(false), t_already_started(false), m_just_left_a_battle(false)
 {
 
 	m_base_battle_sound_buffer.loadFromFile("data\\songs\\009_Battle_Wild_Pok_mon_.ogg");
@@ -149,6 +149,11 @@ void GameBoard::update(const float delta_time)
 	m_collision.update();
 	m_menu_song.update();
 
+	if (m_just_left_a_battle)
+	{
+		tryToLaunchABattle(m_player->positionInGrid());
+		m_just_left_a_battle = false;
+	}
 
 	if (t_fight)
 		blink();
@@ -459,9 +464,10 @@ bool GameBoard::blink()
 	}
 	else if (t_intro.getElapsedTime().asSeconds() >= 2.6f)
 	{
+		t_already_started = false;
 		t_fight = false;
 		game->pushState((GameState*)new GameBattle(this->game, m_player, m_monster_buffer, &m_battle_issue,&m_monsters));
-
+		m_just_left_a_battle = true;
 		m_map->tiles.fade(Color(255, 255, 255));
 		m_base_battle_sound.stop();
 

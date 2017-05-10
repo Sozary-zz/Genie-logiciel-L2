@@ -70,9 +70,6 @@ std::vector<std::string> Joueur::recupNomCompetences() const
 	return res;
 }
 
-
-
-
 //Fonction TEST
 void Joueur::RempirCompetence()
 {

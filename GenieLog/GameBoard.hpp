@@ -92,6 +92,7 @@ private:
 	sf::Vector2i  * m_monster_pos;
 
 	Monstre* m_monster_buffer;
+	bool m_just_left_a_battle;
 
 };
 
