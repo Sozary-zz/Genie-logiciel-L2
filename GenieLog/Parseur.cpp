@@ -174,7 +174,7 @@ Monstre * ChargerMonstre(string pseudo) {
 		contenu = " ";
 		while (contenu != "") {
 			getline(fichier, contenu);
-			if (nomclasse == lignefichier) { // on a trouve le Personnage qu'on cherchait
+			if (pseudo == lignefichier) { // on a trouve le Personnage qu'on cherchait
 				char Pseudovalide = 'o';
 				string hp, mana, armure, force, comp1, comp2, comp3, comp4;
 				// recupere la ligne sans le numero de la competence
@@ -233,22 +233,22 @@ Monstre * ChargerMonstre(string pseudo) {
 
 				fichier.close();
 
-				if (classevalide == 'o' && pseudo != "") {
-					return new Monster(pseudo, stoi(hp), stoi(mana), stoi(armure), stoi(force), stoi(comp1), stoi(comp2), stoi(comp3), stoi(comp4));
+				if (Pseudovalide == 'o' && pseudo != "") {
+					return new Monstre(pseudo, stoi(hp), stoi(mana), stoi(armure), stoi(force), stoi(comp1), stoi(comp2), stoi(comp3), stoi(comp4));
 				}
 				else {
-					cout << "La ligne du fichier de chargemnet concernant le Monstre du nom " << nomclasse << " est incomplet !" << endl;
+					cout << "La ligne du fichier de chargemnet concernant le Monstre du nom " << pseudo << " est incomplet !" << endl;
 					cout << "Impossible de charger le Monstre" << endl;
 					return NULL;
 				}
 			}
 		}
 		fichier.close();
-		cout << "Le Monstre du nom de " << pseudo << " n'est pas renseignée dans le fichier " << DATASAVEMONSTER << endl;
+		cout << "Le Monstre du nom de " << pseudo << " n'est pas renseignée dans le fichier " << DATASAVEMONSTEr << endl;
 		return NULL;
 	}
 	else {
-		cout << "Le fichier " << DATASAVEMONSTER << " est introuvable " << endl;
+		cout << "Le fichier " << DATASAVEMONSTEr << " est introuvable " << endl;
 		return NULL;
 
 	}

@@ -13,8 +13,10 @@ class Monstre : public Entite , public sf::Drawable {
 
 public:
 	Monstre() {}
-	Monstre(std::string classe, int pvMax, int mana, int armure, int force, sf::Vector2i position,sf::Vector2f scale,DIRECTION orientation);
+	Monstre(std::string classe, int pvMax, int mana, int armure, int force);
 	~Monstre();
+
+	void adjustPos(sf::Vector2i position, sf::Vector2f scale, DIRECTION orientation);
 
 	Competence * choisir_competence();
 
