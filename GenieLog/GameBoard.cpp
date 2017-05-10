@@ -7,7 +7,7 @@ using namespace sf;
 
 // https://downloads.khinsider.com/game-soundtracks/album/pokemon-ruby-sapphire-music-super-complete
 GameBoard::GameBoard(Game * game) :
-	m_monster_buffer(nullptr), t_fight(false)
+	m_monster_buffer(nullptr), t_fight(false),t_already_started(false)
 {
 	
 	m_base_battle_sound_buffer.loadFromFile("data\\songs\\009_Battle_Wild_Pok_mon_.ogg");
@@ -79,23 +79,10 @@ GameBoard::GameBoard(Game * game) :
 			}
 	} while (!validMap((int*)m_map->datas, DEFAULT_WIDTH, DEFAULT_HEIGHT));
 
-
-
-	for (int x = 0; x < DEFAULT_WIDTH; ++x) {
-		for (int y = 0; y < DEFAULT_HEIGHT; ++y)
-		{
-			cout << (int)m_map->datas[x + y*DEFAULT_HEIGHT] << ",";
-		}
-		cout << endl;
-	}
-
-
 	m_map->tiles.load("data\\tileset.png", Vector2u(16, 16), level, DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	m_map->tiles.setScale((x.x - 200) / (16 * DEFAULT_WIDTH), (x.y - 150) / (16 * DEFAULT_HEIGHT));
 	m_map->tiles.move(100, 75);
 
-	t_fight = true;
-	t_already_started = false;
 	for (int i = 0; i < NB_OF_MONSTERS; ++i)
 	{
 		cout << m_monster_pos[i].x << "," << m_monster_pos[i].y << " ";
@@ -422,6 +409,17 @@ bool GameBoard::exist(const map<Vector2i*, int>& m, Vector2i * a) const
 		if (*x.first == *a)
 			return true;
 	return false;
+}
+
+std::vector<sf::Vector2i> GameBoard::availablePositions(TILE_TYPE* map) const
+{
+	vector<Vector2i> res;
+	for (int x = 0; x < DEFAULT_WIDTH; ++x)
+		for (int y = 0; y < DEFAULT_HEIGHT; ++y)
+			if ((int)m_map->datas[y + x*DEFAULT_HEIGHT] != 0)
+				res.push_back({ x,y });
+
+	return res;
 }
 
 int GameBoard::getV(const std::map<sf::Vector2i*, int>& m, sf::Vector2i* a) const
