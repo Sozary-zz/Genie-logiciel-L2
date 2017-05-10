@@ -71,6 +71,7 @@ Competence * ChargerCompetence(int numero) {
 	}
 }
 
+
 Joueur * ChargerJoueur(string pseudo, string nomclasse) {
 
 	ifstream fichier(DATASAVEPLAYER, ios::in);
@@ -83,7 +84,6 @@ Joueur * ChargerJoueur(string pseudo, string nomclasse) {
 		contenu = " ";
 		while (contenu != "") {
 			getline(fichier, contenu);
-			lignefichier = contenu.substr(0, contenu.find("/"));
 			if (nomclasse == lignefichier) { // on a trouve le Personnage qu'on cherchait
 				char classevalide = 'o';
 				string classe, hp, mana, armure, force, comp1, comp2, comp3, comp4;
@@ -164,6 +164,94 @@ Joueur * ChargerJoueur(string pseudo, string nomclasse) {
 	}
 }
 
+Monstre * ChargerMonstre(string pseudo) {
+	ifstream fichier(DATASAVEPLAYER, ios::in);
+	string contenu;
+	string lignefichier;
+	if (fichier) {
+		getline(fichier, contenu);
+		getline(fichier, contenu);
+		contenu = " ";
+		while (contenu != "") {
+			getline(fichier, contenu);
+			if (nomclasse == lignefichier) { // on a trouve le Personnage qu'on cherchait
+				char Pseudovalide = 'o';
+				string hp, mana, armure, force, comp1, comp2, comp3, comp4;
+				// recupere la ligne sans le numero de la competence
+
+				lignefichier = contenu.substr(0, contenu.find("/"));
+				pseudo = lignefichier;
+				//pseudo chargée
+
+				contenu = contenu.substr(contenu.find("/") + 1, contenu.length());
+				lignefichier = contenu.substr(0, contenu.find("/"));
+				nombrePossible(lignefichier,Pseudovalide,'m');
+				hp = lignefichier;
+				//hp chargées
+
+				contenu = contenu.substr(contenu.find("/") + 1, contenu.length());
+				lignefichier = contenu.substr(0, contenu.find("/"));
+				nombrePossible(lignefichier,Pseudovalide,'m');
+				mana = lignefichier;
+				// mana chargé
+
+				contenu = contenu.substr(contenu.find("/") + 1, contenu.length());
+				lignefichier = contenu.substr(0, contenu.find("/"));
+				nombrePossible(lignefichier,Pseudovalide,'m');
+				armure = lignefichier;
+				//armure chargé			
+
+				contenu = contenu.substr(contenu.find("/") + 1, contenu.length());
+				lignefichier = contenu.substr(0, contenu.find("/"));
+				nombrePossible(lignefichier,Pseudovalide,'m');
+				force = lignefichier;
+				//force chargée
+
+				contenu = contenu.substr(contenu.find("/") + 1, contenu.length());
+				lignefichier = contenu.substr(0, contenu.find("/"));
+				nombrePossible(lignefichier,Pseudovalide,'m');
+				comp1 = lignefichier;
+				//competence 1 chargée				
+
+				contenu = contenu.substr(contenu.find("/") + 1, contenu.length());
+				lignefichier = contenu.substr(0, contenu.find("/"));
+				nombrePossible(lignefichier,Pseudovalide,'m');
+				comp2 = lignefichier;
+				// competence 2 chargée
+
+				contenu = contenu.substr(contenu.find("/") + 1, contenu.length());
+				lignefichier = contenu.substr(0, contenu.find("/"));
+				nombrePossible(lignefichier,Pseudovalide,'m');
+				comp3 = lignefichier;
+				//competence 3 chargée
+
+				contenu = contenu.substr(contenu.find("/") + 1, contenu.length());
+				lignefichier = contenu.substr(0, contenu.find("/"));
+				nombrePossible(lignefichier,Pseudovalide,'m');
+				comp4 = lignefichier;
+				//competence 4 chargée
+
+				fichier.close();
+
+				if (classevalide == 'o' && pseudo != "") {
+					return new Monster(pseudo, stoi(hp), stoi(mana), stoi(armure), stoi(force), stoi(comp1), stoi(comp2), stoi(comp3), stoi(comp4));
+				}
+				else {
+					cout << "La ligne du fichier de chargemnet concernant le Monstre du nom " << nomclasse << " est incomplet !" << endl;
+					cout << "Impossible de charger le Monstre" << endl;
+					return NULL;
+				}
+			}
+		}
+		fichier.close();
+		cout << "Le Monstre du nom de " << pseudo << " n'est pas renseignée dans le fichier " << DATASAVEMONSTER << endl;
+		return NULL;
+	}
+	else {
+		cout << "Le fichier " << DATASAVEMONSTER << " est introuvable " << endl;
+		return NULL;
+
+	}
 void nombrePossible(string contenu, char& classecomplete,char type){
 	if(classecomplete != 'n'){
 		char complet = 'o';
