@@ -17,12 +17,15 @@ public:
 	~Monstre();
 
 	Competence * choisir_competence();
+
+	sf::Vector2i recupPos() const;
 private:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	void textureUpdate();
 private:
 	sf::Sprite m_sprite;
 	DIRECTION m_orientation;
+	sf::Vector2i m_position;
 };
 
 #endif

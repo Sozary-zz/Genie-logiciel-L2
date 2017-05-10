@@ -1,6 +1,6 @@
 /* Classe / HP / Mana / Armure / Force / Comp1 / Comp2 / Comp3 / Comp4 */
 
-Mage/150/250/75/25/1/2/3/4
-Paladin/250/200/50/1/5/6/7
-Guerrier/300/100/100/1/8/9/10
-Archer/200/100/50/1/11/12/13
+Mage/150/250/2/1/1/2/3/4
+Paladin/250/200/5/3/1/5/6/7
+Guerrier/300/100/7/3/5/8/9/10
+Archer/200/100/50/1/1/11/12/13

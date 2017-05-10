@@ -9,10 +9,10 @@ Joueur::Joueur(string pseudo,string classe, int pvmax, int mana, int armure, int
 	m_inventaire = new Objet[nb_objet_max];
 	m_equipement = new Objet[nb_equipement_max];
 	
-	/*tableau_competence.push_back(ChargerCompetence(comp1));
+	tableau_competence.push_back(ChargerCompetence(comp1));
 	tableau_competence.push_back(ChargerCompetence(comp2));
 	tableau_competence.push_back(ChargerCompetence(comp3));
-	tableau_competence.push_back(ChargerCompetence(comp4));*/
+	tableau_competence.push_back(ChargerCompetence(comp4));
 
 	GameState::texture_manager->addElement("character_sprite", "data\\character.png"); // pwet
 

@@ -7,7 +7,7 @@ using namespace sf;
 
 // https://downloads.khinsider.com/game-soundtracks/album/pokemon-ruby-sapphire-music-super-complete
 GameBoard::GameBoard(Game * game) :
-	m_map_reloaded(false)
+	m_map_reloaded(false), m_monster_buffer(nullptr), t_fight(false)
 {
 	m_base_battle_sound_buffer.loadFromFile("data\\songs\\009_Battle_Wild_Pok_mon_.ogg");
 	m_base_battle_sound.setBuffer(m_base_battle_sound_buffer);
@@ -27,7 +27,7 @@ GameBoard::GameBoard(Game * game) :
 
 	m_base_battle_sound.setLoop(true);	m_base_battle_sound.setVolume(1);
 	//m_player = new Joueur("Rayquaza", "Player", 100, 0, 5, 1);
-	m_player = ChargerJoueur("Loan", "nocera");
+	m_player = ChargerJoueur("Loan", "Archer");
 	if (m_player == NULL)
 		game->window.close();
 	m_monster_pos = new Vector2i[NB_OF_MONSTERS];
@@ -127,6 +127,7 @@ GameBoard::GameBoard(Game * game) :
 	m_movement_clock.restart();
 
 
+
 }
 
 void GameBoard::draw(const float delta_time)
@@ -146,12 +147,14 @@ void GameBoard::draw(const float delta_time)
 
 void GameBoard::update(const float delta_time)
 {
+	t_fight = false;
 	m_collision.update();
 	m_menu_song.update();
 
+	if (!t_fight)		tryToLaunchABattle(m_player->positionInGrid());
 
-	/*if (t_fight)
-		blink();*/
+	if (t_fight)
+		blink();
 }
 
 void GameBoard::eventLoop()
@@ -448,7 +451,7 @@ bool GameBoard::blink()
 	else if (t_intro.getElapsedTime().asSeconds() >= 2.6f)
 	{
 		t_fight = false;
-		game->pushState((GameState*)new GameBattle(this->game, m_player, new Monstre(), &m_battle_issue));
+		game->pushState((GameState*)new GameBattle(this->game, m_player, m_monster_buffer, &m_battle_issue));
 		m_map->tiles.fade(Color(255, 255, 255));
 		m_base_battle_sound.stop();
 		return true;
@@ -475,6 +478,15 @@ bool GameBoard::blink()
 
 	}
 	return false;
+}
+
+void GameBoard::tryToLaunchABattle(sf::Vector2i player_pos)
+{
+
+			m_monster_buffer = m_monsters.front();
+			t_fight = true;
+		
+			
 }
 
 int GameBoard::manhattanDistance(const sf::Vector2i & a, const sf::Vector2i & b)

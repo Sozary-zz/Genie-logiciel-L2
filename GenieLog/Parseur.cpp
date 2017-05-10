@@ -83,15 +83,13 @@ Joueur * ChargerJoueur(string pseudo, string nomclasse) {
 
 				string classe, hp, mana, armure, force, comp1, comp2, comp3, comp4;
 				// recupere la ligne sans le numero de la competence
-				contenu = contenu.substr(contenu.find("/") + 1, contenu.length());
+
 				lignefichier = contenu.substr(0, contenu.find("/"));
 				classe = lignefichier;
-				// nom chargé
 
 				contenu = contenu.substr(contenu.find("/") + 1, contenu.length());
 				lignefichier = contenu.substr(0, contenu.find("/"));
 				hp = lignefichier;
-				// damages chargés
 
 				contenu = contenu.substr(contenu.find("/") + 1, contenu.length());
 				lignefichier = contenu.substr(0, contenu.find("/"));
@@ -101,12 +99,7 @@ Joueur * ChargerJoueur(string pseudo, string nomclasse) {
 				contenu = contenu.substr(contenu.find("/") + 1, contenu.length());
 				lignefichier = contenu.substr(0, contenu.find("/"));
 				armure = lignefichier;
-				//temps incantation chargé
-
-				contenu = contenu.substr(contenu.find("/") + 1, contenu.length());
-				lignefichier = contenu.substr(0, contenu.find("/"));
-				force = lignefichier;
-				//cout mana chargé				
+				//temps incantation chargé			
 
 				contenu = contenu.substr(contenu.find("/") + 1, contenu.length());
 				lignefichier = contenu.substr(0, contenu.find("/"));
@@ -131,7 +124,7 @@ Joueur * ChargerJoueur(string pseudo, string nomclasse) {
 
 				fichier.close();
 
-				if (classe != "" && hp != "" && mana != "" && force != "" && comp1 != "" && comp2 != "" && comp3 != "" && comp4 != "") {
+				if (classe != "" && hp != "" && mana != "" && force != "" &&  armure != "" && comp1 != "" && comp2 != "" && comp3 != "" && comp4 != "") {
 					return new Joueur(pseudo, classe, stoi(hp), stoi(mana), stoi(armure), stoi(force), stoi(comp1), stoi(comp2), stoi(comp3), stoi(comp4));
 				}
 				else {

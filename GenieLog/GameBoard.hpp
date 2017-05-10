@@ -11,7 +11,7 @@
 #include "GameInventory.hpp"
 #include "Parseur.hpp"
 
-#define NB_OF_MONSTERS 5
+#define NB_OF_MONSTERS 10
 
 enum class TILE_TYPE {
 	BUSH,
@@ -19,6 +19,7 @@ enum class TILE_TYPE {
 	FLOWER,
 	BAD_GRASS
 };
+
 struct Map {
 	TileMap tiles;
 	int* movements;
@@ -51,6 +52,8 @@ private:
 
 	int getV(const std::map<sf::Vector2i*, int>& m, sf::Vector2i* a) const;
 	bool blink();
+
+	void tryToLaunchABattle(sf::Vector2i player_pos);
 
 	static int manhattanDistance(const sf::Vector2i& a, const sf::Vector2i& b);
 private:
@@ -85,6 +88,8 @@ private:
 
 	std::vector<Monstre*> m_monsters;
 	sf::Vector2i  * m_monster_pos;
+
+	Monstre* m_monster_buffer;
 
 };
 

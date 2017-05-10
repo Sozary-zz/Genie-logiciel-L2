@@ -5,7 +5,7 @@ using namespace sf;
 using namespace std;
 
 Monstre::Monstre(string classe, int pvMax, int mana, int armure, int force, sf::Vector2i position, sf::Vector2f scale, DIRECTION orientation) : Entite(classe, pvMax, mana, armure, force),m_orientation(orientation)
-{
+, m_position(position){
 	GameState::texture_manager->addElement("monsters_sprites", "data\\hgsshoennpokemonoverworld.png");
 	m_sprite.setTexture(GameState::texture_manager->getElement("monsters_sprites"));
 
@@ -22,6 +22,11 @@ Monstre::~Monstre()
 Competence * Monstre::choisir_competence()
 {
 	return new Competence("Griffure", 15, 1, 5, 0);
+}
+
+sf::Vector2i Monstre::recupPos() const
+{
+	return m_position;
 }
 
 void Monstre::draw(sf::RenderTarget & target, sf::RenderStates states) const
