@@ -11,7 +11,7 @@
 #include "GameInventory.hpp"
 #include "Parseur.hpp"
 
-#define NB_OF_MONSTERS 10
+#define NB_OF_MONSTERS 5
 
 enum class TILE_TYPE {
 	BUSH,
@@ -54,6 +54,8 @@ private:
 	bool blink();
 
 	void tryToLaunchABattle(sf::Vector2i player_pos);
+
+	bool noMonsterHere(sf::Vector2i position) const;
 
 	static int manhattanDistance(const sf::Vector2i& a, const sf::Vector2i& b);
 private:

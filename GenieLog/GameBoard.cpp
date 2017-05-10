@@ -27,6 +27,7 @@ GameBoard::GameBoard(Game * game) :
 
 	m_base_battle_sound.setLoop(true);	m_base_battle_sound.setVolume(1);
 	//m_player = new Joueur("Rayquaza", "Player", 100, 0, 5, 1);
+
 	m_player = ChargerJoueur("Loan", "Paladin");
 	if (m_player == NULL)
 		game->window.close();
@@ -73,7 +74,7 @@ GameBoard::GameBoard(Game * game) :
 						available_pos = { x,y };
 
 					if (m_map_reloaded || monster_compt < NB_OF_MONSTERS)
-						if (available_pos.x != x && available_pos.y != y)
+						if (available_pos.x != x && available_pos.y != y && noMonsterHere({ x,y }))
 							m_monster_pos[monster_compt++] = { x,y };
 
 				}
@@ -98,6 +99,7 @@ GameBoard::GameBoard(Game * game) :
 	t_already_started = false;
 	for (int i = 0; i < NB_OF_MONSTERS; ++i)
 	{
+		cout << m_monster_pos[i].x << "," << m_monster_pos[i].y << endl;
 		auto rand = dis(gen);
 		DIRECTION or ;
 		if (rand <= 2500)
@@ -487,6 +489,14 @@ void GameBoard::tryToLaunchABattle(sf::Vector2i player_pos)
 			t_fight = true;
 		
 			
+}
+
+bool GameBoard::noMonsterHere(sf::Vector2i position) const
+{
+	for (int i = 0; i < NB_OF_MONSTERS; ++i)
+		if (position == m_monster_pos[i])
+			return false;
+	return true;
 }
 
 int GameBoard::manhattanDistance(const sf::Vector2i & a, const sf::Vector2i & b)

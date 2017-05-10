@@ -175,6 +175,7 @@ void GameBattle::player_attack() {
 	m_turns.erase(m_turns.begin());
 
 	m_skills_board->setActive(true);
+	sleep(seconds(1.f));
 }
 
 void GameBattle::monster_attack() {
@@ -209,6 +210,7 @@ void GameBattle::monster_attack() {
 
 	auto comp = m_monster->choisir_competence();
 	m_turns.push_back(Turn{ comp->getTempsIncantation(),m_monster,0,comp });
+	sleep(seconds(1.f));
 }
 bool GameBattle::endBattle()
 {
@@ -240,6 +242,7 @@ bool GameBattle::endBattle()
 }
 void GameBattle::update(const float delta_time)
 {
+
 	m_final_attack.update();
 	m_attack.update();
 
