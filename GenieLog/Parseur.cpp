@@ -185,49 +185,49 @@ Monstre * ChargerMonstre(string pseudo) {
 
 				contenu = contenu.substr(contenu.find("/") + 1, contenu.length());
 				lignefichier = contenu.substr(0, contenu.find("/"));
-				nombrePossible(lignefichier,Pseudovalide,'m');
+				nombrePossible(lignefichier, Pseudovalide, 'm');
 				hp = lignefichier;
 				//hp chargées
 
 				contenu = contenu.substr(contenu.find("/") + 1, contenu.length());
 				lignefichier = contenu.substr(0, contenu.find("/"));
-				nombrePossible(lignefichier,Pseudovalide,'m');
+				nombrePossible(lignefichier, Pseudovalide, 'm');
 				mana = lignefichier;
 				// mana chargé
 
 				contenu = contenu.substr(contenu.find("/") + 1, contenu.length());
 				lignefichier = contenu.substr(0, contenu.find("/"));
-				nombrePossible(lignefichier,Pseudovalide,'m');
+				nombrePossible(lignefichier, Pseudovalide, 'm');
 				armure = lignefichier;
 				//armure chargé			
 
 				contenu = contenu.substr(contenu.find("/") + 1, contenu.length());
 				lignefichier = contenu.substr(0, contenu.find("/"));
-				nombrePossible(lignefichier,Pseudovalide,'m');
+				nombrePossible(lignefichier, Pseudovalide, 'm');
 				force = lignefichier;
 				//force chargée
 
 				contenu = contenu.substr(contenu.find("/") + 1, contenu.length());
 				lignefichier = contenu.substr(0, contenu.find("/"));
-				nombrePossible(lignefichier,Pseudovalide,'m');
+				nombrePossible(lignefichier, Pseudovalide, 'm');
 				comp1 = lignefichier;
 				//competence 1 chargée				
 
 				contenu = contenu.substr(contenu.find("/") + 1, contenu.length());
 				lignefichier = contenu.substr(0, contenu.find("/"));
-				nombrePossible(lignefichier,Pseudovalide,'m');
+				nombrePossible(lignefichier, Pseudovalide, 'm');
 				comp2 = lignefichier;
 				// competence 2 chargée
 
 				contenu = contenu.substr(contenu.find("/") + 1, contenu.length());
 				lignefichier = contenu.substr(0, contenu.find("/"));
-				nombrePossible(lignefichier,Pseudovalide,'m');
+				nombrePossible(lignefichier, Pseudovalide, 'm');
 				comp3 = lignefichier;
 				//competence 3 chargée
 
 				contenu = contenu.substr(contenu.find("/") + 1, contenu.length());
 				lignefichier = contenu.substr(0, contenu.find("/"));
-				nombrePossible(lignefichier,Pseudovalide,'m');
+				nombrePossible(lignefichier, Pseudovalide, 'm');
 				comp4 = lignefichier;
 				//competence 4 chargée
 
@@ -252,6 +252,7 @@ Monstre * ChargerMonstre(string pseudo) {
 		return NULL;
 
 	}
+}
 void nombrePossible(string contenu, char& classecomplete,char type){
 	if(classecomplete != 'n'){
 		char complet = 'o';
