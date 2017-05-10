@@ -10,7 +10,7 @@ ActionButton::ActionButton(const string & label, Vector2f position, Vector2f siz
 	m_text.setFont(font);
 	m_text.setColor(font_color);
 	m_text.setCharacterSize(size.y*0.5f);
-	m_text.setPosition(position+Vector2f(size.x/2.f-m_text.getGlobalBounds().width/2.f, size.y / 2.f - m_text.getGlobalBounds().height ));
+	m_text.setPosition(position + Vector2f(size.x / 2.f - m_text.getGlobalBounds().width / 2.f, size.y / 2.f - m_text.getGlobalBounds().height));
 
 	m_shape.setFillColor(bckgrnd);
 	m_shape.setSize(size);

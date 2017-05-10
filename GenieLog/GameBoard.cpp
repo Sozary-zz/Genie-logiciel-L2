@@ -82,7 +82,16 @@ GameBoard::GameBoard(Game * game) :
 				else if (n < 6.5)
 					level[x + y*DEFAULT_HEIGHT] = (int)TILE_TYPE::BUSH;
 				else
+				{
 					level[x + y*DEFAULT_HEIGHT] = (int)TILE_TYPE::GRASS;
+
+					if (m_map_reloaded || (available_pos.x == -1 && available_pos.y == -1))
+						available_pos = { x,y };
+
+					if (m_map_reloaded || monster_compt < NB_OF_MONSTERS)
+						if (available_pos.x != x && available_pos.y != y && noMonsterHere({ x,y }))
+							m_monster_pos[monster_compt++] = { x,y };
+				}
 
 				m_map->datas[x + y*DEFAULT_HEIGHT] = (TILE_TYPE)level[x + y*DEFAULT_HEIGHT];
 
@@ -99,7 +108,8 @@ GameBoard::GameBoard(Game * game) :
 	t_already_started = false;
 	for (int i = 0; i < NB_OF_MONSTERS; ++i)
 	{
-		cout << m_monster_pos[i].x << "," << m_monster_pos[i].y << endl;
+		cout << m_monster_pos[i].x << "," << m_monster_pos[i].y << " ";
+		cout << level[m_monster_pos[i].x + m_monster_pos[i].y*DEFAULT_HEIGHT] << endl;
 		auto rand = dis(gen);
 		DIRECTION or ;
 		if (rand <= 2500)
@@ -153,7 +163,7 @@ void GameBoard::update(const float delta_time)
 	m_collision.update();
 	m_menu_song.update();
 
-	if (!t_fight)		tryToLaunchABattle(m_player->positionInGrid());
+//	if (!t_fight)		tryToLaunchABattle(m_player->positionInGrid());
 
 	if (t_fight)
 		blink();
@@ -485,10 +495,10 @@ bool GameBoard::blink()
 void GameBoard::tryToLaunchABattle(sf::Vector2i player_pos)
 {
 
-			m_monster_buffer = m_monsters.front();
-			t_fight = true;
-		
-			
+	m_monster_buffer = m_monsters.front();
+	t_fight = true;
+
+
 }
 
 bool GameBoard::noMonsterHere(sf::Vector2i position) const

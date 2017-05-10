@@ -121,12 +121,6 @@
     <ClCompile Include="EditList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AnimatedSprite.cpp">
-      <Filter>Source Files\Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="Animation.cpp">
-      <Filter>Source Files\Tools</Filter>
-    </ClCompile>
     <ClCompile Include="Parseur.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
@@ -224,12 +218,6 @@
     </ClInclude>
     <ClInclude Include="EditList.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimatedSprite.hpp">
-      <Filter>Source Files\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="Animation.hpp">
-      <Filter>Source Files\Tools</Filter>
     </ClInclude>
     <ClInclude Include="Parseur.hpp">
       <Filter>Source Files\Tools</Filter>

@@ -2,7 +2,6 @@
 #include <SFML\Graphics.hpp>
 #include <vector>
 #include "GameState.hpp"
-#include "AnimatedSprite.hpp"
 #include "Entity.h"
 
 #define TILE_SIZE 64.f
