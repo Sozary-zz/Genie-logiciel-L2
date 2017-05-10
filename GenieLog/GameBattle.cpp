@@ -5,7 +5,7 @@
 using namespace std;/// INFOS DE CE Q U IL SE PASSE
 using namespace sf;
 
-GameBattle::GameBattle(Game * game, Joueur* player, Monstre* monster, int* battle_issue, vector<Monstre*>& monsters) :
+GameBattle::GameBattle(Game * game, Joueur* player, Monstre* monster, int* battle_issue, vector<Monstre*>* monsters) :
 	m_tick(0), m_player(player), m_monster(monster), m_enemy_bar(156, 0), m_player_bar(156, 0), m_battle_issue(battle_issue),m_monsters(monsters)
 {
 
@@ -223,10 +223,10 @@ bool GameBattle::endBattle()
 		m_actions->addData(m_monster->recupNom() + " est mort!");
 		changed = true;
 
-		for (int i = 0; i < m_monsters.size(); ++i)
-			if (m_monsters[i] == m_monster) {
-				delete m_monsters[i];
-				m_monsters.erase(m_monsters.begin() + i);
+		for (int i = 0; i < m_monsters->size(); ++i)
+			if ((*m_monsters)[i] == m_monster) {
+				delete (*m_monsters)[i];
+				m_monsters->erase(m_monsters->begin() + i);
 				break;
 			}
 	}

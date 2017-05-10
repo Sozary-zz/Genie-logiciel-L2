@@ -173,7 +173,7 @@ void GameBoard::eventLoop()
 
 			case Event::KeyPressed:
 			{
-
+				if (t_fight)break;
 				if (event.key.code == Keyboard::A)
 				{
 					game->popState();
@@ -216,7 +216,7 @@ void GameBoard::eventLoop()
 				else if (event.key.code == Keyboard::Left) {
 					if (m_menu->isVisible())
 						break;
-					if (m_map->datas[m_player->positionInGrid().x - 1 + m_player->positionInGrid().y*DEFAULT_HEIGHT] != TILE_TYPE::BUSH
+					if ( m_map->datas[m_player->positionInGrid().x - 1 + m_player->positionInGrid().y*DEFAULT_HEIGHT] != TILE_TYPE::BUSH
 						&&  m_map->datas[m_player->positionInGrid().x - 1 + m_player->positionInGrid().y*DEFAULT_HEIGHT] != TILE_TYPE::BAD_GRASS && m_player->positionInGrid().x > 0)
 					{
 						m_player->left();
@@ -460,7 +460,7 @@ bool GameBoard::blink()
 	else if (t_intro.getElapsedTime().asSeconds() >= 2.6f)
 	{
 		t_fight = false;
-		game->pushState((GameState*)new GameBattle(this->game, m_player, m_monster_buffer, &m_battle_issue,m_monsters));
+		game->pushState((GameState*)new GameBattle(this->game, m_player, m_monster_buffer, &m_battle_issue,&m_monsters));
 
 		m_map->tiles.fade(Color(255, 255, 255));
 		m_base_battle_sound.stop();
@@ -493,7 +493,6 @@ bool GameBoard::blink()
 
 void GameBoard::tryToLaunchABattle(sf::Vector2i player_pos)
 {
-	cout << player_pos.x << "," << player_pos.y << endl;
 	for (auto&x : m_monsters)
 		if (x->recupPos() == (player_pos + Vector2i(1, 0)) ||
 			x->recupPos() == (player_pos + Vector2i(-1, 0)) ||
