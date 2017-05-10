@@ -41,7 +41,7 @@ struct Turn {
 class GameBattle: public GameState
 {
 public:
-	GameBattle(Game* game,Joueur* player, Monstre* monster, int* battle_issue);
+	GameBattle(Game* game,Joueur* player, Monstre* monster, int* battle_issue,std::vector<Monstre*>& monsters);
 	~GameBattle();
 	virtual void draw(const float delta_time) ;
 	virtual void update(const float delta_time);
@@ -88,6 +88,7 @@ private:
 
 	Sample m_attack;
 	Sample m_final_attack;
+	std::vector<Monstre*> m_monsters;
 
 };
 

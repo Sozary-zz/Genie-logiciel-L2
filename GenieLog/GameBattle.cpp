@@ -5,8 +5,8 @@
 using namespace std;/// INFOS DE CE Q U IL SE PASSE
 using namespace sf;
 
-GameBattle::GameBattle(Game * game, Joueur* player, Monstre* monster, int* battle_issue) :
-	m_tick(0), m_player(player), m_monster(monster), m_enemy_bar(156, 0), m_player_bar(156, 0), m_battle_issue(battle_issue)
+GameBattle::GameBattle(Game * game, Joueur* player, Monstre* monster, int* battle_issue, vector<Monstre*>& monsters) :
+	m_tick(0), m_player(player), m_monster(monster), m_enemy_bar(156, 0), m_player_bar(156, 0), m_battle_issue(battle_issue),m_monsters(monsters)
 {
 
 
@@ -122,6 +122,7 @@ GameBattle::GameBattle(Game * game, Joueur* player, Monstre* monster, int* battl
 
 GameBattle::~GameBattle()
 {
+
 	m_base_battle_sound.stop();
 }
 
@@ -187,7 +188,7 @@ void GameBattle::monster_attack() {
 		if (!m_attack.running)
 			m_attack.run();
 	}
-	
+
 
 	m_player->prendreDegats(m_turns.front().skill->getDamages());
 	m_player_bar.x -= float(m_turns.front().skill->getDamages()*BAR_SIZE) / (float)m_player->recupMaxVie();
@@ -221,6 +222,13 @@ bool GameBattle::endBattle()
 		*m_battle_issue = 1;
 		m_actions->addData(m_monster->recupNom() + " est mort!");
 		changed = true;
+
+		for (int i = 0; i < m_monsters.size(); ++i)
+			if (m_monsters[i] == m_monster) {
+				delete m_monsters[i];
+				m_monsters.erase(m_monsters.begin() + i);
+				break;
+			}
 	}
 
 	if (!m_player->estVivant()) {

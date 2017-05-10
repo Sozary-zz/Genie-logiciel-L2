@@ -107,7 +107,7 @@ GameBoard::GameBoard(Game * game) :
 			or = RIGHT;
 
 		m_monsters.push_back(ChargerMonstre("Gobelins"));
-		m_monsters.back()->adjustPos(
+		m_monsters.back()->adjustPos({ monster_pos.y,monster_pos.x },
 			Vector2i{ 100 + monster_pos.y*(int)(m_map->tiles.getScale().x * 16) ,75 + monster_pos.x*(int)(m_map->tiles.getScale().y * 16) },
 			Vector2f{ (m_map->tiles.getScale().x * 16) / 32.f  ,(m_map->tiles.getScale().y * 16) / 32.f }, or );
 	}
@@ -124,7 +124,7 @@ GameBoard::GameBoard(Game * game) :
 	m_menu->setVisible(false);
 	m_movement_clock.restart();
 
-
+	tryToLaunchABattle(m_player->positionInGrid());
 
 }
 
@@ -145,11 +145,10 @@ void GameBoard::draw(const float delta_time)
 
 void GameBoard::update(const float delta_time)
 {
-	t_fight = false;
+
 	m_collision.update();
 	m_menu_song.update();
 
-	//	if (!t_fight)		tryToLaunchABattle(m_player->positionInGrid());
 
 	if (t_fight)
 		blink();
@@ -221,6 +220,7 @@ void GameBoard::eventLoop()
 						&&  m_map->datas[m_player->positionInGrid().x - 1 + m_player->positionInGrid().y*DEFAULT_HEIGHT] != TILE_TYPE::BAD_GRASS && m_player->positionInGrid().x > 0)
 					{
 						m_player->left();
+						tryToLaunchABattle(m_player->positionInGrid());
 						return;
 					}
 					else
@@ -240,6 +240,7 @@ void GameBoard::eventLoop()
 						&&  m_map->datas[m_player->positionInGrid().x + 1 + m_player->positionInGrid().y*DEFAULT_HEIGHT] != TILE_TYPE::BAD_GRASS)
 					{
 						m_player->right();
+						tryToLaunchABattle(m_player->positionInGrid());
 						return;
 					}
 					else
@@ -261,6 +262,7 @@ void GameBoard::eventLoop()
 							&&  m_map->datas[m_player->positionInGrid().x + (m_player->positionInGrid().y - 1)*DEFAULT_HEIGHT] != TILE_TYPE::BAD_GRASS && m_player->positionInGrid().y > 0)
 						{
 							m_player->up();
+							tryToLaunchABattle(m_player->positionInGrid());
 							return;
 						}
 						else
@@ -282,7 +284,7 @@ void GameBoard::eventLoop()
 							&&  m_map->datas[m_player->positionInGrid().x + (m_player->positionInGrid().y + 1)*DEFAULT_HEIGHT] != TILE_TYPE::BAD_GRASS)
 						{
 							m_player->down();
-
+							tryToLaunchABattle(m_player->positionInGrid());
 							return;
 						}
 						else
@@ -458,10 +460,12 @@ bool GameBoard::blink()
 	else if (t_intro.getElapsedTime().asSeconds() >= 2.6f)
 	{
 		t_fight = false;
-		game->pushState((GameState*)new GameBattle(this->game, m_player, m_monster_buffer, &m_battle_issue));
+		game->pushState((GameState*)new GameBattle(this->game, m_player, m_monster_buffer, &m_battle_issue,m_monsters));
+
 		m_map->tiles.fade(Color(255, 255, 255));
 		m_base_battle_sound.stop();
-		return true;
+
+		
 	}
 	else {
 
@@ -489,11 +493,17 @@ bool GameBoard::blink()
 
 void GameBoard::tryToLaunchABattle(sf::Vector2i player_pos)
 {
+	cout << player_pos.x << "," << player_pos.y << endl;
+	for (auto&x : m_monsters)
+		if (x->recupPos() == (player_pos + Vector2i(1, 0)) ||
+			x->recupPos() == (player_pos + Vector2i(-1, 0)) ||
+			x->recupPos() == (player_pos + Vector2i(0, 1)) ||
+			x->recupPos() == (player_pos + Vector2i(0, -1))) {
 
-	m_monster_buffer = m_monsters.front();
-	t_fight = true;
-
-
+			m_monster_buffer = x;
+			t_fight = true;
+			return;
+		}
 }
 
 bool GameBoard::noMonsterHere(sf::Vector2i position) const
