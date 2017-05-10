@@ -27,7 +27,7 @@ GameBoard::GameBoard(Game * game) :
 
 	m_base_battle_sound.setLoop(true);	m_base_battle_sound.setVolume(1);
 	//m_player = new Joueur("Rayquaza", "Player", 100, 0, 5, 1);
-	m_player = ChargerJoueur("Loan", "Archer");
+	m_player = ChargerJoueur("Loan", "Paladin");
 	if (m_player == NULL)
 		game->window.close();
 	m_monster_pos = new Vector2i[NB_OF_MONSTERS];
