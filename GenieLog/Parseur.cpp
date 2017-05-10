@@ -1,5 +1,19 @@
+/**
+*
+*\file Parseur.cpp
+*\brief Fonction qui lie le code et les fichiers text de sauvegarde
+*\details Fonctions permettant de faire le lien entre Monstre,Personnage et Competence du Programme avec les fichiers dans /data/loading
+*\author Nocera L.
+*
+*/
+
 #include "Parseur.hpp"
 
+/**
+*\fn ChargerCompetence retourne une Competence lue dans le fichier /data/loading/Competence.txt
+*\param numero Numero de la compétence dans /data/loading/Competence.txt
+*
+*/
 
 Competence * ChargerCompetence(int numero) {
 
@@ -71,6 +85,11 @@ Competence * ChargerCompetence(int numero) {
 	}
 }
 
+/**
+*\fn ChargerJoueur retourne un Joueur lu dans le fichier /data/loading/Player.txt
+*\param numero Numero de la compétence dans /data/loading/Player.txt
+*
+*/
 
 Joueur * ChargerJoueur(string pseudo, string nomclasse) {
 
@@ -167,6 +186,12 @@ Joueur * ChargerJoueur(string pseudo, string nomclasse) {
 
 	}
 }
+
+/**
+*\fn ChargerMonstre retourne un Monstre lu dans le fichier /data/loading/Monster.txt
+*\param numero Numero de la compétence dans /data/loading/Monster.txt
+*
+*/
 
 Monstre * ChargerMonstre(string pseudo) {
 	ifstream fichier(DATASAVEMONSTER, ios::in);
