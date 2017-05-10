@@ -7,9 +7,9 @@ using namespace sf;
 
 // https://downloads.khinsider.com/game-soundtracks/album/pokemon-ruby-sapphire-music-super-complete
 GameBoard::GameBoard(Game * game) :
-	m_monster_buffer(nullptr), t_fight(false),t_already_started(false)
+	m_monster_buffer(nullptr), t_fight(false), t_already_started(false)
 {
-	
+
 	m_base_battle_sound_buffer.loadFromFile("data\\songs\\009_Battle_Wild_Pok_mon_.ogg");
 	m_base_battle_sound.setBuffer(m_base_battle_sound_buffer);
 
@@ -53,7 +53,7 @@ GameBoard::GameBoard(Game * game) :
 	m_map->movements = new int[DEFAULT_HEIGHT*DEFAULT_WIDTH];
 	m_map->datas = new TILE_TYPE[DEFAULT_HEIGHT*DEFAULT_WIDTH];
 
-	Vector2i available_pos = { -1,-1 };
+
 	do {
 		monster_compt = 0;
 		auto pn = PerlinNoise(dis(gen));
@@ -84,13 +84,19 @@ GameBoard::GameBoard(Game * game) :
 	m_map->tiles.move(100, 75);
 
 	auto where_can_I_pose = availablePositions(m_map->datas);
-	auto position_of_player = dis(gen);
-	m_player->
+	auto rand_player_pos = dis(gen);
+	Vector2i player_pos = where_can_I_pose[rand_player_pos%where_can_I_pose.size()];
+	where_can_I_pose.erase(where_can_I_pose.begin() + rand_player_pos%where_can_I_pose.size());
 
 	for (int i = 0; i < NB_OF_MONSTERS; ++i)
 	{
-		cout << m_monster_pos[i].x << "," << m_monster_pos[i].y << " ";
+		auto rand_monster_pos = dis(gen);
+		Vector2i monster_pos = where_can_I_pose[rand_monster_pos%where_can_I_pose.size()];
+		where_can_I_pose.erase(where_can_I_pose.begin() + rand_monster_pos%where_can_I_pose.size());
+
+		cout << monster_pos.x << "," << monster_pos.y << " ";
 		cout << level[m_monster_pos[i].x + m_monster_pos[i].y*DEFAULT_HEIGHT] << endl;
+
 		auto rand = dis(gen);
 		DIRECTION or ;
 		if (rand <= 2500)
@@ -104,13 +110,13 @@ GameBoard::GameBoard(Game * game) :
 
 		m_monsters.push_back(ChargerMonstre("Gobelins"));
 		m_monsters.back()->adjustPos(
-			Vector2i{ 100 + m_monster_pos[i].x*(int)(m_map->tiles.getScale().x * 16) ,75 + m_monster_pos[i].y*(int)(m_map->tiles.getScale().y * 16) },
+			Vector2i{ 100 + monster_pos.x*(int)(m_map->tiles.getScale().x * 16) ,75 + monster_pos.y*(int)(m_map->tiles.getScale().y * 16) },
 			Vector2f{ (m_map->tiles.getScale().x * 16) / 32.f  ,(m_map->tiles.getScale().y * 16) / 32.f }, or );
 	}
 
 
 
-	m_player->adjustPos(available_pos, Vector2i{ 100 + available_pos.x*(int)(m_map->tiles.getScale().x * 16) ,75 + available_pos.y*(int)(m_map->tiles.getScale().y * 16) },
+	m_player->adjustPos(player_pos, Vector2i{ 100 + player_pos.x*(int)(m_map->tiles.getScale().x * 16) ,75 + player_pos.y*(int)(m_map->tiles.getScale().y * 16) },
 		Vector2f{ (m_map->tiles.getScale().x * 16) / TILE_SIZE  ,(m_map->tiles.getScale().y * 16) / TILE_SIZE },
 		Vector2f{ m_map->tiles.getScale().x * 16, m_map->tiles.getScale().y * 16
 	});
