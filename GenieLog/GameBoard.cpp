@@ -83,6 +83,10 @@ GameBoard::GameBoard(Game * game) :
 	m_map->tiles.setScale((x.x - 200) / (16 * DEFAULT_WIDTH), (x.y - 150) / (16 * DEFAULT_HEIGHT));
 	m_map->tiles.move(100, 75);
 
+	auto where_can_I_pose = availablePositions(m_map->datas);
+	auto position_of_player = dis(gen);
+	m_player->
+
 	for (int i = 0; i < NB_OF_MONSTERS; ++i)
 	{
 		cout << m_monster_pos[i].x << "," << m_monster_pos[i].y << " ";
