@@ -57,6 +57,10 @@ GameBoard::GameBoard(Game * game) :
 	do {
 		monster_compt = 0;
 		auto pn = PerlinNoise(dis(gen));
+		if (m_map_reloaded)
+			available_pos = { -1,-1 };
+
+			
 		for (int x = 0; x < DEFAULT_WIDTH; ++x)
 			for (int y = 0; y < DEFAULT_HEIGHT; ++y) {
 				double n = 10 * pn.noise(x, y, 2.6);
@@ -70,10 +74,10 @@ GameBoard::GameBoard(Game * game) :
 				{
 					level[x + y*DEFAULT_HEIGHT] = (int)TILE_TYPE::GRASS;
 
-					if (m_map_reloaded || (available_pos.x == -1 && available_pos.y == -1))
+					if (available_pos.x == -1 && available_pos.y == -1)
 						available_pos = { x,y };
 
-					if (m_map_reloaded || monster_compt < NB_OF_MONSTERS)
+					if (monster_compt < NB_OF_MONSTERS)
 						if (available_pos.x != x && available_pos.y != y && noMonsterHere({ x,y }))
 							m_monster_pos[monster_compt++] = { x,y };
 

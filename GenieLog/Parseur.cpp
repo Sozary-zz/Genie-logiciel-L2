@@ -164,7 +164,7 @@ Joueur * ChargerJoueur(string pseudo, string nomclasse) {
 	}
 }
 
-void nombrePossible(string contenu, &char classecomplete,char type){
+void nombrePossible(string contenu, char& classecomplete,char type){
 	if(classecomplete != 'n'){
 		char complet = 'o';
 		if(contenu == ""){

@@ -7,4 +7,4 @@
 class Joueur;
 Competence * ChargerCompetence(int numero);
 Joueur * ChargerJoueur(std::string pseudo, std::string nomclasse);
-void nombrePossible(string contenu, &char classecomplete,char type);
+void nombrePossible(string contenu, char& classecomplete,char type);
