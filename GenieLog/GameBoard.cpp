@@ -80,6 +80,14 @@ GameBoard::GameBoard(Game * game) :
 	} while (!validMap((int*)m_map->datas, DEFAULT_WIDTH, DEFAULT_HEIGHT));
 
 
+	for (int x = 0; x < DEFAULT_WIDTH; ++x) {
+		for (int y = 0; y < DEFAULT_HEIGHT; ++y)
+		{
+			cout <<(int) m_map->datas[x + y*DEFAULT_HEIGHT] << ",";
+		}
+		cout << endl;
+	}
+		
 
 	m_map->tiles.load("data\\tileset.png", Vector2u(16, 16), level, DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	m_map->tiles.setScale((x.x - 200) / (16 * DEFAULT_WIDTH), (x.y - 150) / (16 * DEFAULT_HEIGHT));
