@@ -90,5 +90,11 @@ private:
 	Sample m_final_attack;
 	std::vector<Monstre*>* m_monsters;
 
+	bool m_have_to_stop;
+	bool m_action_occured;
+
+	sf::Clock m_waiting_for_message;
+	bool m_have_to_wait_for_message;
+
 };
 
