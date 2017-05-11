@@ -11,11 +11,11 @@ GameBattle::GameBattle(Game * game, Joueur* player, Monstre* monster, int* battl
 
 
 	m_attack.load("data\\songs\\sounds_effect\\emerald_000D_hit.wav");
-	m_attack.sample.setVolume(10);
+	m_attack.sample.setVolume(MAIN_VOLUME);
 	m_attack.running = false;
 
 	m_final_attack.load("data\\songs\\sounds_effect\\emerald_000E_end.wav");
-	m_final_attack.sample.setVolume(10);
+	m_final_attack.sample.setVolume(MAIN_VOLUME);
 	m_final_attack.running = false;
 
 	m_dis = uniform_int_distribution<>(1, 100);
@@ -56,7 +56,7 @@ GameBattle::GameBattle(Game * game, Joueur* player, Monstre* monster, int* battl
 
 	m_base_battle_sound.setPlayingOffset(seconds(3.f));
 	m_base_battle_sound.play();
-	m_base_battle_sound.setVolume(1);
+	m_base_battle_sound.setVolume(MAIN_VOLUME);
 
 	Text name_a, name_b;
 	Text hp;

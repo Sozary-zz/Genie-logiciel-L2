@@ -8,7 +8,7 @@
 
 #define DEFAULT_HEIGHT 5 //20 max!
 #define DEFAULT_WIDTH  5
-
+#define MAIN_VOLUME 1
 
 class GameState
 {

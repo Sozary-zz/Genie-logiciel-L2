@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML\Graphics.hpp>
+#include <SFML\Audio.hpp>
 #include "ActionButton.h"
 #include "GameState.hpp"
 #include "GameBoard.hpp"
@@ -29,6 +30,8 @@ private:
 	bool m_locked;
 
 	std::string m_class;
+
+	sf::Music m_main_music;
 
 };
 

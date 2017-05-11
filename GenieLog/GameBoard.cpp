@@ -14,20 +14,20 @@ GameBoard::GameBoard(Game * game,string & classe, string& pseudo) :
 	m_base_battle_sound.setBuffer(m_base_battle_sound_buffer);
 
 	m_collision.load("data\\songs\\sounds_effect\\emerald_0003_collision.wav");
-	m_collision.sample.setVolume(1);
+	m_collision.sample.setVolume(MAIN_VOLUME);
 	m_collision.running = false;
 
 	m_main_song.openFromFile("data\\songs\\048_Route_111.ogg");
 	m_main_song.setLoop(true);
-	m_main_song.setVolume(1);
+	m_main_song.setVolume(MAIN_VOLUME);
 	m_main_song.play();
 
 
 	m_menu_song.load("data\\songs\\sounds_effect\\emerald_00F8_menu.wav");
 	m_menu_song.running = false;
-	m_menu_song.sample.setVolume(1);
+	m_menu_song.sample.setVolume(MAIN_VOLUME);
 
-	m_base_battle_sound.setLoop(true);	m_base_battle_sound.setVolume(1);
+	m_base_battle_sound.setLoop(true);	m_base_battle_sound.setVolume(MAIN_VOLUME);
 
 	m_player = ChargerJoueur(pseudo, classe);
 	if (m_player == NULL)
@@ -151,7 +151,7 @@ void GameBoard::update(const float delta_time)
 
 	if (m_just_left_a_battle)
 	{
-		m_main_song.setVolume(1);
+		m_main_song.setVolume(MAIN_VOLUME);
 
 
 		tryToLaunchABattle(m_player->positionInGrid());

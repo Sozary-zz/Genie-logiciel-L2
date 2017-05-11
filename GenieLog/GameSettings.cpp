@@ -12,11 +12,11 @@ GameSettings::GameSettings(Game * game)
 	m_view.setSize(x);
 	m_view.setCenter(x*.5f);
 
-	GameState::texture_manager->addElement("settings_background", "data\\back_2.png");
+	//GameState::texture_manager->addElement("settings_background", "data\\back_2.png");
 
-	m_background.setTexture(GameState::texture_manager->getElement("settings_background"));
+//	m_background.setTexture(GameState::texture_manager->getElement("settings_background"));
 
-	m_background.setScale(x.x / m_background.getTexture()->getSize().x, x.y / m_background.getTexture()->getSize().y);
+	//m_background.setScale(x.x / m_background.getTexture()->getSize().x, x.y / m_background.getTexture()->getSize().y);
 
 }
 

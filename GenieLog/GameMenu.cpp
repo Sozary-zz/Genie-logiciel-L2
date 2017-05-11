@@ -47,9 +47,9 @@ void GameMenu::update(const float delta_time)
 			switch (i)
 			{
 			case (int)BUTTON_INDEX::QUIT_BUTTON:
-				game->popState();
+		
 
-				game->window.close();
+				game->window.close();//		game->popState();
 
 			case (int)BUTTON_INDEX::SETTINGS_BUTTON:
 				game->pushState((GameState*)new GameSettings(this->game));

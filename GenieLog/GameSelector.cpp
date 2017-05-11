@@ -12,6 +12,11 @@ GameSelector::GameSelector(Game * game) :m_selected(-1), m_someone_else_selected
 	m_view.setSize(x);
 	m_view.setCenter(x*.5f);
 
+	m_main_music.openFromFile("data\\songs\\004_Introductions.ogg");
+	m_main_music.setLoop(true);
+	m_main_music.setVolume(MAIN_VOLUME);
+	m_main_music.play();
+
 	GameState::texture_manager->addElement("grad", "data\\gradiant.png");
 	GameState::texture_manager->addElement("Paladin", "data\\paladin.png");
 	GameState::texture_manager->addElement("Guerrier", "data\\guerrier.png");
@@ -80,20 +85,24 @@ void GameSelector::update(const float delta_time)
 {
 	if (m_next_button->buttonPushed() && m_locked) {
 		try {
-			PlayerNameChoiceBox* choice_ctxt = new PlayerNameChoiceBox(300, 150, "Pseudo pour le "+ m_class);
+			PlayerNameChoiceBox* choice_ctxt = new PlayerNameChoiceBox(300, 150, "Pseudo pour la classe "+ m_class);
 		}
 		catch (int e) {
 			m_locked = false;
 		}
 		catch (string& s) {
+			m_main_music.stop();
 			game->pushState((GameState*)new GameBoard(this->game, m_class, s));
 		}
 		
 	}
 		
 
-	else if (m_quit_button->buttonPushed())
+	else if (m_quit_button->buttonPushed()) {
+		m_main_music.stop();
 		game->popState();
+		return;
+	}
 
 	if (m_someone_else_selected && !m_locked) {
 		for (int i = 0; i < 4; ++i) {
@@ -134,6 +143,7 @@ void GameSelector::eventLoop()
 		}
 
 		case Event::MouseMoved: {
+			if (m_locked) break;
 			for (int i = 0; i < 4; ++i)
 				if (m_presentations[i].getGlobalBounds().contains({ (float)event.mouseMove.x,(float)event.mouseMove.y })) {
 					m_selected = i;
@@ -154,13 +164,11 @@ void GameSelector::eventLoop()
 					{
 					case 0:m_class = "Paladin"; break;
 					case 1:m_class = "Guerrier"; break;
-
 					case 2:m_class = "Archer"; break;
-
 					case 3:m_class = "Mage"; break;
 
 					}
-					
+			
 				}
 			}
 			break;
