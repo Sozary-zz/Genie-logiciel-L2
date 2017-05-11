@@ -38,6 +38,8 @@ PlayerNameChoiceBox::PlayerNameChoiceBox(int width, int height, std::string name
 		bind(&PlayerNameChoiceBox::actionButton, this, placeholders::_1),
 		"Annuler",
 		END_BUTTON_COMPONENT));
+
+	run();
 }
 
 void PlayerNameChoiceBox::actionButton(std::string s)
