@@ -92,6 +92,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="PerlinNoise.cpp" />
+    <ClCompile Include="PlayerNameChoiceBox.cpp" />
     <ClCompile Include="SkillsBoard.cpp" />
     <ClCompile Include="SOZLayout\Exception.cpp" />
     <ClCompile Include="SOZLayout\LayoutBase.cpp" />
@@ -124,6 +125,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="PerlinNoise.hpp" />
+    <ClInclude Include="PlayerNameChoiceBox.h" />
     <ClInclude Include="SkillsBoard.h" />
     <ClInclude Include="SOZLayout\Colors.h" />
     <ClInclude Include="SOZLayout\Component.h" />
