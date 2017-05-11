@@ -134,7 +134,7 @@
       <Filter>Source Files\GameStates</Filter>
     </ClCompile>
     <ClCompile Include="PlayerNameChoiceBox.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\ChoiceBoxs</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -238,7 +238,7 @@
       <Filter>Source Files\GameStates</Filter>
     </ClInclude>
     <ClInclude Include="PlayerNameChoiceBox.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\ChoiceBoxs</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
