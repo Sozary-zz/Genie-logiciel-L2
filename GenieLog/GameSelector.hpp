@@ -2,7 +2,7 @@
 #include <SFML\Graphics.hpp>
 #include "ActionButton.h"
 #include "GameState.hpp"
-
+#include "GameBoard.hpp"
 
 class GameSelector: public GameState
 {

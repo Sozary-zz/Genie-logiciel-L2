@@ -31,7 +31,9 @@ GameSelector::GameSelector(Game * game)
 
 	m_presentations[0].setFillColor(Color(142, 68, 173));
 
-	m_next_button = new ActionButton("Suivant",{x.x/2-x.y/)
+	m_next_button = new ActionButton("Suivant", { 50,50 }, { 250, 50 }, Color::Blue, Color::White, GameState::font_manager->getElement("main_font"));
+	m_quit_button = new ActionButton("Quitter", { 150,50 }, { 250, 50 }, Color::Blue, Color::White, GameState::font_manager->getElement("main_font"));
+
 }
 
 void GameSelector::draw(const float delta_time)
@@ -41,12 +43,21 @@ void GameSelector::draw(const float delta_time)
 		game->window.draw(m_presentations[0]);
 		game->window.draw(m_sprites[i]);
 	}
+	game->window.draw(*m_next_button);
+	game->window.draw(*m_quit_button);
 
 }
 
 void GameSelector::update(const float delta_time)
 {
-
+	if (m_next_button->buttonPushed()) {
+		game->pushState((GameState*)new GameBoard(this->game));
+		m_next_button->setState(false);
+	}
+	else if (m_quit_button->buttonPushed()) {
+		game->popState();
+		m_quit_button->setState(false);
+	}
 }
 
 void GameSelector::eventLoop()
