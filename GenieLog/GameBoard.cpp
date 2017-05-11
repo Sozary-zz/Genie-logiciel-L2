@@ -6,7 +6,7 @@ using namespace sf;
 
 
 // https://downloads.khinsider.com/game-soundtracks/album/pokemon-ruby-sapphire-music-super-complete
-GameBoard::GameBoard(Game * game,string & classe) :
+GameBoard::GameBoard(Game * game,string & classe, string& pseudo) :
 	m_monster_buffer(nullptr), t_fight(false), t_already_started(false), m_just_left_a_battle(false)
 {
 
@@ -29,7 +29,7 @@ GameBoard::GameBoard(Game * game,string & classe) :
 
 	m_base_battle_sound.setLoop(true);	m_base_battle_sound.setVolume(1);
 
-	m_player = ChargerJoueur("Loan", classe);
+	m_player = ChargerJoueur(pseudo, classe);
 	if (m_player == NULL)
 		game->window.close();
 	m_monster_pos = new Vector2i[NB_OF_MONSTERS];

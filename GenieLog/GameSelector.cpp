@@ -78,8 +78,20 @@ void GameSelector::draw(const float delta_time)
 
 void GameSelector::update(const float delta_time)
 {
-	if (m_next_button->buttonPushed())
-		game->pushState((GameState*)new GameBoard(this->game,m_class));
+	if (m_next_button->buttonPushed()) {
+		try {
+			PlayerNameChoiceBox* choice_ctxt = new PlayerNameChoiceBox(300, 250, "Pseudo");
+		}
+		catch (int e) {
+			if (e == INTERRUPT_WINDOW_EXCEPTION)
+				game->window.close();
+		}
+		catch (string& s) {
+			game->pushState((GameState*)new GameBoard(this->game, m_class, s));
+		}
+		
+	}
+		
 
 	else if (m_quit_button->buttonPushed())
 		game->popState();

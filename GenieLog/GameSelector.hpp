@@ -3,6 +3,7 @@
 #include "ActionButton.h"
 #include "GameState.hpp"
 #include "GameBoard.hpp"
+#include "PlayerNameChoiceBox.h"
 
 class GameSelector: public GameState
 {
