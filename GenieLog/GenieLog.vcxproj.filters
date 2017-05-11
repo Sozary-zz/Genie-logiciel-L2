@@ -137,9 +137,6 @@
     <ClCompile Include="PlayerNameChoiceBox.cpp">
       <Filter>Source Files\ChoiceBoxs</Filter>
     </ClCompile>
-    <ClCompile Include="GameEnd.cpp">
-      <Filter>Source Files\GameStates</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.hpp">
@@ -243,9 +240,6 @@
     </ClInclude>
     <ClInclude Include="PlayerNameChoiceBox.h">
       <Filter>Source Files\ChoiceBoxs</Filter>
-    </ClInclude>
-    <ClInclude Include="GameEnd.hpp">
-      <Filter>Source Files\GameStates</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

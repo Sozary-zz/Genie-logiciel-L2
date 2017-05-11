@@ -6,7 +6,7 @@ using namespace sf;
 
 
 // https://downloads.khinsider.com/game-soundtracks/album/pokemon-ruby-sapphire-music-super-complete
-GameBoard::GameBoard(Game * game,string & classe, string& pseudo) :
+GameBoard::GameBoard(Game * game, string & classe, string& pseudo) :
 	m_monster_buffer(nullptr), t_fight(false), t_already_started(false), m_just_left_a_battle(false)
 {
 
@@ -105,8 +105,18 @@ GameBoard::GameBoard(Game * game,string & classe, string& pseudo) :
 			or = LEFT;
 		else
 			or = RIGHT;
+		auto type = dis(gen);
+		string type_monster;
+		if (type < 3000)
+			type_monster = "Gobelins";
 
-		m_monsters.push_back(ChargerMonstre("Gobelins"));
+		else if(type>=3000 && type<6500)
+			type_monster = "Orc";
+		else
+			type_monster = "Dragonnet";
+
+
+		m_monsters.push_back(ChargerMonstre(type_monster));
 		m_monsters.back()->adjustPos({ monster_pos.y,monster_pos.x },
 			Vector2i{ 100 + monster_pos.y*(int)(m_map->tiles.getScale().x * 16) ,75 + monster_pos.x*(int)(m_map->tiles.getScale().y * 16) },
 			Vector2f{ (m_map->tiles.getScale().x * 16) / 32.f  ,(m_map->tiles.getScale().y * 16) / 32.f }, or );
@@ -508,6 +518,36 @@ void GameBoard::tryToLaunchABattle(sf::Vector2i player_pos)
 			x->recupPos() == (player_pos + Vector2i(0, 1)) ||
 			x->recupPos() == (player_pos + Vector2i(0, -1))) {
 
+			DIRECTION tmp;
+			if (x->recupPos() == (player_pos + Vector2i(1, 0)))
+				tmp = RIGHT;
+			else if (x->recupPos() == (player_pos + Vector2i(-1, 0)))
+				tmp = LEFT;
+			else if (x->recupPos() == (player_pos + Vector2i(0, 1)))
+				tmp = DOWN;
+			else
+				tmp = UP;
+
+
+			switch (tmp)
+			{
+			case DOWN:
+				x->setOrientation(UP);
+				break;
+
+			case UP:
+				x->setOrientation(DOWN);
+				break;
+
+			case LEFT:
+				x->setOrientation(RIGHT);
+				break;
+
+			case RIGHT:
+				x->setOrientation(LEFT);
+				break;
+			}
+			x->textureUpdate();
 			m_monster_buffer = x;
 			t_fight = true;
 			return;
