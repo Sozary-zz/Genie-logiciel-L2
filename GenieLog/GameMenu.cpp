@@ -13,7 +13,7 @@ GameMenu::GameMenu(Game * game)
 	m_view.setCenter(x*.5f);
 
 	GameState::texture_manager->addElement("menu_background", "data\\back.png");
-	GameState::font_manager->addElement("main_font", "data\\arial.ttf");
+	GameState::font_manager->addElement("main_font", "data\\VCR_OSD_MONO_1.001.ttf");
 
 	m_background.setTexture(GameState::texture_manager->getElement("menu_background"));
 

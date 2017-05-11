@@ -130,6 +130,9 @@
     <ClCompile Include="GameInventory.cpp">
       <Filter>Source Files\GameStates</Filter>
     </ClCompile>
+    <ClCompile Include="GameSelector.cpp">
+      <Filter>Source Files\GameStates</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.hpp">
@@ -226,6 +229,9 @@
       <Filter>Source Files\Tools</Filter>
     </ClInclude>
     <ClInclude Include="GameInventory.hpp">
+      <Filter>Source Files\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSelector.hpp">
       <Filter>Source Files\GameStates</Filter>
     </ClInclude>
   </ItemGroup>

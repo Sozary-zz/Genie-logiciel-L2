@@ -14,12 +14,11 @@ Joueur::Joueur(string pseudo,string classe, int pvmax, int mana, int armure, int
 	tableau_competence.push_back(ChargerCompetence(comp3));
 	tableau_competence.push_back(ChargerCompetence(comp4));
 
-	GameState::texture_manager->addElement("character_sprite", "data\\character.png"); // pwet
 
 	m_walking_positions = new int[4]
 	{ 8,10,9,11 };
 
-	m_sprite.setTexture(GameState::texture_manager->getElement("character_sprite"));
+	m_sprite.setTexture(GameState::texture_manager->getElement(classe));
 	m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
 }
 
@@ -30,12 +29,11 @@ Joueur::Joueur(string pseudo, string classe, int pvmax, int mana, int armure, in
 	RempirCompetence();
 
 	m_nom = pseudo;
-	GameState::texture_manager->addElement("character_sprite", "data\\character.png"); // pwet
 
 	m_walking_positions = new int[4]
 	{ 8,10,9,11 };
 
-	m_sprite.setTexture(GameState::texture_manager->getElement("character_sprite"));
+	m_sprite.setTexture(GameState::texture_manager->getElement(classe));
 	m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
 }
 Joueur::Joueur() :nb_objet_max(30), nb_equipement_max(6), nb_competence_max(5),
