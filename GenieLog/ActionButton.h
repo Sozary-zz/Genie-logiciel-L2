@@ -11,9 +11,9 @@
 #include <string>
 
 /**
-*\class ActionButton
+*\class ActionButton: public sf::Drawable , public sf::Transformable
 **/
-class ActionButton: public sf::Drawable, public sf::Transformable /*!<Elle est de type Drawable pour pouvoir l'afficher et Transformable pour pouvoir la redimentionner*/
+class ActionButton: public sf::Drawable, public sf::Transformable /*!Elle est de type Drawable pour pouvoir l'afficher et Transformable pour pouvoir la redimentionner*/
 {
 public:
 	ActionButton(const std::string& label, sf::Vector2f position, sf::Vector2f size, sf::Color bckgrnd, sf::Color font_color,const sf::Font &font);/*!<Constructeur prenant en argument ce qui est écris dans le bouton , sa position , sa taille , sa couleur d'arrière plan , la couleur du texte */
