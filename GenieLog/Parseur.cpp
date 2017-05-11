@@ -12,9 +12,8 @@
 /**
 *\fn ChargerCompetence retourne une Competence lue dans le fichier /data/loading/Competence.txt
 *\param numero Numero de la compétence dans /data/loading/Competence.txt
-*
+*\param[out] newCompetence renvoi une competence chargée via le fichier texte NULL si incomplet/aucune competence correspond au numero entre en parametre
 */
-
 Competence * ChargerCompetence(int numero) {
 
 	ifstream fichier(DATASAVECOMP, ios::in);
@@ -23,6 +22,8 @@ Competence * ChargerCompetence(int numero) {
 	string compnumber = to_string(numero);
 
 	if (fichier) {
+		
+		/*! < getline(fichier,contenu) recuperer les lignes dans l'ordre du fichier ouvert et les met dans contenu ( les unes apres les autres )  */
 		getline(fichier, contenu);
 		getline(fichier, contenu);
 		contenu = " ";
@@ -87,8 +88,9 @@ Competence * ChargerCompetence(int numero) {
 
 /**
 *\fn ChargerJoueur retourne un Joueur lu dans le fichier /data/loading/Player.txt
-*\param numero Numero de la compétence dans /data/loading/Player.txt
-*
+*\param nomclasse Nom de la classe du Personnage dans /data/loading/Player.txt
+*\param pseudo Pseudo rentré par l'utilisateur
+*\param[out] newJoueur Renvoi un Joueur chargé via le fichier texte. NULL si incomplet/nomclasse pas trouvé
 */
 
 Joueur * ChargerJoueur(string pseudo, string nomclasse) {
@@ -167,7 +169,12 @@ Joueur * ChargerJoueur(string pseudo, string nomclasse) {
 				fichier.close();
 
 				if (classevalide == 'o') {
-					return new Joueur(pseudo, classe, stoi(hp), stoi(mana), stoi(armure), stoi(force), stoi(comp1), stoi(comp2), stoi(comp3), stoi(comp4));
+					if(pseudo != ""){
+						return new Joueur(pseudo, classe, stoi(hp), stoi(mana), stoi(armure), stoi(force), stoi(comp1), stoi(comp2), stoi(comp3), stoi(comp4));
+					}
+					else{
+						cout << "La fonction ChargerPersonnage a été mal appelée avec un pseudo vide pour le joueur" << endl;
+					}
 				}
 				else {
 					cout << "La ligne du fichier de chargemnet concernant le Personnage de la classe " << nomclasse << " est incomplet !" << endl;
@@ -189,11 +196,11 @@ Joueur * ChargerJoueur(string pseudo, string nomclasse) {
 
 /**
 *\fn ChargerMonstre retourne un Monstre lu dans le fichier /data/loading/Monster.txt
-*\param numero Numero de la compétence dans /data/loading/Monster.txt
-*
+*\param pseudo Nom du monstre dans /data/loading/Monster.txt
+*\param[out] newMonstre reenvoi un Monstre chargé via le fichier teste. NULL si incomplet/pseudo correspondant a aucun monstre
 */
 
-Monstre * ChargerMonstre(string pseudo) {
+Monstre * ChargerMonstre(string pseudo){
 	ifstream fichier(DATASAVEMONSTER, ios::in);
 	string contenu;
 	string lignefichier;
@@ -283,12 +290,22 @@ Monstre * ChargerMonstre(string pseudo) {
 
 	}
 }
+
+/**
+*\fn nombrePossible retourne un Monstre lu dans le fichier /data/loading/Monster.txt
+*\param contenu Chaine de caractère a analyser
+*\param classecomplete Vaut 'o' si le chargement des parametres precedent est complet et 'n' si il y a une erreur
+*\param type Indique quel type de Parseur appelle la fonction pour préciser a l'utilisateur quel fichier est mal renseigné 
+*\param type si type = 'c' il s'agit d'une competence, si type = 'm' il s'agit d'un mosntre, si type = 'j' il s'agit d'un joueur
+*/
 void nombrePossible(string contenu, char& classecomplete, char type) {
-	if (classecomplete != 'n') {
+	if (classecomplete != 'n') { /*!<Es ce que la classe est déja incomplete ? */
+/*!< */
 		char complet = 'o';
-		if (contenu == "") {
+		if (contenu == "") { /*!< Si la chaine est vide */
 			complet = 'n';
-			if (type == 'm') {
+			/*!< Ecrit en un message d'erreur en fonction de la fonction qui a appelé nombrePossible */
+			if (type == 'm') { /
 				cout << "Erreur le fichier de chargement du Monstre est mal construit ou incomplet" << endl;
 			}
 			if (type == 'c') {
@@ -299,9 +316,10 @@ void nombrePossible(string contenu, char& classecomplete, char type) {
 			}
 		}
 		else {
-			int contenuint = stoi(contenu);
-			if (contenuint < 0) {
+			int contenuint = stoi(contenu); /*< On le transforme maintenant en int (il représente biensur un int alloué en string) afin d'effectuer d'autres test	 */
+			if (contenuint < 0) { : /*< Si la valeur est nulle */
 				complet = 'n';
+				/*!< Ecrit en un message d'erreur en fonction de la fonction qui a appelé nombrePossible */
 				if (type == 'j') {
 					cout << "Erreur le fichier de chargement du Joueur contient une valeur négative" << endl;
 				}
@@ -312,8 +330,9 @@ void nombrePossible(string contenu, char& classecomplete, char type) {
 					cout << "Erreur le fichier de chargement de Competence contient une valeur négative" << endl;
 				}
 			}
-			else if (contenuint > 1000) {
+			else if (contenuint > NOMBREMAX) { /*< Si la valeur est trop grande */
 				complet = 'n';
+				/*!< Ecrit en un message d'erreur en fonction de la fonction qui a appelé nombrePossible */
 				if (type == 'j') {
 					cout << "Erreur le fichier de chargement du Joueur contient une valeur négative" << endl;
 				}
@@ -325,6 +344,8 @@ void nombrePossible(string contenu, char& classecomplete, char type) {
 				}
 			}
 		}
+		/*! < Met a jour classeomplete si elle était complete pour savoir si le nombre chargé est "possible" */
+		/*! < Soit non null, non négatif et pas superieur a NOMBREMAX ( defini dans Parseur.hpp ) */
 		complet = classecomplete;
 	}
 }

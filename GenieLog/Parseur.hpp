@@ -5,6 +5,7 @@
 #define DATASAVECOMP "data\\loading\\Comp.txt"
 #define DATASAVEPLAYER "data\\loading\\Character.txt"
 #define DATASAVEMONSTER "data\\loading\\Monster.txt"
+#define NOMBREMAX 1000
 
 class Joueur;
 class Monstre;
