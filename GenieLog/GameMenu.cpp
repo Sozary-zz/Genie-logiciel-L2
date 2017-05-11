@@ -57,7 +57,7 @@ void GameMenu::update(const float delta_time)
 				break;
 
 			case (int)BUTTON_INDEX::PLAY_BUTTON:
-				game->pushState((GameState*)new GameBoard(this->game));
+				game->pushState((GameState*)new GameSelector(this->game));
 				m_buttons[i]->setState(false);
 				break;
 

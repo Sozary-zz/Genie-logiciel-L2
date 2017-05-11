@@ -57,8 +57,6 @@ Competence * Joueur::choisir_competence(int i_comp)
 
 }
 
-
-
 std::vector<std::string> Joueur::recupNomCompetences() const
 {
 	vector<string> res;
