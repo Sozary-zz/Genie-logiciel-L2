@@ -78,13 +78,12 @@ void GameSelector::draw(const float delta_time)
 
 void GameSelector::update(const float delta_time)
 {
-	if (m_next_button->buttonPushed()) {
+	if (m_next_button->buttonPushed() && m_locked) {
 		try {
-			PlayerNameChoiceBox* choice_ctxt = new PlayerNameChoiceBox(300, 250, "Pseudo");
+			PlayerNameChoiceBox* choice_ctxt = new PlayerNameChoiceBox(300, 150, "Pseudo pour le "+ m_class);
 		}
 		catch (int e) {
-			if (e == INTERRUPT_WINDOW_EXCEPTION)
-				game->window.close();
+			m_locked = false;
 		}
 		catch (string& s) {
 			game->pushState((GameState*)new GameBoard(this->game, m_class, s));
@@ -150,6 +149,7 @@ void GameSelector::eventLoop()
 			{
 				if (m_selected != -1) {
 					m_locked = true;
+				
 					switch (m_selected)
 					{
 					case 0:m_class = "Paladin"; break;
@@ -160,6 +160,7 @@ void GameSelector::eventLoop()
 					case 3:m_class = "Mage"; break;
 
 					}
+					
 				}
 			}
 			break;
