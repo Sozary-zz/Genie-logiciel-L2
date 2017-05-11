@@ -22,5 +22,12 @@ private:
 	sf::Sprite * m_sprites;
 	sf::Text * m_text_presentation;
 
+	int m_selected;
+
+	bool m_someone_else_selected;
+	bool m_locked;
+
+	std::string m_class;
+
 };
 

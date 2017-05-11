@@ -34,7 +34,7 @@ struct Node {
 class GameBoard : public GameState
 {
 public:
-	GameBoard(Game* game);
+	GameBoard(Game* game,std::string& classe);
 	virtual void draw(const float delta_time);
 	virtual void update(const float delta_time);
 	virtual void eventLoop();
