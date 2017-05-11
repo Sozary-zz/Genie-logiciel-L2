@@ -16,7 +16,7 @@ public:
 	Monstre(std::string classe, int pvMax, int mana, int armure, int force,  int comp1, int comp2, int comp3, int comp4);
 	~Monstre();
 
-	void adjustPos(sf::Vector2i position, sf::Vector2f scale, DIRECTION orientation);
+	void adjustPos(sf::Vector2i grid, sf::Vector2i position, sf::Vector2f scale, DIRECTION orientation);
 
 	Competence * choisir_competence();
 
@@ -28,6 +28,7 @@ private:
 	sf::Sprite m_sprite;
 	DIRECTION m_orientation;
 	sf::Vector2i m_position;
+	sf::Vector2i m_grid_pos;
 };
 
 #endif

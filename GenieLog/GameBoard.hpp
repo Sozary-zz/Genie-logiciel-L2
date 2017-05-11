@@ -50,12 +50,14 @@ private:
 	const std::vector<sf::Vector2i*> getNeigh(int* _map, int _x, int _y, sf::Vector2i *node) const;
 	bool exist(const std::map<sf::Vector2i*, int>& m, sf::Vector2i* a) const;
 
+	std::vector<sf::Vector2i> availablePositions(TILE_TYPE* map) const;
 	int getV(const std::map<sf::Vector2i*, int>& m, sf::Vector2i* a) const;
 	bool blink();
 
 	void tryToLaunchABattle(sf::Vector2i player_pos);
 
 	bool noMonsterHere(sf::Vector2i position) const;
+
 
 	static int manhattanDistance(const sf::Vector2i& a, const sf::Vector2i& b);
 private:
@@ -90,6 +92,7 @@ private:
 	sf::Vector2i  * m_monster_pos;
 
 	Monstre* m_monster_buffer;
+	bool m_just_left_a_battle;
 
 };
 

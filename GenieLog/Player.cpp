@@ -4,7 +4,7 @@
 using namespace sf;
 using namespace std;
 
-Joueur::Joueur(string pseudo,string classe, int pvmax, int mana, int armure, int force,int comp1,int comp2,int comp3,int comp4) : Entite(classe, pvmax, mana, armure, force), nb_objet_max(30), nb_equipement_max(6), nb_competence_max(5), m_pseudo(pseudo)
+Joueur::Joueur(string pseudo,string classe, int pvmax, int mana, int armure, int force,int comp1,int comp2,int comp3,int comp4) : Entite(pseudo, pvmax, mana, armure, force), nb_objet_max(30), nb_equipement_max(6), nb_competence_max(5), m_pseudo(pseudo)
 , m_walking_compt(0), m_orientation(DOWN), m_anim_running(false), m_position_in_the_grid(0,0){
 	m_inventaire = new Objet[nb_objet_max];
 	m_equipement = new Objet[nb_equipement_max];
@@ -23,7 +23,7 @@ Joueur::Joueur(string pseudo,string classe, int pvmax, int mana, int armure, int
 	m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
 }
 
-Joueur::Joueur(string pseudo, string classe, int pvmax, int mana, int armure, int force): Entite(classe, pvmax, mana, armure, force), nb_objet_max(30), nb_equipement_max(6), nb_competence_max(5), m_pseudo(pseudo)
+Joueur::Joueur(string pseudo, string classe, int pvmax, int mana, int armure, int force): Entite(pseudo, pvmax, mana, armure, force), nb_objet_max(30), nb_equipement_max(6), nb_competence_max(5), m_pseudo(pseudo)
 , m_walking_compt(0), m_orientation(DOWN), m_anim_running(false), m_position_in_the_grid(0, 0)  {
 	m_inventaire = new Objet[nb_objet_max];
 	m_equipement = new Objet[nb_equipement_max];
@@ -69,9 +69,6 @@ std::vector<std::string> Joueur::recupNomCompetences() const
 
 	return res;
 }
-
-
-
 
 //Fonction TEST
 void Joueur::RempirCompetence()
@@ -216,8 +213,6 @@ void Joueur::_right_()
 	m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
 
 }
-
-
 
 void Joueur::draw(sf::RenderTarget & target, sf::RenderStates states) const
 {

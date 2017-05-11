@@ -5,8 +5,8 @@
 using namespace std;/// INFOS DE CE Q U IL SE PASSE
 using namespace sf;
 
-GameBattle::GameBattle(Game * game, Joueur* player, Monstre* monster, int* battle_issue) :
-	m_tick(0), m_player(player), m_monster(monster), m_enemy_bar(156, 0), m_player_bar(156, 0), m_battle_issue(battle_issue)
+GameBattle::GameBattle(Game * game, Joueur* player, Monstre* monster, int* battle_issue, vector<Monstre*>* monsters) :
+	m_tick(0), m_player(player), m_monster(monster), m_enemy_bar(156, 0), m_player_bar(156, 0), m_battle_issue(battle_issue), m_monsters(monsters)
 {
 
 
@@ -118,10 +118,15 @@ GameBattle::GameBattle(Game * game, Joueur* player, Monstre* monster, int* battl
 	m_skills_board->setActive(true);
 
 	*m_battle_issue = 0;
+
+	m_player_bar.x -= 100 * float(m_player->recupMaxVie() - m_player->recupVie()) / (float)m_player->recupMaxVie();
+	m_player_bar.y += 100 * float(m_player->recupMaxVie() - m_player->recupVie()) / (float)m_player->recupMaxVie();
+	updateBars(1);
 }
 
 GameBattle::~GameBattle()
 {
+
 	m_base_battle_sound.stop();
 }
 
@@ -141,7 +146,7 @@ void GameBattle::draw(const float delta_time)
 		game->window.draw(m_hp_player[i]);
 	}
 
-	game->window.draw(*m_actions);
+	//game->window.draw(*m_actions);
 
 	for (auto&x : m_texts)
 		game->window.draw(x);
@@ -161,8 +166,8 @@ void GameBattle::player_attack() {
 	m_enemy_bar.x -= float(m_turns.front().skill->getDamages()*BAR_SIZE) / (float)m_monster->recupMaxVie();
 	m_enemy_bar.y += float(m_turns.front().skill->getDamages()*BAR_SIZE) / (float)m_monster->recupMaxVie();
 
-	m_actions->addData(m_monster->recupNom() + ": -" + to_string(m_turns.front().skill->getDamages()) + " hp.");
-	m_actions->addData("");
+	m_skills_board->addData(m_turns.front().entity->recupNom() + " utilise l'attaque " + m_turns.front().skill->getNom() + "!", 0);
+	m_skills_board->addData(m_monster->recupNom() + " perd " + to_string(m_turns.front().skill->getDamages()) + "hp.", 1);
 
 	if (m_enemy_bar.x < 0)
 		m_enemy_bar.x = 0;
@@ -187,14 +192,15 @@ void GameBattle::monster_attack() {
 		if (!m_attack.running)
 			m_attack.run();
 	}
-	
+
 
 	m_player->prendreDegats(m_turns.front().skill->getDamages());
 	m_player_bar.x -= float(m_turns.front().skill->getDamages()*BAR_SIZE) / (float)m_player->recupMaxVie();
 	m_player_bar.y += float(m_turns.front().skill->getDamages()*BAR_SIZE) / (float)m_player->recupMaxVie();
 
-	m_actions->addData(m_player->recupNom() + ": -" + to_string(m_turns.front().skill->getDamages()) + " hp.");
-	m_actions->addData("");
+	m_skills_board->addData(m_turns.front().entity->recupNom() + " utilise l'attaque " + m_turns.front().skill->getNom() + "!", 0);
+	m_skills_board->addData(m_player->recupNom() + " perd " + to_string(m_turns.front().skill->getDamages()) + "hp.", 1);
+
 
 	if (m_player_bar.x < 0)
 		m_player_bar.x = 0;
@@ -219,12 +225,24 @@ bool GameBattle::endBattle()
 	{
 		m_skills_board->setActive(false);
 		*m_battle_issue = 1;
-		m_actions->addData(m_monster->recupNom() + " est mort!");
+	
+
+		m_skills_board->addData(m_monster->recupNom() + " est mort!", 0);
+		m_skills_board->addData(string(""), 1);
+
 		changed = true;
+
+		for (int i = 0; i < m_monsters->size(); ++i)
+			if ((*m_monsters)[i] == m_monster) {
+				delete (*m_monsters)[i];
+				m_monsters->erase(m_monsters->begin() + i);
+				break;
+			}
 	}
 
 	if (!m_player->estVivant()) {
-		m_actions->addData(m_player->recupNom() + " est mort!");
+		m_skills_board->addData(m_player->recupNom() + " est mort!", 0);
+		m_skills_board->addData(string(""), 1);
 		m_skills_board->setActive(false);
 		*m_battle_issue = 2;
 
@@ -256,7 +274,7 @@ void GameBattle::update(const float delta_time)
 			monster_attack();
 		else
 		{
-			m_actions->init();
+		//	m_actions->init();
 			player_attack();
 		}
 

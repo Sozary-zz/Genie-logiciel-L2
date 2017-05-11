@@ -12,6 +12,16 @@ SkillsBoard::SkillsBoard(const Font& font, Vector2f size, Vector2f position, con
 
 	changeSkill(m_skill_selected);	
 
+	m_explanations = new Text[2];
+	m_explanations[0].setFont(font);
+	m_explanations[1].setFont(font);
+	m_explanations[0].setColor(Color::Black);
+	m_explanations[1].setColor(Color::Black);
+	m_explanations[0].setPosition(position);
+	m_explanations[1].setPosition(position+Vector2f(0,50));
+
+
+
 	int compt = 0;
 	if (skills_name.size() <= 4)
 		for (auto&x : skills_name) {
@@ -44,8 +54,8 @@ void SkillsBoard::setActive(bool active)
 	m_active = active;
 	if (!active)
 	{
-		m_skills_context.setFillColor(Color(64, 64, 64));
-		m_skill_selector[1].setFillColor(Color(64, 64, 64));
+		/*m_skills_context.setFillColor(Color(64, 64, 64));
+		m_skill_selector[1].setFillColor(Color(64, 64, 64));*/
 	}
 	else
 	{
@@ -80,13 +90,25 @@ int SkillsBoard::getCurrentSkillID() const
 	return m_skill_selected;
 }
 
+void SkillsBoard::addData(std::string & data, int index)
+{
+	m_explanations[index].setString(data);
+}
+
 
 void SkillsBoard::draw(sf::RenderTarget & target, sf::RenderStates states) const
 {
 	target.draw(m_skills_context);
-	target.draw(m_skill_selector[0]);
-	target.draw(m_skill_selector[1]);
-	for (auto&x : m_skills_name)
-		target.draw(x);
+	if (m_active) {
+		target.draw(m_skill_selector[0]);
+		target.draw(m_skill_selector[1]);
+		for (auto&x : m_skills_name)
+			target.draw(x);
+	}
+	else {
+		target.draw(m_explanations[0]);
+		target.draw(m_explanations[1]);
+	}
+
 }
 

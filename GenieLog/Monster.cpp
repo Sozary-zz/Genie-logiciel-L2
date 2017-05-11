@@ -15,8 +15,9 @@ Monstre::~Monstre()
 {
 }
 
-void Monstre::adjustPos(sf::Vector2i position, sf::Vector2f scale, DIRECTION orientation)
+void Monstre::adjustPos(Vector2i grid, sf::Vector2i position, sf::Vector2f scale, DIRECTION orientation)
 {
+	m_grid_pos = grid;
 	m_orientation = orientation;
 	m_position = position;
 
@@ -36,7 +37,7 @@ Competence * Monstre::choisir_competence()
 
 sf::Vector2i Monstre::recupPos() const
 {
-	return m_position;
+	return m_grid_pos;
 }
 
 void Monstre::draw(sf::RenderTarget & target, sf::RenderStates states) const

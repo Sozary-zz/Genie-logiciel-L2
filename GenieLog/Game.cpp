@@ -6,6 +6,8 @@
 #include "game.hpp"
 #include "GameState.hpp"
 
+using namespace sf;
+
 void Game::pushState(GameState* state)
 {
 	this->states.push(state);
@@ -38,17 +40,17 @@ GameState* Game::peekState()
 
 void Game::gameLoop()
 {
-	sf::Clock clock;
+	Clock clock;
 
 	while (this->window.isOpen())
 	{
-		sf::Time elapsed = clock.restart();
+		Time elapsed = clock.restart();
 		float dt = elapsed.asSeconds();
 
 		if (peekState() == nullptr) continue;
 		peekState()->eventLoop();
 		peekState()->update(dt);
-		this->window.clear(sf::Color::Black);
+		this->window.clear(Color::Black);
 		peekState()->draw(dt);
 		this->window.display();
 	}
@@ -56,7 +58,7 @@ void Game::gameLoop()
 
 Game::Game()
 {
-	this->window.create(sf::VideoMode(800, 600), "RPG", sf::Style::Close, sf::ContextSettings{ 0,0,8 });
+	this->window.create(VideoMode(800, 600), "RPG", Style::Close, ContextSettings{ 0,0,8 });
 	this->window.setFramerateLimit(60);
 }
 
