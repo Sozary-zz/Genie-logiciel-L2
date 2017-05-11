@@ -13,6 +13,11 @@ public:
 	void changeSkill(int skill_id);
 	int getCurrentSkillID() const;
 
+	void addData(std::string& data,  int index);
+
+
+
+
 private:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 private:
@@ -26,6 +31,9 @@ private:
 	int m_skill_selected;
 
 	bool m_active;
+
+	sf::Text * m_explanations;
+
 
 };
 
