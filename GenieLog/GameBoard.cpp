@@ -22,6 +22,7 @@ GameBoard::GameBoard(Game * game) :
 	m_main_song.setVolume(1);
 	m_main_song.play();
 
+
 	m_menu_song.load("data\\songs\\sounds_effect\\emerald_00F8_menu.wav");
 	m_menu_song.running = false;
 	m_menu_song.sample.setVolume(1);
@@ -151,6 +152,9 @@ void GameBoard::update(const float delta_time)
 
 	if (m_just_left_a_battle)
 	{
+		m_main_song.setVolume(1);
+
+
 		tryToLaunchABattle(m_player->positionInGrid());
 		m_just_left_a_battle = false;
 	}
@@ -221,7 +225,7 @@ void GameBoard::eventLoop()
 				else if (event.key.code == Keyboard::Left) {
 					if (m_menu->isVisible())
 						break;
-					if ( m_map->datas[m_player->positionInGrid().x - 1 + m_player->positionInGrid().y*DEFAULT_HEIGHT] != TILE_TYPE::BUSH
+					if (m_map->datas[m_player->positionInGrid().x - 1 + m_player->positionInGrid().y*DEFAULT_HEIGHT] != TILE_TYPE::BUSH
 						&&  m_map->datas[m_player->positionInGrid().x - 1 + m_player->positionInGrid().y*DEFAULT_HEIGHT] != TILE_TYPE::BAD_GRASS && m_player->positionInGrid().x > 0)
 					{
 						m_player->left();
@@ -448,7 +452,7 @@ int GameBoard::getV(const std::map<sf::Vector2i*, int>& m, sf::Vector2i* a) cons
 bool GameBoard::blink()
 {
 	if (!t_already_started) {
-		m_main_song.stop();
+		m_main_song.setVolume(0);
 		t_intro.restart(); m_base_battle_sound.setPlayingOffset(seconds(.2f));
 		m_base_battle_sound.play();
 		t_already_started = true;
@@ -466,12 +470,12 @@ bool GameBoard::blink()
 	{
 		t_already_started = false;
 		t_fight = false;
-		game->pushState((GameState*)new GameBattle(this->game, m_player, m_monster_buffer, &m_battle_issue,&m_monsters));
+		game->pushState((GameState*)new GameBattle(this->game, m_player, m_monster_buffer, &m_battle_issue, &m_monsters));
 		m_just_left_a_battle = true;
 		m_map->tiles.fade(Color(255, 255, 255));
 		m_base_battle_sound.stop();
 
-		
+
 	}
 	else {
 

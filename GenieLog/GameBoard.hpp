@@ -94,5 +94,6 @@ private:
 	Monstre* m_monster_buffer;
 	bool m_just_left_a_battle;
 
+
 };
 

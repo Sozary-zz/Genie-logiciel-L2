@@ -42,10 +42,10 @@ void Entite::prendreDegats(int nombrededmgdelacomp)
 
 	m_pv = m_pv - nombrededmgdelacomp;
 
-	cout << "Le " << m_nom << " a perdu " << nombrededmgdelacomp << " points de vie" << endl;
+	//cout << "Le " << m_nom << " a perdu " << nombrededmgdelacomp << " points de vie" << endl;
 
-	if (!estVivant())	cout << ", le tuant" << endl;
-	else				cout << endl;
+//	if (!estVivant())	cout << ", le tuant" << endl;
+//	else				cout << endl;
 
 }
 
