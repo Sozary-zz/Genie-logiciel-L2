@@ -80,6 +80,7 @@
     <ClCompile Include="GameBattle.cpp" />
     <ClCompile Include="GameBoard.cpp" />
     <ClCompile Include="GameCreator.cpp" />
+    <ClCompile Include="GameEnd.cpp" />
     <ClCompile Include="GameInventory.cpp" />
     <ClCompile Include="GameSelector.cpp" />
     <ClCompile Include="GameSettings.cpp" />
@@ -113,6 +114,7 @@
     <ClInclude Include="GameBattle.hpp" />
     <ClInclude Include="GameBoard.hpp" />
     <ClInclude Include="GameCreator.hpp" />
+    <ClInclude Include="GameEnd.hpp" />
     <ClInclude Include="GameInventory.hpp" />
     <ClInclude Include="GameSelector.hpp" />
     <ClInclude Include="GameSettings.hpp" />
