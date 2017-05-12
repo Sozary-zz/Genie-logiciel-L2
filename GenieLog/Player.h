@@ -58,7 +58,7 @@ private:
 
 	sf::Vector2f m_speed;
 
-	DIRECTION m_orientation;
+
 
 	bool m_anim_running;
 	sf::Clock m_next_anim;

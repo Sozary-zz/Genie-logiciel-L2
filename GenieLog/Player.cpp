@@ -5,7 +5,7 @@ using namespace sf;
 using namespace std;
 
 Joueur::Joueur(string pseudo,string classe, int pvmax, int mana, int armure, int force,int comp1,int comp2,int comp3,int comp4) : Entite(pseudo, pvmax, mana, armure, force), nb_objet_max(30), nb_equipement_max(6), nb_competence_max(5), m_pseudo(pseudo)
-, m_walking_compt(0), m_orientation(DOWN), m_anim_running(false), m_position_in_the_grid(0,0){
+, m_walking_compt(0), m_anim_running(false), m_position_in_the_grid(0,0){
 	m_inventaire = new Objet[nb_objet_max];
 	m_equipement = new Objet[nb_equipement_max];
 	
@@ -13,29 +13,28 @@ Joueur::Joueur(string pseudo,string classe, int pvmax, int mana, int armure, int
 	tableau_competence.push_back(ChargerCompetence(comp2));
 	tableau_competence.push_back(ChargerCompetence(comp3));
 	tableau_competence.push_back(ChargerCompetence(comp4));
-
-	GameState::texture_manager->addElement("character_sprite", "data\\character.png"); // pwet
+	m_orientation = DOWN;
 
 	m_walking_positions = new int[4]
 	{ 8,10,9,11 };
 
-	m_sprite.setTexture(GameState::texture_manager->getElement("character_sprite"));
+	m_sprite.setTexture(GameState::texture_manager->getElement(classe));
 	m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
 }
 
 Joueur::Joueur(string pseudo, string classe, int pvmax, int mana, int armure, int force): Entite(pseudo, pvmax, mana, armure, force), nb_objet_max(30), nb_equipement_max(6), nb_competence_max(5), m_pseudo(pseudo)
-, m_walking_compt(0), m_orientation(DOWN), m_anim_running(false), m_position_in_the_grid(0, 0)  {
+, m_walking_compt(0), m_anim_running(false), m_position_in_the_grid(0, 0)  {
 	m_inventaire = new Objet[nb_objet_max];
 	m_equipement = new Objet[nb_equipement_max];
 	RempirCompetence();
 
-	m_nom = pseudo;
-	GameState::texture_manager->addElement("character_sprite", "data\\character.png"); // pwet
+	m_nom = pseudo;	m_orientation = DOWN;
+
 
 	m_walking_positions = new int[4]
 	{ 8,10,9,11 };
 
-	m_sprite.setTexture(GameState::texture_manager->getElement("character_sprite"));
+	m_sprite.setTexture(GameState::texture_manager->getElement(classe));
 	m_sprite.setTextureRect(IntRect(m_walking_compt* TILE_SIZE, m_walking_positions[m_orientation] * TILE_SIZE, TILE_SIZE, TILE_SIZE));
 }
 Joueur::Joueur() :nb_objet_max(30), nb_equipement_max(6), nb_competence_max(5),
@@ -58,8 +57,6 @@ Competence * Joueur::choisir_competence(int i_comp)
 	return new Competence(x->getNom(), x->getDamages() + x->getRatio()*m_force, 0, x->getTempsIncantation(), x->getCoutMana());
 
 }
-
-
 
 std::vector<std::string> Joueur::recupNomCompetences() const
 {

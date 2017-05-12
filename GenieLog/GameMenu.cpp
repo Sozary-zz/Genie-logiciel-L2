@@ -13,7 +13,7 @@ GameMenu::GameMenu(Game * game)
 	m_view.setCenter(x*.5f);
 
 	GameState::texture_manager->addElement("menu_background", "data\\back.png");
-	GameState::font_manager->addElement("main_font", "data\\arial.ttf");
+	GameState::font_manager->addElement("main_font", "data\\VCR_OSD_MONO_1.001.ttf");
 
 	m_background.setTexture(GameState::texture_manager->getElement("menu_background"));
 
@@ -47,7 +47,7 @@ void GameMenu::update(const float delta_time)
 			switch (i)
 			{
 			case (int)BUTTON_INDEX::QUIT_BUTTON:
-				game->popState();
+		
 
 				game->window.close();
 
@@ -57,7 +57,7 @@ void GameMenu::update(const float delta_time)
 				break;
 
 			case (int)BUTTON_INDEX::PLAY_BUTTON:
-				game->pushState((GameState*)new GameBoard(this->game));
+				game->pushState((GameState*)new GameSelector(this->game));
 				m_buttons[i]->setState(false);
 				break;
 

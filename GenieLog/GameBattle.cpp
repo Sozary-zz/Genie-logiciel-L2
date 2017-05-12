@@ -6,16 +6,16 @@ using namespace std;/// INFOS DE CE Q U IL SE PASSE
 using namespace sf;
 
 GameBattle::GameBattle(Game * game, Joueur* player, Monstre* monster, int* battle_issue, vector<Monstre*>* monsters) :
-	m_tick(0), m_player(player), m_monster(monster), m_enemy_bar(156, 0), m_player_bar(156, 0), m_battle_issue(battle_issue), m_monsters(monsters)
-{
+	m_tick(0), m_player(player), m_monster(monster), m_enemy_bar(156, 0), m_player_bar(156, 0), m_battle_issue(battle_issue), m_monsters(monsters), m_have_to_stop(false), m_action_occured(false)
+, m_have_to_wait_for_message(false){
 
 
 	m_attack.load("data\\songs\\sounds_effect\\emerald_000D_hit.wav");
-	m_attack.sample.setVolume(10);
+	m_attack.sample.setVolume(MAIN_VOLUME);
 	m_attack.running = false;
 
 	m_final_attack.load("data\\songs\\sounds_effect\\emerald_000E_end.wav");
-	m_final_attack.sample.setVolume(10);
+	m_final_attack.sample.setVolume(MAIN_VOLUME);
 	m_final_attack.running = false;
 
 	m_dis = uniform_int_distribution<>(1, 100);
@@ -56,7 +56,7 @@ GameBattle::GameBattle(Game * game, Joueur* player, Monstre* monster, int* battl
 
 	m_base_battle_sound.setPlayingOffset(seconds(3.f));
 	m_base_battle_sound.play();
-	m_base_battle_sound.setVolume(1);
+	m_base_battle_sound.setVolume(MAIN_VOLUME);
 
 	Text name_a, name_b;
 	Text hp;
@@ -146,21 +146,33 @@ void GameBattle::draw(const float delta_time)
 		game->window.draw(m_hp_player[i]);
 	}
 
+
 	//game->window.draw(*m_actions);
 
 	for (auto&x : m_texts)
 		game->window.draw(x);
 
 
+
+	if (m_action_occured)
+	{
+		if (!m_attack.running)
+			m_attack.run();
+		m_action_occured = false;
+		m_waiting_for_message.restart();
+		m_have_to_wait_for_message = true;
+	}
+	
 }
 void GameBattle::player_attack() {
+	m_action_occured = true;
 	if (m_monster->recupVie() - m_turns.front().skill->getDamages() <= 0) {
 		if (!m_final_attack.running)
 			m_final_attack.run();
 	}
 	else {
-		if (!m_attack.running)
-			m_attack.run();
+	/*	if (!m_attack.running)
+			m_attack.run();*/
 	}
 	m_monster->prendreDegats(m_turns.front().skill->getDamages());
 	m_enemy_bar.x -= float(m_turns.front().skill->getDamages()*BAR_SIZE) / (float)m_monster->recupMaxVie();
@@ -180,17 +192,18 @@ void GameBattle::player_attack() {
 	m_turns.erase(m_turns.begin());
 
 	m_skills_board->setActive(true);
-	sleep(seconds(1.f));
+
 }
 
 void GameBattle::monster_attack() {
+	m_action_occured = true;
 	if (m_player->recupVie() - m_turns.front().skill->getDamages() <= 0) {
 		if (!m_final_attack.running)
 			m_final_attack.run();
 	}
 	else {
-		if (!m_attack.running)
-			m_attack.run();
+		/*if (!m_attack.running)
+			m_attack.run();*/
 	}
 
 
@@ -216,7 +229,7 @@ void GameBattle::monster_attack() {
 
 	auto comp = m_monster->choisir_competence();
 	m_turns.push_back(Turn{ comp->getTempsIncantation(),m_monster,0,comp });
-	sleep(seconds(1.f));
+
 }
 bool GameBattle::endBattle()
 {
@@ -252,7 +265,7 @@ bool GameBattle::endBattle()
 	if (changed)
 	{
 		m_base_battle_sound.stop();
-		game->popState();
+		m_action_occured = true;
 		return false;
 	}
 
@@ -261,11 +274,25 @@ bool GameBattle::endBattle()
 void GameBattle::update(const float delta_time)
 {
 
+	if (m_have_to_wait_for_message&&  m_waiting_for_message.getElapsedTime().asSeconds() < .9f)
+		return;
+
+	if (m_have_to_stop) {
+		game->popState();
+		return;
+	}
+	m_have_to_wait_for_message = false;
+	m_action_occured = false;
+
 	m_final_attack.update();
 	m_attack.update();
 
 	if (!endBattle())
+	{
+		m_have_to_stop = true;
 		return;
+	}
+		
 
 	sort(m_turns.begin(), m_turns.end(), [](const Turn &a, const Turn &b) {return a.tick_rest < b.tick_rest; });
 
@@ -274,14 +301,16 @@ void GameBattle::update(const float delta_time)
 			monster_attack();
 		else
 		{
-		//	m_actions->init();
 			player_attack();
 		}
 
 	}
 
 	if (!endBattle())
+	{
+		m_have_to_stop = true;
 		return;
+	}
 
 	if (m_turns.front().tick_rest == 0) {
 		if (m_turns.front().type == 0)
@@ -290,7 +319,10 @@ void GameBattle::update(const float delta_time)
 			player_attack();
 	}
 	if (!endBattle())
+	{
+		m_have_to_stop = true;
 		return;
+	}
 	if (!m_skills_board->active())
 		for (auto&x : m_turns)
 			x.tick_rest--;
@@ -299,6 +331,10 @@ void GameBattle::update(const float delta_time)
 
 void GameBattle::eventLoop()
 {
+	if (m_have_to_wait_for_message &&m_waiting_for_message.getElapsedTime().asSeconds() < .9f)
+		return;
+
+	m_have_to_wait_for_message = false;
 	Event event;
 
 

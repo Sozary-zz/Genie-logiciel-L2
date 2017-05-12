@@ -11,7 +11,7 @@
 #include "GameInventory.hpp"
 #include "Parseur.hpp"
 
-#define NB_OF_MONSTERS 5
+
 
 enum class TILE_TYPE {
 	BUSH,
@@ -34,7 +34,7 @@ struct Node {
 class GameBoard : public GameState
 {
 public:
-	GameBoard(Game* game);
+	GameBoard(Game* game,std::string& classe, std::string& pseudo);
 	virtual void draw(const float delta_time);
 	virtual void update(const float delta_time);
 	virtual void eventLoop();
@@ -93,6 +93,7 @@ private:
 
 	Monstre* m_monster_buffer;
 	bool m_just_left_a_battle;
+
 
 };
 

@@ -6,7 +6,7 @@ using namespace sf;
 
 
 // https://downloads.khinsider.com/game-soundtracks/album/pokemon-ruby-sapphire-music-super-complete
-GameBoard::GameBoard(Game * game) :
+GameBoard::GameBoard(Game * game, string & classe, string& pseudo) :
 	m_monster_buffer(nullptr), t_fight(false), t_already_started(false), m_just_left_a_battle(false)
 {
 
@@ -14,22 +14,22 @@ GameBoard::GameBoard(Game * game) :
 	m_base_battle_sound.setBuffer(m_base_battle_sound_buffer);
 
 	m_collision.load("data\\songs\\sounds_effect\\emerald_0003_collision.wav");
-	m_collision.sample.setVolume(1);
+	m_collision.sample.setVolume(MAIN_VOLUME);
 	m_collision.running = false;
 
 	m_main_song.openFromFile("data\\songs\\048_Route_111.ogg");
 	m_main_song.setLoop(true);
-	m_main_song.setVolume(1);
+	m_main_song.setVolume(MAIN_VOLUME);
 	m_main_song.play();
+
 
 	m_menu_song.load("data\\songs\\sounds_effect\\emerald_00F8_menu.wav");
 	m_menu_song.running = false;
-	m_menu_song.sample.setVolume(1);
+	m_menu_song.sample.setVolume(MAIN_VOLUME);
 
-	m_base_battle_sound.setLoop(true);	m_base_battle_sound.setVolume(1);
-	//m_player = new Joueur("Rayquaza", "Player", 100, 0, 5, 1);
+	m_base_battle_sound.setLoop(true);	m_base_battle_sound.setVolume(MAIN_VOLUME);
 
-	m_player = ChargerJoueur("Loan", "Paladin");
+	m_player = ChargerJoueur(pseudo, classe);
 	if (m_player == NULL)
 		game->window.close();
 	m_monster_pos = new Vector2i[NB_OF_MONSTERS];
@@ -105,8 +105,18 @@ GameBoard::GameBoard(Game * game) :
 			or = LEFT;
 		else
 			or = RIGHT;
+		auto type = dis(gen);
+		string type_monster;
+		if (type < 3000)
+			type_monster = "Gobelins";
 
-		m_monsters.push_back(ChargerMonstre("Gobelins"));
+		else if(type>=3000 && type<6500)
+			type_monster = "Orc";
+		else
+			type_monster = "Dragonnet";
+
+
+		m_monsters.push_back(ChargerMonstre(type_monster));
 		m_monsters.back()->adjustPos({ monster_pos.y,monster_pos.x },
 			Vector2i{ 100 + monster_pos.y*(int)(m_map->tiles.getScale().x * 16) ,75 + monster_pos.x*(int)(m_map->tiles.getScale().y * 16) },
 			Vector2f{ (m_map->tiles.getScale().x * 16) / 32.f  ,(m_map->tiles.getScale().y * 16) / 32.f }, or );
@@ -151,6 +161,9 @@ void GameBoard::update(const float delta_time)
 
 	if (m_just_left_a_battle)
 	{
+		m_main_song.setVolume(MAIN_VOLUME);
+
+
 		tryToLaunchABattle(m_player->positionInGrid());
 		m_just_left_a_battle = false;
 	}
@@ -221,7 +234,7 @@ void GameBoard::eventLoop()
 				else if (event.key.code == Keyboard::Left) {
 					if (m_menu->isVisible())
 						break;
-					if ( m_map->datas[m_player->positionInGrid().x - 1 + m_player->positionInGrid().y*DEFAULT_HEIGHT] != TILE_TYPE::BUSH
+					if (m_map->datas[m_player->positionInGrid().x - 1 + m_player->positionInGrid().y*DEFAULT_HEIGHT] != TILE_TYPE::BUSH
 						&&  m_map->datas[m_player->positionInGrid().x - 1 + m_player->positionInGrid().y*DEFAULT_HEIGHT] != TILE_TYPE::BAD_GRASS && m_player->positionInGrid().x > 0)
 					{
 						m_player->left();
@@ -448,7 +461,7 @@ int GameBoard::getV(const std::map<sf::Vector2i*, int>& m, sf::Vector2i* a) cons
 bool GameBoard::blink()
 {
 	if (!t_already_started) {
-		m_main_song.stop();
+		m_main_song.setVolume(0);
 		t_intro.restart(); m_base_battle_sound.setPlayingOffset(seconds(.2f));
 		m_base_battle_sound.play();
 		t_already_started = true;
@@ -466,12 +479,12 @@ bool GameBoard::blink()
 	{
 		t_already_started = false;
 		t_fight = false;
-		game->pushState((GameState*)new GameBattle(this->game, m_player, m_monster_buffer, &m_battle_issue,&m_monsters));
+		game->pushState((GameState*)new GameBattle(this->game, m_player, m_monster_buffer, &m_battle_issue, &m_monsters));
 		m_just_left_a_battle = true;
 		m_map->tiles.fade(Color(255, 255, 255));
 		m_base_battle_sound.stop();
 
-		
+
 	}
 	else {
 
@@ -505,6 +518,36 @@ void GameBoard::tryToLaunchABattle(sf::Vector2i player_pos)
 			x->recupPos() == (player_pos + Vector2i(0, 1)) ||
 			x->recupPos() == (player_pos + Vector2i(0, -1))) {
 
+			DIRECTION tmp;
+			if (x->recupPos() == (player_pos + Vector2i(1, 0)))
+				tmp = RIGHT;
+			else if (x->recupPos() == (player_pos + Vector2i(-1, 0)))
+				tmp = LEFT;
+			else if (x->recupPos() == (player_pos + Vector2i(0, 1)))
+				tmp = DOWN;
+			else
+				tmp = UP;
+
+
+			switch (tmp)
+			{
+			case DOWN:
+				x->setOrientation(UP);
+				break;
+
+			case UP:
+				x->setOrientation(DOWN);
+				break;
+
+			case LEFT:
+				x->setOrientation(RIGHT);
+				break;
+
+			case RIGHT:
+				x->setOrientation(LEFT);
+				break;
+			}
+			x->textureUpdate();
 			m_monster_buffer = x;
 			t_fight = true;
 			return;

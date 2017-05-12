@@ -2,7 +2,7 @@
 #include <SFML\Graphics.hpp>
 #include "GameState.hpp"
 #include "GameSettings.hpp"
-#include "GameBoard.hpp"
+#include "GameSelector.hpp"
 #include "GameCreator.hpp"
 #include "ActionButton.h"
 

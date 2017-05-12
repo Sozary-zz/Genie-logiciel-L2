@@ -41,6 +41,7 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -129,6 +130,12 @@
     </ClCompile>
     <ClCompile Include="GameInventory.cpp">
       <Filter>Source Files\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSelector.cpp">
+      <Filter>Source Files\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerNameChoiceBox.cpp">
+      <Filter>Source Files\ChoiceBoxs</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -227,6 +234,12 @@
     </ClInclude>
     <ClInclude Include="GameInventory.hpp">
       <Filter>Source Files\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSelector.hpp">
+      <Filter>Source Files\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerNameChoiceBox.h">
+      <Filter>Source Files\ChoiceBoxs</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

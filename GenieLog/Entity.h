@@ -23,6 +23,9 @@ public:
 
 	int recupMaxVie() { return m_pvMax; };
 	int recupVie() { return m_pv; };
+	
+	DIRECTION recupOrientation();
+	void setOrientation(DIRECTION d);
 
 
 protected:
@@ -35,7 +38,7 @@ protected:
 	int m_Armure;
 	int m_force;
 	std::vector<Competence*> tableau_competence;
-
+	DIRECTION m_orientation;
 };
 
 #endif 

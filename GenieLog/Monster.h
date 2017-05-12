@@ -21,12 +21,14 @@ public:
 	Competence * choisir_competence();
 
 	sf::Vector2i recupPos() const;
-private:
-	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+
 	void textureUpdate();
 private:
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+
+private:
 	sf::Sprite m_sprite;
-	DIRECTION m_orientation;
+
 	sf::Vector2i m_position;
 	sf::Vector2i m_grid_pos;
 };
