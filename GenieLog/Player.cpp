@@ -4,6 +4,8 @@
 using namespace sf;
 using namespace std;
 
+//
+
 Joueur::Joueur(string pseudo,string classe, int pvmax, int mana, int armure, int force,int comp1,int comp2,int comp3,int comp4) : Entite(pseudo, pvmax, mana, armure, force), nb_objet_max(30), nb_equipement_max(6), nb_competence_max(5), m_pseudo(pseudo)
 , m_walking_compt(0), m_anim_running(false), m_position_in_the_grid(0,0){
 	m_inventaire = new Objet[nb_objet_max];
