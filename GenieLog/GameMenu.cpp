@@ -4,7 +4,7 @@
 using namespace std;
 using namespace sf;
 
-GameMenu::GameMenu(Game * game)
+GameMenu::GameMenu(Game * game):m_setSongUp(false)
 {
 	this->game = game;
 	auto x = (Vector2f)this->game->window.getSize();
@@ -26,6 +26,12 @@ GameMenu::GameMenu(Game * game)
 	m_buttons[static_cast<int>(BUTTON_INDEX::EDIT_BUTTON)] = new ActionButton("Éditeur de carte", Vector2f(x.x / 2 - 250 / 2.f, (x.y / 7.f) * 3), Vector2f(250, 50), Color(0, 140, 186), Color::White, GameState::font_manager->getElement("main_font"));
 	m_buttons[static_cast<int>(BUTTON_INDEX::SETTINGS_BUTTON)] = new ActionButton("Réglages", Vector2f(x.x / 2 - 250 / 2.f, (x.y / 7.f) * 4), Vector2f(250, 50), Color(0, 140, 186), Color::White, GameState::font_manager->getElement("main_font"));
 	m_buttons[static_cast<int>(BUTTON_INDEX::QUIT_BUTTON)] = new ActionButton("Quitter", Vector2f(x.x / 2 - 250 / 2.f, (x.y / 7.f) * 6), Vector2f(250, 50), Color(0, 140, 186), Color::White, GameState::font_manager->getElement("main_font"));
+
+	m_menu_song.openFromFile("data\\songs\\003_Title_Screen_Main_Theme.ogg");
+	m_menu_song.setLoop(true);
+	m_menu_song.setVolume(MAIN_VOLUME);
+	m_menu_song.play();
+
 }
 
 void GameMenu::draw(const float delta_time)
@@ -39,6 +45,10 @@ void GameMenu::draw(const float delta_time)
 
 void GameMenu::update(const float delta_time)
 {
+	if (m_setSongUp) {
+		m_menu_song.setVolume(MAIN_VOLUME);
+		m_setSongUp = false;
+	}		
 
 	for (int i = 0; i < 5; ++i)
 	{
@@ -52,19 +62,22 @@ void GameMenu::update(const float delta_time)
 				game->window.close();
 
 			case (int)BUTTON_INDEX::SETTINGS_BUTTON:
-				game->pushState((GameState*)new GameSettings(this->game));
-				m_buttons[i]->setState(false);
 				break;
+				/*game->pushState((GameState*)new GameSettings(this->game));
+				m_buttons[i]->setState(false);
+				break;*/
 
 			case (int)BUTTON_INDEX::PLAY_BUTTON:
-				game->pushState((GameState*)new GameSelector(this->game));
+				m_menu_song.setVolume(0);
+				game->pushState((GameState*)new GameSelector(this->game, m_setSongUp));
 				m_buttons[i]->setState(false);
 				break;
 
-			case (int)BUTTON_INDEX::EDIT_BUTTON:
-				game->pushState((GameState*)new GameCreator(this->game));
+		case (int)BUTTON_INDEX::EDIT_BUTTON:
+			break;
+				/*game->pushState((GameState*)new GameCreator(this->game));
 				m_buttons[i]->setState(false);
-				break;
+				break;*/
 			}
 		}
 	}
@@ -99,3 +112,5 @@ void GameMenu::eventLoop()
 	}
 
 }
+
+

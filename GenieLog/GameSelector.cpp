@@ -4,7 +4,7 @@
 using namespace std;
 using namespace sf;
 
-GameSelector::GameSelector(Game * game) :m_selected(-1), m_someone_else_selected(false), m_locked(false)
+GameSelector::GameSelector(Game * game,  bool& end) :m_selected(-1), m_someone_else_selected(false), m_locked(false), m_end(end)
 {
 	this->game = game;
 	auto x = (Vector2f)this->game->window.getSize();
@@ -85,7 +85,7 @@ void GameSelector::update(const float delta_time)
 {
 	if (m_next_button->buttonPushed() && m_locked) {
 		try {
-			PlayerNameChoiceBox* choice_ctxt = new PlayerNameChoiceBox(300, 150, "Pseudo pour la classe "+ m_class);
+			PlayerNameChoiceBox* choice_ctxt = new PlayerNameChoiceBox(350, 150, "Pseudo pour la classe "+ m_class);
 		}
 		catch (int e) {
 			m_locked = false;
@@ -99,8 +99,10 @@ void GameSelector::update(const float delta_time)
 		
 
 	else if (m_quit_button->buttonPushed()) {
+		m_end = true;
 		m_main_music.stop();
 		game->popState();
+		
 		return;
 	}
 

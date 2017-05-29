@@ -6,6 +6,7 @@
 #include "GameCreator.hpp"
 #include "ActionButton.h"
 
+
 enum class BUTTON_INDEX
 {
 	PLAY_BUTTON,
@@ -22,9 +23,16 @@ public:
 	virtual void update(const float delta_time);
 	virtual void eventLoop();
 
+
+
 private:
 	sf::View m_view;
 	sf::Sprite m_background;
 	ActionButton** m_buttons;
+	sf::Music m_menu_song;
+
+	bool m_setSongUp;
+
+
 };
 

@@ -9,7 +9,7 @@
 class GameSelector: public GameState
 {
 public:
-	GameSelector(Game* game);
+	GameSelector(Game* game,bool& end);
 	virtual void draw(const float delta_time) ;
 	virtual void update(const float delta_time);
 	virtual void eventLoop();
@@ -32,6 +32,8 @@ private:
 	std::string m_class;
 
 	sf::Music m_main_music;
+
+	bool& m_end;
 
 };
 

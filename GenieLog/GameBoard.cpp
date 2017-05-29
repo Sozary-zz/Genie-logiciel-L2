@@ -155,6 +155,9 @@ void GameBoard::draw(const float delta_time)
 
 void GameBoard::update(const float delta_time)
 {
+	if (m_monsters.empty()) {
+
+	}
 
 	m_collision.update();
 	m_menu_song.update();
