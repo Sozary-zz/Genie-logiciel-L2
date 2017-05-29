@@ -6,8 +6,8 @@ using namespace sf;
 
 
 // https://downloads.khinsider.com/game-soundtracks/album/pokemon-ruby-sapphire-music-super-complete
-GameBoard::GameBoard(Game * game, string & classe, string& pseudo) :
-	m_monster_buffer(nullptr), t_fight(false), t_already_started(false), m_just_left_a_battle(false)
+GameBoard::GameBoard(Game * game, string & classe, vector<string>& infos) :
+	m_monster_buffer(nullptr), t_fight(false), t_already_started(false), m_just_left_a_battle(false),m_map_size(stoi(infos[1])), m_monster_number(stoi(infos[0]))
 {
 
 	m_base_battle_sound_buffer.loadFromFile("data\\songs\\009_Battle_Wild_Pok_mon_.ogg");
@@ -29,10 +29,10 @@ GameBoard::GameBoard(Game * game, string & classe, string& pseudo) :
 
 	m_base_battle_sound.setLoop(true);	m_base_battle_sound.setVolume(MAIN_VOLUME);
 
-	m_player = ChargerJoueur(pseudo, classe);
+	m_player = ChargerJoueur(infos[2], classe);
 	if (m_player == NULL)
 		game->window.close();
-	m_monster_pos = new Vector2i[NB_OF_MONSTERS];
+	m_monster_pos = new Vector2i[m_monster_number];
 
 	int monster_compt;
 
@@ -48,39 +48,39 @@ GameBoard::GameBoard(Game * game, string & classe, string& pseudo) :
 	mt19937 gen(rd());
 	uniform_int_distribution<>dis(0, 9999);
 
-	int* level = new int[DEFAULT_HEIGHT*DEFAULT_WIDTH];
+	int* level = new int[m_map_size*m_map_size];
 
-	m_map->movements = new int[DEFAULT_HEIGHT*DEFAULT_WIDTH];
-	m_map->datas = new TILE_TYPE[DEFAULT_HEIGHT*DEFAULT_WIDTH];
+	m_map->movements = new int[m_map_size*m_map_size];
+	m_map->datas = new TILE_TYPE[m_map_size*m_map_size];
 
 
 	do {
 		monster_compt = 0;
 		auto pn = PerlinNoise(dis(gen));
 
-		for (int x = 0; x < DEFAULT_WIDTH; ++x)
-			for (int y = 0; y < DEFAULT_HEIGHT; ++y) {
+		for (int x = 0; x < m_map_size; ++x)
+			for (int y = 0; y < m_map_size; ++y) {
 				double n = 10 * pn.noise(x, y, 2.6);
 
 				/*	if (n < 4 && dis(gen) < 5000)
-						level[x + y*DEFAULT_HEIGHT] = (int)TILE_TYPE::BAD_GRASS;
+						level[x + y*m_map_size] = (int)TILE_TYPE::BAD_GRASS;
 					else */
 				if (n < 4.5)
-					level[x + y*DEFAULT_HEIGHT] = (int)TILE_TYPE::FLOWER;
+					level[x + y*m_map_size] = (int)TILE_TYPE::FLOWER;
 				else if (n < 5.5)
-					level[x + y*DEFAULT_HEIGHT] = (int)TILE_TYPE::GRASS;
+					level[x + y*m_map_size] = (int)TILE_TYPE::GRASS;
 				else if (n < 6.5)
-					level[x + y*DEFAULT_HEIGHT] = (int)TILE_TYPE::BUSH;
+					level[x + y*m_map_size] = (int)TILE_TYPE::BUSH;
 				else
-					level[x + y*DEFAULT_HEIGHT] = (int)TILE_TYPE::GRASS;
+					level[x + y*m_map_size] = (int)TILE_TYPE::GRASS;
 
-				m_map->datas[x + y*DEFAULT_HEIGHT] = (TILE_TYPE)level[x + y*DEFAULT_HEIGHT];
+				m_map->datas[x + y*m_map_size] = (TILE_TYPE)level[x + y*m_map_size];
 
 			}
-	} while (!validMap((int*)m_map->datas, DEFAULT_WIDTH, DEFAULT_HEIGHT));
+	} while (!validMap((int*)m_map->datas, m_map_size, m_map_size));
 
-	m_map->tiles.load("data\\tileset.png", Vector2u(16, 16), level, DEFAULT_WIDTH, DEFAULT_HEIGHT);
-	m_map->tiles.setScale((x.x - 200) / (16 * DEFAULT_WIDTH), (x.y - 150) / (16 * DEFAULT_HEIGHT));
+	m_map->tiles.load("data\\tileset.png", Vector2u(16, 16), level, m_map_size, m_map_size);
+	m_map->tiles.setScale((x.x - 200) / (16 * m_map_size), (x.y - 150) / (16 * m_map_size));
 	m_map->tiles.move(100, 75);
 
 	auto where_can_I_pose = availablePositions(m_map->datas);
@@ -89,7 +89,7 @@ GameBoard::GameBoard(Game * game, string & classe, string& pseudo) :
 	Vector2i player_pos = where_can_I_pose[rand_player_pos%where_can_I_pose.size()];
 	where_can_I_pose.erase(where_can_I_pose.begin() + rand_player_pos%where_can_I_pose.size());
 
-	for (int i = 0; i < NB_OF_MONSTERS; ++i)
+	for (int i = 0; i < m_monster_number; ++i)
 	{
 		auto rand_monster_pos = dis(gen);
 		Vector2i monster_pos = where_can_I_pose[rand_monster_pos%where_can_I_pose.size()];
@@ -237,8 +237,8 @@ void GameBoard::eventLoop()
 				else if (event.key.code == Keyboard::Left) {
 					if (m_menu->isVisible())
 						break;
-					if (m_map->datas[m_player->positionInGrid().x - 1 + m_player->positionInGrid().y*DEFAULT_HEIGHT] != TILE_TYPE::BUSH
-						&&  m_map->datas[m_player->positionInGrid().x - 1 + m_player->positionInGrid().y*DEFAULT_HEIGHT] != TILE_TYPE::BAD_GRASS && m_player->positionInGrid().x > 0)
+					if (m_map->datas[m_player->positionInGrid().x - 1 + m_player->positionInGrid().y*m_map_size] != TILE_TYPE::BUSH
+						&&  m_map->datas[m_player->positionInGrid().x - 1 + m_player->positionInGrid().y*m_map_size] != TILE_TYPE::BAD_GRASS && m_player->positionInGrid().x > 0)
 					{
 						m_player->left();
 						tryToLaunchABattle(m_player->positionInGrid());
@@ -257,8 +257,8 @@ void GameBoard::eventLoop()
 				else if (event.key.code == Keyboard::Right) {
 					if (m_menu->isVisible())
 						break;
-					if (m_player->positionInGrid().x < DEFAULT_WIDTH - 1 && m_map->datas[m_player->positionInGrid().x + 1 + m_player->positionInGrid().y*DEFAULT_HEIGHT] != TILE_TYPE::BUSH
-						&&  m_map->datas[m_player->positionInGrid().x + 1 + m_player->positionInGrid().y*DEFAULT_HEIGHT] != TILE_TYPE::BAD_GRASS)
+					if (m_player->positionInGrid().x < m_map_size - 1 && m_map->datas[m_player->positionInGrid().x + 1 + m_player->positionInGrid().y*m_map_size] != TILE_TYPE::BUSH
+						&&  m_map->datas[m_player->positionInGrid().x + 1 + m_player->positionInGrid().y*m_map_size] != TILE_TYPE::BAD_GRASS)
 					{
 						m_player->right();
 						tryToLaunchABattle(m_player->positionInGrid());
@@ -279,8 +279,8 @@ void GameBoard::eventLoop()
 						m_menu->up();
 
 					else {
-						if (m_map->datas[m_player->positionInGrid().x + (m_player->positionInGrid().y - 1)*DEFAULT_HEIGHT] != TILE_TYPE::BUSH
-							&&  m_map->datas[m_player->positionInGrid().x + (m_player->positionInGrid().y - 1)*DEFAULT_HEIGHT] != TILE_TYPE::BAD_GRASS && m_player->positionInGrid().y > 0)
+						if (m_map->datas[m_player->positionInGrid().x + (m_player->positionInGrid().y - 1)*m_map_size] != TILE_TYPE::BUSH
+							&&  m_map->datas[m_player->positionInGrid().x + (m_player->positionInGrid().y - 1)*m_map_size] != TILE_TYPE::BAD_GRASS && m_player->positionInGrid().y > 0)
 						{
 							m_player->up();
 							tryToLaunchABattle(m_player->positionInGrid());
@@ -301,8 +301,8 @@ void GameBoard::eventLoop()
 					if (m_menu->isVisible())
 						m_menu->down();
 					else {
-						if (m_player->positionInGrid().y < DEFAULT_HEIGHT - 1 && m_map->datas[m_player->positionInGrid().x + (m_player->positionInGrid().y + 1)*DEFAULT_HEIGHT] != TILE_TYPE::BUSH
-							&&  m_map->datas[m_player->positionInGrid().x + (m_player->positionInGrid().y + 1)*DEFAULT_HEIGHT] != TILE_TYPE::BAD_GRASS)
+						if (m_player->positionInGrid().y < m_map_size - 1 && m_map->datas[m_player->positionInGrid().x + (m_player->positionInGrid().y + 1)*m_map_size] != TILE_TYPE::BUSH
+							&&  m_map->datas[m_player->positionInGrid().x + (m_player->positionInGrid().y + 1)*m_map_size] != TILE_TYPE::BAD_GRASS)
 						{
 							m_player->down();
 							tryToLaunchABattle(m_player->positionInGrid());
@@ -374,7 +374,7 @@ bool GameBoard::validMap(int * map, int _x, int _y)
 		{
 			if (!_continue)break;
 
-			if (map[y + x*DEFAULT_HEIGHT] != (int)TILE_TYPE::BUSH && map[y + x*DEFAULT_HEIGHT] != (int)TILE_TYPE::BAD_GRASS)
+			if (map[y + x*m_map_size] != (int)TILE_TYPE::BUSH && map[y + x*m_map_size] != (int)TILE_TYPE::BAD_GRASS)
 			{
 				start = { x,y };
 				_continue = false;
@@ -409,7 +409,7 @@ bool GameBoard::getDistanceMap(int* _map, int _x, int _y, Vector2i start) const
 
 	for (int x = 0; x < _x; ++x)
 		for (int y = 0; y < _y; ++y)
-			if (_map[y + x*DEFAULT_HEIGHT] != (int)TILE_TYPE::BUSH && _map[y + x*DEFAULT_HEIGHT] != (int)TILE_TYPE::BAD_GRASS && getV(distance, new Vector2i(y, x)) == -1)
+			if (_map[y + x*m_map_size] != (int)TILE_TYPE::BUSH && _map[y + x*m_map_size] != (int)TILE_TYPE::BAD_GRASS && getV(distance, new Vector2i(y, x)) == -1)
 				return false;
 
 	return  true;
@@ -419,16 +419,16 @@ const vector<Vector2i*> GameBoard::getNeigh(int * _map, int _x, int _y, Vector2i
 {
 	vector<Vector2i*> res;
 
-	if (node->x + 1 < _x && _map[(node->x + 1) + (node->y)*DEFAULT_HEIGHT] != (int)TILE_TYPE::BUSH  &&  _map[(node->x + 1) + (node->y)*DEFAULT_HEIGHT] != (int)TILE_TYPE::BAD_GRASS)
+	if (node->x + 1 < _x && _map[(node->x + 1) + (node->y)*m_map_size] != (int)TILE_TYPE::BUSH  &&  _map[(node->x + 1) + (node->y)*m_map_size] != (int)TILE_TYPE::BAD_GRASS)
 		res.push_back(new Vector2i{ node->x + 1,node->y });
 
-	if (node->x - 1 >= 0 && _map[(node->x - 1) + (node->y)*DEFAULT_HEIGHT] != (int)TILE_TYPE::BUSH &&  _map[(node->x + 1) + (node->y)*DEFAULT_HEIGHT] != (int)TILE_TYPE::BAD_GRASS)
+	if (node->x - 1 >= 0 && _map[(node->x - 1) + (node->y)*m_map_size] != (int)TILE_TYPE::BUSH &&  _map[(node->x + 1) + (node->y)*m_map_size] != (int)TILE_TYPE::BAD_GRASS)
 		res.push_back(new Vector2i{ node->x - 1,node->y });
 
-	if (node->y + 1 < _y && _map[(node->x) + (node->y + 1)*DEFAULT_HEIGHT] != (int)TILE_TYPE::BUSH &&  _map[(node->x + 1) + (node->y)*DEFAULT_HEIGHT] != (int)TILE_TYPE::BAD_GRASS)
+	if (node->y + 1 < _y && _map[(node->x) + (node->y + 1)*m_map_size] != (int)TILE_TYPE::BUSH &&  _map[(node->x + 1) + (node->y)*m_map_size] != (int)TILE_TYPE::BAD_GRASS)
 		res.push_back(new Vector2i{ node->x,node->y + 1 });
 
-	if (node->y - 1 >= 0 && _map[(node->x) + (node->y - 1)*DEFAULT_HEIGHT] != (int)TILE_TYPE::BUSH  &&  _map[(node->x + 1) + (node->y)*DEFAULT_HEIGHT] != (int)TILE_TYPE::BAD_GRASS)
+	if (node->y - 1 >= 0 && _map[(node->x) + (node->y - 1)*m_map_size] != (int)TILE_TYPE::BUSH  &&  _map[(node->x + 1) + (node->y)*m_map_size] != (int)TILE_TYPE::BAD_GRASS)
 		res.push_back(new Vector2i{ node->x,node->y - 1 });
 
 	return res;
@@ -445,9 +445,9 @@ bool GameBoard::exist(const map<Vector2i*, int>& m, Vector2i * a) const
 std::vector<sf::Vector2i> GameBoard::availablePositions(TILE_TYPE* map) const
 {
 	vector<Vector2i> res;
-	for (int x = 0; x < DEFAULT_WIDTH; ++x)
-		for (int y = 0; y < DEFAULT_HEIGHT; ++y)
-			if ((int)m_map->datas[y + x*DEFAULT_HEIGHT] != 0)
+	for (int x = 0; x < m_map_size; ++x)
+		for (int y = 0; y < m_map_size; ++y)
+			if ((int)m_map->datas[y + x*m_map_size] != 0)
 				res.push_back({ x,y });
 
 	return res;
@@ -559,7 +559,7 @@ void GameBoard::tryToLaunchABattle(sf::Vector2i player_pos)
 
 bool GameBoard::noMonsterHere(sf::Vector2i position) const
 {
-	for (int i = 0; i < NB_OF_MONSTERS; ++i)
+	for (int i = 0; i < m_monster_number; ++i)
 		if (position == m_monster_pos[i])
 			return false;
 	return true;

@@ -306,7 +306,7 @@ void nombrePossible(string contenu, char& classecomplete, char type) {
 		if (contenu == "") { /*!< Gere Si la chaine est vide */
 			complet = 'n';
 			/*!< Ecrit en un message d'erreur en fonction de la fonction qui a appelé nombrePossible */
-			if (type == 'm') { /
+			if (type == 'm') { 
 				cout << "Erreur le fichier de chargement du Monstre est mal construit ou incomplet" << endl;
 			}
 			if (type == 'c') {
@@ -318,7 +318,7 @@ void nombrePossible(string contenu, char& classecomplete, char type) {
 		}
 		else {
 			int contenuint = stoi(contenu); // On le transforme maintenant en int (il représente biensur un int alloué en string) afin d'effectuer d'autres test
-			if (contenuint < 0) { : /*<Gere si la valeur est nulle */
+			if (contenuint < 0) {  /*<Gere si la valeur est nulle */
 				complet = 'n';
 				// Ecrit en un message d'erreur en fonction de la fonction qui a appelé nombrePossible 
 				if (type == 'j') {

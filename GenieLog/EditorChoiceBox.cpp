@@ -73,13 +73,13 @@ void EditorChoiceBox::actionButton(string s)
 		auto splitted_string = stringSplit(s, '\n');
 
 		if (splitted_string.size() == 3) {
-			if (splitted_string[2].empty() || stoi(splitted_string[2]) < 5 || stoi(splitted_string[2]) >= DEFAULT_WIDTH)
+			if (splitted_string[2].empty() || stoi(splitted_string[2]) < 5 || stoi(splitted_string[2]) >= 15)
 				throw 0x0;
 
-			if (splitted_string[1].empty() || stoi(splitted_string[1]) < 5 || stoi(splitted_string[1]) >= DEFAULT_HEIGHT)
+			if (splitted_string[1].empty() || stoi(splitted_string[1]) < 5 || stoi(splitted_string[1]) >= 15)
 				throw 0x0;
 
-			if (splitted_string[0].empty() || stoi(splitted_string[0]) < 2 || stoi(splitted_string[0]) >= (int)sqrt(DEFAULT_HEIGHT*DEFAULT_WIDTH))
+			if (splitted_string[0].empty() || stoi(splitted_string[0]) < 2 || stoi(splitted_string[0]) >= (int)sqrt(15*15))
 				throw 0x0;
 			throw splitted_string;
 		}		

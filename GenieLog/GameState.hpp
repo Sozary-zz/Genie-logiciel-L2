@@ -6,10 +6,8 @@
 #include "TextureManager.h"
 #include "FontManager.h"
 
-#define DEFAULT_HEIGHT 15 //20 max!
-#define DEFAULT_WIDTH  15
 #define MAIN_VOLUME 10
-#define NB_OF_MONSTERS 15
+
 
 class GameState
 {

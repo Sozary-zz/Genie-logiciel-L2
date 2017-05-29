@@ -34,7 +34,7 @@ struct Node {
 class GameBoard : public GameState
 {
 public:
-	GameBoard(Game* game,std::string& classe, std::string& pseudo);
+	GameBoard(Game* game,std::string& classe, std::vector<std::string>& infos);
 	virtual void draw(const float delta_time);
 	virtual void update(const float delta_time);
 	virtual void eventLoop();
@@ -94,6 +94,9 @@ private:
 	Monstre* m_monster_buffer;
 	bool m_just_left_a_battle;
 
+	int m_map_size;
+
+	int m_monster_number;
 
 };
 

@@ -85,12 +85,12 @@ void GameSelector::update(const float delta_time)
 {
 	if (m_next_button->buttonPushed() && m_locked) {
 		try {
-			PlayerNameChoiceBox* choice_ctxt = new PlayerNameChoiceBox(350, 150, "Pseudo pour la classe "+ m_class);
+			PlayerNameChoiceBox* choice_ctxt = new PlayerNameChoiceBox(360, 220, "Pseudo pour la classe "+ m_class);
 		}
 		catch (int e) {
 			m_locked = false;
 		}
-		catch (string& s) {
+		catch (vector<string>& s) {
 			m_main_music.stop();
 			game->pushState((GameState*)new GameBoard(this->game, m_class, s));
 		}
