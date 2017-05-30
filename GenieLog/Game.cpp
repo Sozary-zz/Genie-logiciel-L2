@@ -58,7 +58,7 @@ void Game::gameLoop()
 
 Game::Game()
 {
-	this->window.create(VideoMode(800, 600), "RPG", Style::Close, ContextSettings{ 0,0,8 });
+	this->window.create(VideoMode(GAME_W, GAME_H), "RPG", Style::Close, ContextSettings{ 0,0,8 });
 	this->window.setFramerateLimit(60);
 }
 

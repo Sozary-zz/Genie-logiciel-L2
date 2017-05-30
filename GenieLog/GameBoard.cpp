@@ -7,8 +7,8 @@ using namespace sf;
 
 // https://downloads.khinsider.com/game-soundtracks/album/pokemon-ruby-sapphire-music-super-complete
 GameBoard::GameBoard(Game * game, string & classe, vector<string>& infos) :
-	m_monster_buffer(nullptr), t_fight(false), t_already_started(false), m_just_left_a_battle(false),m_map_size(stoi(infos[1])), m_monster_number(stoi(infos[0]))
-{
+	m_monster_buffer(nullptr), t_fight(false), t_already_started(false), m_just_left_a_battle(false), m_map_size(stoi(infos[1])), m_monster_number(stoi(infos[0])), m_end(false), m_end_scale_on(false)
+	, m_NOW_THE_END(false) {
 
 	m_base_battle_sound_buffer.loadFromFile("data\\songs\\009_Battle_Wild_Pok_mon_.ogg");
 	m_base_battle_sound.setBuffer(m_base_battle_sound_buffer);
@@ -21,6 +21,10 @@ GameBoard::GameBoard(Game * game, string & classe, vector<string>& infos) :
 	m_main_song.setLoop(true);
 	m_main_song.setVolume(MAIN_VOLUME);
 	m_main_song.play();
+
+	m_end_music.openFromFile("data\\songs\\051_Victory_Gym_Leader_.ogg");
+	m_end_music.setLoop(true);
+	m_end_music.setVolume(MAIN_VOLUME);
 
 
 	m_menu_song.load("data\\songs\\sounds_effect\\emerald_00F8_menu.wav");
@@ -110,7 +114,7 @@ GameBoard::GameBoard(Game * game, string & classe, vector<string>& infos) :
 		if (type < 3000)
 			type_monster = "Gobelins";
 
-		else if(type>=3000 && type<6500)
+		else if (type >= 3000 && type < 6500)
 			type_monster = "Orc";
 		else
 			type_monster = "Dragonnet";
@@ -136,6 +140,12 @@ GameBoard::GameBoard(Game * game, string & classe, vector<string>& infos) :
 
 	tryToLaunchABattle(m_player->positionInGrid());
 
+
+	m_end_text.setFont(GameState::font_manager->getElement("main_font"));
+	m_end_text.setString("VOUS AVEZ GAGNÉ\n  PRESS ENTER");
+	m_end_text.setCharacterSize(26);
+	m_end_text.setColor(Color(255, 0, 0, 0));
+	m_end_text.setPosition({ GAME_W / 2 - m_end_text.getGlobalBounds().width / 2,GAME_H / 2 - m_end_text.getGlobalBounds().height });
 }
 
 void GameBoard::draw(const float delta_time)
@@ -150,13 +160,41 @@ void GameBoard::draw(const float delta_time)
 	if (m_menu->isVisible())
 		game->window.draw(*m_menu);
 
+	game->window.draw(m_end_text);
 
 }
 
 void GameBoard::update(const float delta_time)
 {
-	if (m_monsters.empty()) {
 
+	if (m_monsters.empty() && !m_end) {
+		m_main_song.stop();
+		m_end_music.play();
+		m_end_clk.restart();
+		m_end = true;
+	}
+	if (m_end &&m_end_clk.getElapsedTime().asSeconds() < 5.3f) {
+
+		auto alpha = ((m_end_clk.getElapsedTime().asSeconds() / 5.3f))*255.f;
+		m_end_text.setColor(Color(255, 0, 0, alpha));
+		if (m_end_clk.getElapsedTime().asSeconds() >= 4.8f && !m_end_scale_on)
+		{
+			m_end_scale_on = true;
+			m_end_scale.restart();
+		}
+		if (m_end_scale_on) {
+			auto scale_change = ((m_end_scale.getElapsedTime().asSeconds() / .5f)) * 5;
+			m_end_text.setCharacterSize(m_end_text.getCharacterSize() + scale_change);
+			m_end_text.setPosition({ GAME_W / 2 - m_end_text.getGlobalBounds().width / 2,GAME_H / 2 - m_end_text.getGlobalBounds().height });
+
+		}
+
+		if (m_end_text.getCharacterSize() >= 31)
+		{
+			m_end_scale_on = false;
+			m_NOW_THE_END = true;
+			m_end = false;
+		}
 	}
 
 	m_collision.update();
@@ -195,12 +233,15 @@ void GameBoard::eventLoop()
 			case Event::KeyPressed:
 			{
 				if (t_fight)break;
-				if (event.key.code == Keyboard::A)
-				{
-					game->popState();
-					return;
+				if (m_end_scale_on || m_end)break;
+				if (m_NOW_THE_END) {
+					if (event.key.code == Keyboard::Return) {
+						game->window.close();
+						return;
+					}
 				}
-				else	if (event.key.code == Keyboard::Escape)
+
+				if (event.key.code == Keyboard::Escape)
 					game->window.close();
 				else if (event.key.code == Keyboard::Return)
 				{
