@@ -10,7 +10,7 @@
 class Joueur;
 class Monstre;
 
-Competence * ChargerCompetence(int numero);
-Joueur * ChargerJoueur(std::string pseudo, std::string nomclasse);
-void nombrePossible(string contenu, char& classecomplete,char type);
-Monstre * ChargerMonstre(string pseudo);
+Competence * ChargerCompetence(int numero);// charge comp
+Joueur * ChargerJoueur(std::string pseudo, std::string nomclasse);//charge joeueur
+void nombrePossible(string contenu, char& classecomplete,char type);// nb possible de classe
+Monstre * ChargerMonstre(string pseudo);//charge ennemie

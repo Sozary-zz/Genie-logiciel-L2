@@ -4,4 +4,4 @@
 #include <string>
 
 
-std::vector<std::string> stringSplit(const std::string & s, char c);
+std::vector<std::string> stringSplit(const std::string & s, char c);// separe chaine carac selon carac

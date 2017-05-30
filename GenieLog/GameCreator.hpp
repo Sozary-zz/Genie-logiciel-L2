@@ -19,6 +19,6 @@ private:
 
 	int m_height;
 	int m_width;
-	int m_number_of_monsters;
+	int m_number_of_monsters;// nb monstre
 };
 

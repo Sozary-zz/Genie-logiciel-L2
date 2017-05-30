@@ -1,3 +1,4 @@
+// useless af
 #ifndef COMBAT
 #define COMBAT
 

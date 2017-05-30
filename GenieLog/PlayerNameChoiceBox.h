@@ -9,6 +9,6 @@ class PlayerNameChoiceBox :public LayoutBase
 public:
 	PlayerNameChoiceBox(int width, int height, std::string name);
 private:
-	void actionButton(std::string);
+	void actionButton(std::string);// action quand choisi le nom
 };
 

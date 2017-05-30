@@ -18,19 +18,19 @@ public:
 
 	void adjustPos(sf::Vector2i grid, sf::Vector2i position, sf::Vector2f scale, DIRECTION orientation);
 
-	Competence * choisir_competence();
+	Competence * choisir_competence();// recup comp
 
-	sf::Vector2i recupPos() const;
+	sf::Vector2i recupPos() const;// il est ou le monmonstre?
 
-	void textureUpdate();
+	void textureUpdate();// pour pas figé quand on l approche
 private:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 private:
 	sf::Sprite m_sprite;
 
-	sf::Vector2i m_position;
-	sf::Vector2i m_grid_pos;
+	sf::Vector2i m_position;// posiotn dans fenetre
+	sf::Vector2i m_grid_pos;// position dans grille
 };
 
 #endif

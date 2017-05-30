@@ -8,7 +8,7 @@
 class EditorChoiceBox:public LayoutBase
 {
 public:
-	EditorChoiceBox(int width, int height, std::string name);
+	EditorChoiceBox(int width, int height, std::string name);// pas utilié
 
 private:
 	void actionButton(std::string);

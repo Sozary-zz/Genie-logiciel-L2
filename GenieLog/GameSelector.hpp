@@ -17,23 +17,23 @@ public:
 private:
 	sf::View m_view;
 
-	ActionButton * m_next_button;
-	ActionButton * m_quit_button;
+	ActionButton * m_next_button;// bouton next
+	ActionButton * m_quit_button;// boutton quitter
 
-	sf::RectangleShape * m_presentations;
-	sf::Sprite * m_sprites;
-	sf::Text * m_text_presentation;
+	sf::RectangleShape * m_presentations;// rectnagles de pres
+	sf::Sprite * m_sprites;// les images dedans
+	sf::Text * m_text_presentation;// le text de chauque classe
 
-	int m_selected;
+	int m_selected;// la classe selec
 
-	bool m_someone_else_selected;
-	bool m_locked;
+	bool m_someone_else_selected;// cahnge curseur
+	bool m_locked;// verouille choix classe
 
-	std::string m_class;
+	std::string m_class;// nom classe
 
-	sf::Music m_main_music;
+	sf::Music m_main_music;// musiqye
 
-	bool& m_end;
+	bool& m_end;// est fini?
 
 };
 

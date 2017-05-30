@@ -8,7 +8,7 @@
 
 
 enum class BUTTON_INDEX
-{
+{// boutons possibles
 	PLAY_BUTTON,
 	EDIT_BUTTON,
 	SETTINGS_BUTTON,
@@ -28,10 +28,10 @@ public:
 private:
 	sf::View m_view;
 	sf::Sprite m_background;
-	ActionButton** m_buttons;
-	sf::Music m_menu_song;
+	ActionButton** m_buttons;// liste boutons
+	sf::Music m_menu_song;//son
 
-	bool m_setSongUp;
+	bool m_setSongUp;//si je reviens sur cette fentre je remets du son
 
 
 };
